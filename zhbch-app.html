@@ -1,0 +1,4048 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>智伴长护—长护价值银行</title>
+  <style>
+/* ============================================
+   智伴长护—长护价值银行 小程序样式
+   配色方案来自护阿婆IP设计规范
+   ============================================ */
+
+/* ===== CSS 变量 ===== */
+:root {
+  --c-orange: #D97706;
+  --c-deep-blue: #065A82;
+  --c-cyan: #1C7293;
+  --c-gold: #E8A838;
+  --c-cream: #FAFBFC;
+  --c-red: #C0392B;
+  --c-ink: #1A2744;
+  --c-orange-light: #FEF3E7;
+  --c-blue-light: #E8F1F8;
+  --c-gray: #F5F6F8;
+  --c-gray-border: #E8EAED;
+  --c-text-secondary: #6B7280;
+  --c-text-tertiary: #9CA3AF;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-orange: 0 4px 14px rgba(217,119,6,0.3);
+  --shadow-blue: 0 4px 14px rgba(6,90,130,0.25);
+  --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  background: linear-gradient(135deg, #E8F1F8 0%, #FEF3E7 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--c-ink); overflow: hidden;
+}
+button { border: none; background: none; cursor: pointer; font-family: inherit; color: inherit; }
+input { border: none; outline: none; font-family: inherit; }
+svg { display: block; }
+
+/* ===== 手机框架 ===== */
+.phone-frame {
+  width: 390px; height: 844px;
+  background: #000; border-radius: 48px; padding: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 2px #333;
+  position: relative; flex-shrink: 0;
+}
+.phone-screen {
+  width: 100%; height: 100%;
+  background: var(--c-cream);
+  border-radius: 36px; overflow: hidden;
+  display: flex; flex-direction: column; position: relative;
+}
+.phone-frame::before {
+  content: ''; position: absolute; top: 18px; left: 50%;
+  transform: translateX(-50%); width: 120px; height: 28px;
+  background: #000; border-radius: 14px; z-index: 100;
+}
+
+/* ===== 状态栏 ===== */
+.status-bar {
+  height: 44px; padding: 0 24px 0 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 14px; font-weight: 600; color: var(--c-ink);
+  flex-shrink: 0; z-index: 50; position: relative;
+}
+.status-bar__icons { display: flex; align-items: center; gap: 5px; color: var(--c-ink); }
+.status-bar__battery { font-size: 13px; font-weight: 500; margin-right: 2px; }
+
+/* ===== 导航栏（子页面） ===== */
+.nav-bar {
+  height: 44px; padding: 0 12px;
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border-bottom: 1px solid var(--c-gray-border);
+  flex-shrink: 0; z-index: 40; position: relative;
+}
+.nav-bar__back { display: flex; align-items: center; color: var(--c-deep-blue); padding: 4px; }
+.nav-bar__title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--c-ink); }
+.nav-bar__right { width: 32px; font-size: 14px; color: var(--c-deep-blue); text-align: right; }
+
+/* ===== 内容区域 ===== */
+.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; position: relative; }
+.content-area::-webkit-scrollbar { width: 0; }
+
+/* ===== 页面容器 ===== */
+.page { min-height: 100%; padding-bottom: 8px; }
+
+/* ===== 通用区块 ===== */
+.section { padding: 0 16px; margin-top: 16px; }
+.section__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.section__header h3 { font-size: 17px; font-weight: 700; color: var(--c-ink); }
+.section__more { font-size: 13px; color: var(--c-cyan); cursor: pointer; }
+.section__tag { font-size: 11px; color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
+
+/* ===== TabBar ===== */
+.tabbar {
+  height: 60px; background: #fff; border-top: 1px solid var(--c-gray-border);
+  display: flex; align-items: stretch; flex-shrink: 0; position: relative; z-index: 50;
+  padding-bottom: var(--safe-bottom);
+}
+.tabbar__item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; color: var(--c-text-tertiary); transition: color 0.2s; position: relative;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.tabbar__item--active { color: var(--c-orange); }
+.tabbar__item--center { position: relative; }
+.tabbar__center-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--c-orange) 0%, var(--c-gold) 100%);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  box-shadow: var(--shadow-orange);
+}
+.tabbar__item--center .tabbar__icon { display: none; }
+.tabbar__item--center.tabbar__item--active .tabbar__text { color: var(--c-orange); }
+.tabbar__icon { width: 24px; height: 24px; }
+.tabbar__text { font-size: 10px; font-weight: 500; }
+.tabbar__text--center { margin-top: 28px; }
+
+/* ===== 首页 ===== */
+.home-hero { position: relative; padding: 8px 16px 16px; overflow: hidden; }
+.home-hero__bg {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, var(--c-deep-blue) 0%, var(--c-cyan) 100%);
+  border-radius: 0 0 24px 24px; height: 180px;
+}
+.home-hero__bg::after {
+  content: ''; position: absolute; top: 0; right: -20px; width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(232,168,56,0.15) 0%, transparent 70%); border-radius: 50%;
+}
+.home-hero__content { position: relative; display: flex; align-items: center; gap: 14px; padding-top: 12px; }
+.home-hero__avatar {
+  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #FEF3E7 0%, #FFF 100%);
+  border: 3px solid rgba(255,255,255,0.4); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.home-hero__text { color: #fff; flex: 1; }
+.home-hero__greeting { font-size: 15px; font-weight: 600; line-height: 1.4; }
+.home-hero__sub { font-size: 12px; opacity: 0.85; margin-top: 4px; line-height: 1.3; }
+
+.home-stats {
+  display: flex; align-items: center; margin: 0 16px; margin-top: -20px;
+  background: #fff; border-radius: var(--radius-lg); padding: 14px 0;
+  box-shadow: var(--shadow-md); position: relative; z-index: 10;
+}
+.home-stats__item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.home-stats__label { font-size: 11px; color: var(--c-text-secondary); }
+.home-stats__value { font-size: 18px; font-weight: 700; color: var(--c-ink); }
+.home-stats__value--accent { color: var(--c-cyan); font-size: 15px; }
+.home-stats__value--badge {
+  font-size: 13px; color: var(--c-deep-blue); background: var(--c-blue-light);
+  padding: 2px 10px; border-radius: 10px; font-weight: 600;
+}
+.home-stats__divider { width: 1px; height: 28px; background: var(--c-gray-border); }
+
+.home-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.home-features__item {
+  background: #fff; border-radius: var(--radius-md); padding: 14px 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow-sm);
+}
+.home-features__item:active { transform: scale(0.96); }
+.home-features__icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.home-features__name { font-size: 12px; font-weight: 600; color: var(--c-ink); }
+.home-features__desc { font-size: 10px; color: var(--c-text-tertiary); text-align: center; }
+
+.home-recommend {
+  background: linear-gradient(135deg, var(--c-orange-light) 0%, #FFF8F0 100%);
+  border-radius: var(--radius-md); padding: 14px; display: flex; gap: 12px;
+  align-items: center; cursor: pointer; transition: transform 0.15s;
+  border: 1px solid rgba(217,119,6,0.12);
+}
+.home-recommend:active { transform: scale(0.98); }
+.home-recommend__badge {
+  width: 44px; height: 44px; border-radius: 12px; background: var(--c-orange);
+  display: flex; align-items: center; justify-content: center; color: #fff;
+  flex-shrink: 0; font-size: 20px; font-weight: 700;
+}
+.home-recommend__content { flex: 1; }
+.home-recommend__title { font-size: 14px; font-weight: 600; color: var(--c-ink); line-height: 1.3; }
+.home-recommend__desc { font-size: 12px; color: var(--c-text-secondary); margin-top: 3px; }
+.home-recommend__points {
+  font-size: 11px; color: var(--c-orange); background: rgba(217,119,6,0.1);
+  padding: 2px 8px; border-radius: 10px; margin-top: 6px; display: inline-block;
+}
+
+.home-news__item {
+  background: #fff; border-radius: var(--radius-md); padding: 12px;
+  margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start;
+  box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.15s;
+}
+.home-news__item:active { transform: scale(0.98); }
+.home-news__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-orange); margin-top: 6px; flex-shrink: 0; }
+.home-news__content { flex: 1; }
+.home-news__title { font-size: 13px; font-weight: 500; color: var(--c-ink); line-height: 1.4; }
+.home-news__meta { font-size: 11px; color: var(--c-text-tertiary); margin-top: 4px; display: flex; gap: 8px; }
+
+/* ===== 科普页 ===== */
+.edu-dialect {
+  margin: 8px 16px; padding: 12px 14px; background: #fff; border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.edu-dialect__label { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 10px; }
+.edu-dialect__btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.edu-dialect__btn {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  background: var(--c-gray); color: var(--c-text-secondary); transition: all 0.2s;
+  border: 1px solid transparent; cursor: pointer;
+}
+.edu-dialect__btn--active { background: var(--c-orange); color: #fff; border-color: var(--c-orange); }
+
+.edu-stages { margin: 12px 16px; padding: 16px 14px; background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.edu-stages__title { font-size: 13px; font-weight: 600; color: var(--c-text-secondary); margin-bottom: 12px; }
+.edu-stages__track { display: flex; align-items: center; justify-content: space-between; position: relative; }
+.edu-stages__track::before { content: ''; position: absolute; top: 16px; left: 16px; right: 16px; height: 2px; background: var(--c-gray-border); z-index: 0; }
+.edu-stages__progress { position: absolute; top: 16px; left: 16px; height: 2px; background: var(--c-orange); z-index: 1; transition: width 0.5s; }
+.edu-stages__node { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 2; flex: 1; }
+.edu-stages__dot { width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 2px solid var(--c-gray-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--c-text-tertiary); }
+.edu-stages__node--done .edu-stages__dot { background: var(--c-orange); border-color: var(--c-orange); color: #fff; }
+.edu-stages__node--current .edu-stages__dot { background: var(--c-deep-blue); border-color: var(--c-deep-blue); color: #fff; box-shadow: 0 0 0 4px rgba(6,90,130,0.15); }
+.edu-stages__name { font-size: 10px; color: var(--c-text-secondary); text-align: center; }
+.edu-stages__node--done .edu-stages__name, .edu-stages__node--current .edu-stages__name { color: var(--c-ink); font-weight: 600; }
+
+.edu-content__section { margin-bottom: 16px; }
+.edu-content__section-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin: 12px 16px 8px; display: flex; align-items: center; gap: 6px; }
+.edu-content__section-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--c-orange); }
+.edu-card {
+  margin: 0 16px 10px; background: #fff; border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.15s;
+}
+.edu-card:active { transform: scale(0.98); }
+.edu-card__img { width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: #fff; }
+.edu-card__body { padding: 12px 14px; }
+.edu-card__title { font-size: 14px; font-weight: 600; color: var(--c-ink); }
+.edu-card__desc { font-size: 12px; color: var(--c-text-secondary); margin-top: 4px; line-height: 1.4; }
+.edu-card__meta { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.edu-card__tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+.edu-card__points { font-size: 11px; color: var(--c-orange); font-weight: 600; }
+
+.edu-videos { display: flex; gap: 10px; overflow-x: auto; padding: 0 16px; }
+.edu-videos::-webkit-scrollbar { display: none; }
+.edu-video {
+  flex-shrink: 0; width: 200px; background: #fff; border-radius: var(--radius-md);
+  overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer;
+}
+.edu-video__thumb { width: 200px; height: 112px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #fff; position: relative; }
+.edu-video__duration { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 4px; }
+.edu-video__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; }
+.edu-video__body { padding: 10px 12px; }
+.edu-video__title { font-size: 13px; font-weight: 600; color: var(--c-ink); line-height: 1.3; }
+.edu-video__stage { font-size: 11px; color: var(--c-text-secondary); margin-top: 4px; }
+
+/* ===== AI问答页 ===== */
+.page--qa { display: flex; flex-direction: column; height: 100%; }
+.page--qa .content-area { flex: 1; }
+
+.qa-header {
+  display: flex; align-items: center; gap: 10px; padding: 8px 16px;
+  background: linear-gradient(135deg, var(--c-deep-blue) 0%, var(--c-cyan) 100%);
+  color: #fff; flex-shrink: 0; z-index: 10; position: relative;
+}
+.qa-header__avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.qa-header__info { flex: 1; }
+.qa-header__name { font-size: 16px; font-weight: 600; }
+.qa-header__status { display: flex; align-items: center; gap: 4px; font-size: 12px; opacity: 0.9; }
+.qa-header__dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; }
+.qa-header__dialect-btn { padding: 6px; color: #fff; opacity: 0.9; }
+
+.qa-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.qa-messages::-webkit-scrollbar { width: 0; }
+
+.qa-msg { display: flex; gap: 8px; max-width: 85%; }
+.qa-msg--user { align-self: flex-end; flex-direction: row-reverse; }
+.qa-msg__avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.qa-msg--ai .qa-msg__avatar { background: var(--c-orange-light); border: 1px solid rgba(217,119,6,0.2); }
+.qa-msg--user .qa-msg__avatar { background: var(--c-blue-light); }
+.qa-msg__bubble {
+  padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.5;
+  word-break: break-word; position: relative;
+}
+.qa-msg--ai .qa-msg__bubble { background: #fff; color: var(--c-ink); border-top-left-radius: 4px; box-shadow: var(--shadow-sm); }
+.qa-msg--user .qa-msg__bubble { background: var(--c-deep-blue); color: #fff; border-top-right-radius: 4px; }
+.qa-msg__source { font-size: 11px; color: var(--c-text-tertiary); margin-top: 6px; padding: 4px 8px; background: var(--c-gray); border-radius: 6px; display: flex; align-items: center; gap: 4px; }
+
+.qa-typing { display: flex; gap: 4px; padding: 12px 14px; }
+.qa-typing__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-text-tertiary); animation: qaTyping 1.2s infinite; }
+.qa-typing__dot:nth-child(2) { animation-delay: 0.2s; }
+.qa-typing__dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes qaTyping { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
+
+.qa-quick { display: flex; gap: 8px; padding: 8px 16px; overflow-x: auto; flex-shrink: 0; }
+.qa-quick::-webkit-scrollbar { display: none; }
+.qa-quick__chip {
+  flex-shrink: 0; padding: 6px 14px; border-radius: 16px; font-size: 12px;
+  background: var(--c-blue-light); color: var(--c-deep-blue); white-space: nowrap;
+  cursor: pointer; transition: background 0.2s; font-weight: 500;
+}
+.qa-quick__chip:active { background: var(--c-cyan); color: #fff; }
+
+.qa-input-bar { display: flex; gap: 8px; padding: 8px 12px 12px; background: #fff; border-top: 1px solid var(--c-gray-border); flex-shrink: 0; align-items: center; }
+.qa-input { flex: 1; height: 36px; background: var(--c-gray); border-radius: 18px; padding: 0 14px; font-size: 14px; color: var(--c-ink); }
+.qa-input::placeholder { color: var(--c-text-tertiary); }
+.qa-send { width: 36px; height: 36px; border-radius: 50%; background: var(--c-orange); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.qa-send:active { transform: scale(0.92); }
+
+/* ===== 我的页 ===== */
+.profile-hero {
+  background: linear-gradient(135deg, var(--c-deep-blue) 0%, var(--c-cyan) 100%);
+  padding: 16px 16px 20px; border-radius: 0 0 20px 20px; color: #fff; position: relative; overflow: hidden;
+}
+.profile-hero::after { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(232,168,56,0.12) 0%, transparent 70%); border-radius: 50%; }
+.profile-hero__top { display: flex; align-items: center; gap: 14px; position: relative; }
+.profile-hero__avatar { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; }
+.profile-hero__info { flex: 1; }
+.profile-hero__name { font-size: 18px; font-weight: 700; }
+.profile-hero__meta { font-size: 12px; opacity: 0.85; margin-top: 2px; display: flex; gap: 8px; align-items: center; }
+.profile-hero__badge { font-size: 11px; background: rgba(232,168,56,0.2); color: var(--c-gold); padding: 2px 8px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(232,168,56,0.3); }
+
+.profile-points { margin: 12px 16px 0; background: #fff; border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
+.profile-points__row { display: flex; justify-content: space-between; align-items: center; }
+.profile-points__label { font-size: 14px; font-weight: 600; color: var(--c-ink); }
+.profile-points__value { font-size: 22px; font-weight: 700; color: var(--c-orange); }
+.profile-points__bar { height: 6px; background: var(--c-gray); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.profile-points__bar-fill { height: 100%; background: linear-gradient(90deg, var(--c-orange), var(--c-gold)); border-radius: 3px; transition: width 0.5s; }
+.profile-points__meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--c-text-tertiary); margin-top: 6px; }
+
+.profile-tags { display: flex; flex-direction: column; gap: 12px; }
+.profile-tags__group {}
+.profile-tags__group-title { font-size: 13px; font-weight: 600; color: var(--c-deep-blue); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.profile-tags__group-title::before { content: ''; width: 3px; height: 12px; border-radius: 2px; background: var(--c-deep-blue); }
+.profile-tags__list { display: flex; flex-wrap: wrap; gap: 6px; }
+.profile-tags__tag {
+  font-size: 11px; padding: 4px 10px; border-radius: 12px;
+  background: var(--c-gray); color: var(--c-text-secondary);
+  display: flex; align-items: center; gap: 4px;
+}
+.profile-tags__tag-key { color: var(--c-text-tertiary); }
+.profile-tags__tag-val { color: var(--c-ink); font-weight: 600; }
+
+.profile-menu { background: #fff; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+.profile-menu__item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--c-gray-border); cursor: pointer; transition: background 0.15s; }
+.profile-menu__item:last-child { border-bottom: none; }
+.profile-menu__item:active { background: var(--c-gray); }
+.profile-menu__icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+.profile-menu__text { flex: 1; font-size: 14px; font-weight: 500; color: var(--c-ink); }
+.profile-menu__arrow { color: var(--c-text-tertiary); }
+.profile-menu__badge { font-size: 11px; color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
+
+.profile-compliance { margin: 16px 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.profile-compliance__item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--c-deep-blue); }
+
+/* ===== 数据看板页 ===== */
+.dash-tabs { display: flex; padding: 8px 16px; gap: 8px; }
+.dash-tab {
+  flex: 1; padding: 8px; text-align: center; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  background: #fff; color: var(--c-text-secondary); box-shadow: var(--shadow-sm);
+}
+.dash-tab--active { background: var(--c-deep-blue); color: #fff; }
+
+.dash-content { padding: 0 16px; }
+.dash-overview { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.dash-stat { background: #fff; border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-sm); }
+.dash-stat__label { font-size: 12px; color: var(--c-text-secondary); }
+.dash-stat__value { font-size: 22px; font-weight: 700; color: var(--c-ink); margin-top: 4px; }
+.dash-stat__trend { font-size: 11px; margin-top: 4px; display: flex; align-items: center; gap: 2px; }
+.dash-stat__trend--up { color: #16A34A; }
+.dash-stat__trend--down { color: var(--c-red); }
+.dash-stat--accent .dash-stat__value { color: var(--c-orange); }
+.dash-stat--blue .dash-stat__value { color: var(--c-deep-blue); }
+
+.dash-chart-card { background: #fff; border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
+.dash-chart-card__title { font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.dash-chart-card__title-tag { font-size: 11px; color: var(--c-text-tertiary); font-weight: 400; }
+.dash-chart { width: 100%; }
+
+.dash-funnel__item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.dash-funnel__label { width: 70px; font-size: 12px; color: var(--c-ink); flex-shrink: 0; }
+.dash-funnel__bar-wrap { flex: 1; height: 24px; background: var(--c-gray); border-radius: 12px; overflow: hidden; }
+.dash-funnel__bar { height: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 11px; color: #fff; font-weight: 600; transition: width 0.5s; }
+.dash-funnel__count { width: 60px; font-size: 12px; color: var(--c-text-secondary); text-align: right; }
+
+.dash-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.dash-table th { text-align: left; padding: 6px 8px; color: var(--c-text-secondary); font-weight: 600; border-bottom: 1px solid var(--c-gray-border); }
+.dash-table td { padding: 8px; border-bottom: 1px solid var(--c-gray-border); color: var(--c-ink); }
+.dash-table tr:last-child td { border-bottom: none; }
+
+/* ===== 子页面（覆盖层） ===== */
+.subpage {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--c-cream); z-index: 200;
+  display: flex; flex-direction: column; border-radius: 36px; overflow: hidden;
+}
+.subpage__inner { flex: 1; overflow-y: auto; }
+.subpage__inner::-webkit-scrollbar { width: 0; }
+
+/* ===== 子页面 - 积分中心 ===== */
+.sp-points__hero {
+  background: linear-gradient(135deg, var(--c-orange) 0%, var(--c-gold) 100%);
+  padding: 20px 16px; color: #fff; text-align: center;
+}
+.sp-points__balance { font-size: 36px; font-weight: 700; }
+.sp-points__label { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+.sp-points__actions { display: flex; justify-content: center; gap: 20px; margin-top: 16px; }
+.sp-points__action { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+.sp-points__action-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; }
+.sp-points__action-text { font-size: 11px; }
+
+.sp-section-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin: 16px 16px 8px; display: flex; align-items: center; gap: 6px; }
+.sp-section-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--c-orange); }
+
+.sp-task { margin: 0 16px 8px; background: #fff; border-radius: var(--radius-md); padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
+.sp-task__icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+.sp-task__info { flex: 1; }
+.sp-task__name { font-size: 14px; font-weight: 600; color: var(--c-ink); }
+.sp-task__desc { font-size: 11px; color: var(--c-text-secondary); margin-top: 2px; }
+.sp-task__btn { padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; color: #fff; background: var(--c-orange); cursor: pointer; transition: opacity 0.2s; }
+.sp-task__btn--done { background: var(--c-gray); color: var(--c-text-tertiary); }
+.sp-task__btn--disabled { opacity: 0.5; }
+
+.sp-reward { margin: 0 16px 8px; background: #fff; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+.sp-reward__row { display: flex; align-items: center; gap: 12px; padding: 14px; }
+.sp-reward__icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+.sp-reward__info { flex: 1; }
+.sp-reward__name { font-size: 14px; font-weight: 600; color: var(--c-ink); }
+.sp-reward__desc { font-size: 11px; color: var(--c-text-secondary); margin-top: 2px; }
+.sp-reward__cost { font-size: 13px; font-weight: 700; color: var(--c-orange); }
+.sp-reward__btn { padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; background: var(--c-orange-light); color: var(--c-orange); border: 1px solid var(--c-orange); cursor: pointer; }
+.sp-reward__btn--disabled { background: var(--c-gray); color: var(--c-text-tertiary); border-color: var(--c-gray-border); }
+
+.sp-history__item { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--c-gray-border); }
+.sp-history__type { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.sp-history__type--earn { background: #DCFCE7; color: #16A34A; }
+.sp-history__type--spend { background: #FEE2E2; color: var(--c-red); }
+.sp-history__type--transfer { background: var(--c-blue-light); color: var(--c-deep-blue); }
+.sp-history__info { flex: 1; }
+.sp-history__desc { font-size: 13px; color: var(--c-ink); }
+.sp-history__date { font-size: 11px; color: var(--c-text-tertiary); }
+.sp-history__amount { font-size: 14px; font-weight: 700; }
+.sp-history__amount--earn { color: #16A34A; }
+.sp-history__amount--spend { color: var(--c-red); }
+.sp-history__amount--transfer { color: var(--c-deep-blue); }
+
+/* ===== 子页面 - 保障推荐 ===== */
+.sp-rec__hero { padding: 20px 16px; background: linear-gradient(135deg, var(--c-deep-blue) 0%, var(--c-cyan) 100%); color: #fff; }
+.sp-rec__hero-title { font-size: 20px; font-weight: 700; }
+.sp-rec__hero-desc { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+
+.sp-rec__form { margin: 12px 16px; background: #fff; border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-sm); }
+.sp-rec__form-title { font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 12px; }
+.sp-rec__field { margin-bottom: 12px; }
+.sp-rec__field-label { font-size: 12px; color: var(--c-text-secondary); margin-bottom: 4px; }
+.sp-rec__field-input { width: 100%; height: 38px; background: var(--c-gray); border-radius: 8px; padding: 0 12px; font-size: 14px; color: var(--c-ink); }
+.sp-rec__field-select { display: flex; gap: 8px; flex-wrap: wrap; }
+.sp-rec__option { padding: 6px 14px; border-radius: 16px; font-size: 12px; background: var(--c-gray); color: var(--c-text-secondary); cursor: pointer; }
+.sp-rec__option--active { background: var(--c-deep-blue); color: #fff; }
+.sp-rec__submit { width: 100%; height: 44px; border-radius: 22px; background: linear-gradient(135deg, var(--c-deep-blue), var(--c-cyan)); color: #fff; font-size: 15px; font-weight: 600; margin-top: 8px; cursor: pointer; }
+.sp-rec__submit:active { opacity: 0.85; }
+
+.sp-rec__result { margin: 12px 16px; }
+.sp-rec__gap-card { background: linear-gradient(135deg, #FEF3E7 0%, #FFF8F0 100%); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; border: 1px solid rgba(217,119,6,0.15); }
+.sp-rec__gap-title { font-size: 14px; font-weight: 600; color: var(--c-orange); }
+.sp-rec__gap-desc { font-size: 13px; color: var(--c-ink); margin-top: 6px; line-height: 1.5; }
+
+.sp-rec__product { background: #fff; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
+.sp-rec__product-header { padding: 14px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--c-gray-border); }
+.sp-rec__product-logo { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+.sp-rec__product-info { flex: 1; }
+.sp-rec__product-name { font-size: 15px; font-weight: 600; color: var(--c-ink); }
+.sp-rec__product-company { font-size: 11px; color: var(--c-text-secondary); }
+.sp-rec__product-score { text-align: right; }
+.sp-rec__product-score-val { font-size: 18px; font-weight: 700; color: var(--c-deep-blue); }
+.sp-rec__product-score-label { font-size: 10px; color: var(--c-text-tertiary); }
+.sp-rec__product-body { padding: 12px 16px; }
+.sp-rec__product-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--c-gray-border); }
+.sp-rec__product-row:last-child { border-bottom: none; }
+.sp-rec__product-row-label { color: var(--c-text-secondary); }
+.sp-rec__product-row-value { color: var(--c-ink); font-weight: 500; }
+.sp-rec__product-scores { display: flex; gap: 8px; padding: 10px 0 4px; }
+.sp-rec__score-bar { flex: 1; text-align: center; }
+.sp-rec__score-bar-label { font-size: 10px; color: var(--c-text-secondary); }
+.sp-rec__score-bar-track { height: 4px; background: var(--c-gray); border-radius: 2px; margin: 4px 0; overflow: hidden; }
+.sp-rec__score-bar-fill { height: 100%; border-radius: 2px; }
+.sp-rec__score-bar-val { font-size: 13px; font-weight: 700; color: var(--c-ink); }
+.sp-rec__trace { padding: 8px 16px 12px; font-size: 11px; color: var(--c-text-tertiary); display: flex; align-items: center; gap: 4px; }
+
+/* ===== 子页面 - 成本测算 ===== */
+.sp-calc__hero { padding: 20px 16px; background: linear-gradient(135deg, var(--c-red) 0%, #E74C3C 100%); color: #fff; }
+.sp-calc__hero-title { font-size: 20px; font-weight: 700; }
+.sp-calc__hero-desc { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+.sp-calc__card { margin: 12px 16px; background: #fff; border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-sm); }
+.sp-calc__card-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.sp-calc__card-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--c-deep-blue); }
+.sp-calc__item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--c-gray-border); font-size: 13px; }
+.sp-calc__item:last-child { border-bottom: none; }
+.sp-calc__item-label { color: var(--c-text-secondary); flex: 1; }
+.sp-calc__item-freq { font-size: 11px; color: var(--c-text-tertiary); margin-left: 8px; }
+.sp-calc__item-value { font-weight: 600; color: var(--c-ink); }
+.sp-calc__total { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--c-ink); }
+.sp-calc__total-label { font-size: 14px; font-weight: 700; color: var(--c-ink); }
+.sp-calc__total-value { font-size: 22px; font-weight: 700; color: var(--c-orange); }
+.sp-calc__compare { margin: 12px 16px; background: var(--c-orange-light); border-radius: var(--radius-md); padding: 14px; border: 1px solid rgba(217,119,6,0.15); }
+.sp-calc__compare-title { font-size: 14px; font-weight: 600; color: var(--c-orange); margin-bottom: 8px; }
+.sp-calc__compare-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+.sp-calc__compare-gap { color: var(--c-red); font-weight: 700; }
+
+/* ===== 子页面 - 内容详情 ===== */
+.sp-detail { padding: 16px; }
+.sp-detail__title { font-size: 20px; font-weight: 700; color: var(--c-ink); line-height: 1.4; }
+.sp-detail__meta { display: flex; gap: 12px; font-size: 12px; color: var(--c-text-tertiary); margin: 8px 0 16px; }
+.sp-detail__content { font-size: 15px; line-height: 1.7; color: var(--c-ink); }
+.sp-detail__content p { margin-bottom: 12px; }
+.sp-detail__content h4 { font-size: 16px; font-weight: 700; margin: 16px 0 8px; color: var(--c-deep-blue); }
+.sp-detail__highlight { background: var(--c-orange-light); border-left: 3px solid var(--c-orange); padding: 12px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+.sp-detail__source { margin-top: 16px; padding: 12px; background: var(--c-gray); border-radius: 8px; font-size: 12px; color: var(--c-text-secondary); }
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px;
+  border-radius: 10px; font-size: 14px; z-index: 9999;
+  animation: toastIn 0.3s; pointer-events: none; white-space: nowrap;
+}
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%,-40%) scale(0.9); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+
+/* ===== 护阿婆头像 SVG ===== */
+.huapo-svg { width: 100%; height: 100%; }
+
+/* ===== 响应式 ===== */
+@media (max-height: 900px) {
+  .phone-frame { transform: scale(0.92); transform-origin: center; }
+}
+@media (max-height: 800px) {
+  .phone-frame { transform: scale(0.82); }
+}
+@media (max-width: 420px) {
+  body { background: var(--c-cream); }
+  .phone-frame { width: 100vw; height: 100vh; border-radius: 0; padding: 0; box-shadow: none; }
+  .phone-frame::before { display: none; }
+  .phone-screen { border-radius: 0; }
+  .subpage { border-radius: 0; }
+}
+
+    </style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="phone-screen" id="phoneScreen">
+
+    <!-- ========== 状态栏 ========== -->
+    <div class="status-bar">
+      <span class="status-bar__time" id="statusTime">11:25</span>
+      <div class="status-bar__icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 7h2v4H1zM5 5h2v6H5zM9 3h2v8H9zM13 1h2v10h-2z" fill="currentColor"></path></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3 1 4.5L0 3.5C1.8 1.8 4.7.5 8 .5s6.2 1.3 8 3l-1 1C13.5 3 11 2 8 2zm0 3C6 5 4.2 5.8 3 7L2 6c1.5-1.5 3.6-2.5 6-2.5s4.5 1 6 2.5l-1 1c-1.2-1.2-3-2-5-2zm0 3c-1 0-1.8.4-2.5 1L4.5 8c1-1 2.2-1.5 3.5-1.5s2.5.5 3.5 1.5l-1 1C9.8 8.4 9 8 8 8z" fill="currentColor"></path></svg>
+        <span class="status-bar__battery">96%</span>
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="2" width="20" height="8" rx="2" stroke="currentColor" stroke-width="1" fill="none"></rect><rect x="3" y="4" width="16" height="4" rx="1" fill="currentColor"></rect><rect x="22" y="5" width="1.5" height="2" rx="0.5" fill="currentColor"></rect></svg>
+      </div>
+    </div>
+
+    <!-- ========== 导航栏（子页面用） ========== -->
+    <div class="nav-bar" id="navBar" style="display:none">
+      <button class="nav-bar__back" id="navBackBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <span class="nav-bar__title" id="navTitle"></span>
+      <span class="nav-bar__right" id="navRight"></span>
+    </div>
+
+    <!-- ========== 内容滚动区 ========== -->
+    <div class="content-area" id="contentArea">
+
+      <!-- ===================== 首页 ===================== -->
+      <div class="page page--active" id="page-home">
+        <!-- 护阿婆问候横幅 -->
+        <div class="home-hero">
+          <div class="home-hero__bg"></div>
+          <div class="home-hero__content">
+            <div class="home-hero__avatar" id="huapoAvatarHome"><svg class="huapo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="hc64"><circle cx="50" cy="50" r="48"></circle></clipPath></defs><circle cx="50" cy="50" r="48" fill="#FEF3E7"></circle><g clip-path="url(#hc64)"><rect x="0" y="70" width="100" height="30" fill="#E8F1F8"></rect><rect x="10" y="55" width="8" height="15" fill="#B0D4E8"></rect><rect x="20" y="48" width="10" height="22" fill="#B0D4E8"></rect><rect x="32" y="52" width="6" height="18" fill="#B0D4E8"></rect><rect x="62" y="50" width="8" height="20" fill="#B0D4E8"></rect><rect x="72" y="45" width="10" height="25" fill="#B0D4E8"></rect><rect x="84" y="55" width="6" height="15" fill="#B0D4E8"></rect><polygon points="40,70 50,60 60,70" fill="#065A82" opacity="0.3"></polygon><path d="M25,42 Q22,28 35,22 Q50,15 65,22 Q78,28 75,42 Q75,35 72,32 Q70,28 65,26 Q55,22 50,22 Q45,22 35,26 Q30,28 28,32 Q25,35 25,42Z" fill="#E8E8E8"></path><circle cx="30" cy="32" r="3" fill="#E8E8E8"></circle><ellipse cx="50" cy="48" rx="20" ry="19" fill="#FDE8D0"></ellipse><circle cx="36" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><circle cx="64" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><path d="M36,47 Q40,44 44,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M56,47 Q60,44 64,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M50,50 Q48,53 50,55 Q52,53 50,50" stroke="#D4A576" stroke-width="1" fill="none"></path><path d="M42,58 Q50,64 58,58" stroke="#C0392B" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="40" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><circle cx="60" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><line x1="47" y1="47" x2="53" y2="47" stroke="#E8A838" stroke-width="1.5"></line><line x1="33" y1="47" x2="28" y2="52" stroke="#E8A838" stroke-width="1"></line><line x1="67" y1="47" x2="72" y2="52" stroke="#E8A838" stroke-width="1"></line><path d="M28,67 Q26,75 24,100 L76,100 Q74,75 72,67 Q65,70 50,70 Q35,70 28,67Z" fill="#065A82"></path><path d="M40,67 Q50,74 60,67 L58,62 L50,65 L42,62Z" fill="#7BB3D4"></path><circle cx="68" cy="80" r="6" fill="#D97706"></circle><circle cx="68" cy="80" r="3.5" fill="#FFF"></circle></g><circle cx="50" cy="50" r="48" stroke="#065A82" stroke-width="1.5" fill="none"></circle></svg></div>
+            <div class="home-hero__text">
+              <p class="home-hero__greeting" id="homeGreeting">中午好！吃饱了来看看政策，阿婆陪你</p>
+              <p class="home-hero__sub" id="homeSubGreeting">你的护理值又涨了，当前1280分，离兑换"居家护理服务"还差-80分</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 快捷统计 -->
+        <div class="home-stats">
+          <div class="home-stats__item">
+            <span class="home-stats__label">护理值</span>
+            <span class="home-stats__value" id="homePoints">1,280</span>
+          </div>
+          <div class="home-stats__divider"></div>
+          <div class="home-stats__item">
+            <span class="home-stats__label">认知阶段</span>
+            <span class="home-stats__value home-stats__value--accent" id="homeStage">理解期</span>
+          </div>
+          <div class="home-stats__divider"></div>
+          <div class="home-stats__item">
+            <span class="home-stats__label">账户</span>
+            <span class="home-stats__value home-stats__value--badge" id="homeAccount">授权</span>
+          </div>
+        </div>
+
+        <!-- 功能入口网格 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>服务入口</h3>
+          </div>
+          <div class="home-features" id="homeFeatures"><div class="home-features__item" onclick="app.openSubPage('education')"><div class="home-features__icon" style="background:#D97706"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 5a1 1 0 011-1h7v16H5a1 1 0 01-1-1V5zM13 4h6a1 1 0 011 1v14a1 1 0 01-1 1h-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M7 8h2M7 11h2M16 8h2M16 11h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">政策科普</div><div class="home-features__desc">多方言政策解读</div></div><div class="home-features__item" onclick="app.openSubPage('qa')"><div class="home-features__icon" style="background:#1C7293"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-3.5-.5L3 21l1.5-5.5A8.38 8.38 0 0112 3a8.38 8.38 0 019 8.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg></div><div class="home-features__name">AI问答</div><div class="home-features__desc">护阿婆在线解答</div></div><div class="home-features__item" onclick="app.openSubPage('points')"><div class="home-features__icon" style="background:#E8A838"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="13" rx="1" stroke="currentColor" stroke-width="1.8"></rect><path d="M3 12h18M12 8v13M12 8S8 8 8 5a2.5 2.5 0 015 0M12 8s4 0 4-3a2.5 2.5 0 00-4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">积分商城</div><div class="home-features__desc">护理值兑换</div></div><div class="home-features__item" onclick="app.openSubPage('recommendation')"><div class="home-features__icon" style="background:#065A82"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">保障测评</div><div class="home-features__desc">缺口评估推荐</div></div><div class="home-features__item" onclick="app.openSubPage('calculator')"><div class="home-features__icon" style="background:#C0392B"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.8"></rect><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M16 11h0M16 15h0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">成本测算</div><div class="home-features__desc">护理费用估算</div></div><div class="home-features__item" onclick="app.openSubPage('dashboard')"><div class="home-features__icon" style="background:#1A2744"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">数据看板</div><div class="home-features__desc">运营数据追踪</div></div></div>
+        </div>
+
+        <!-- 今日推荐 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>今日推荐</h3>
+            <span class="section__more" onclick="app.openSubPage('todayRecommend')">更多</span>
+          </div>
+          <div class="home-recommend" id="homeRecommend"><div class="home-recommend" onclick="app.openSubPage('todayRecommend')"><div class="home-recommend__badge">荐</div><div class="home-recommend__content"><div class="home-recommend__title">你的工资条上，有一笔叫长护险</div><div class="home-recommend__desc">阿婆帮你算算，每月交了多少，又能用回来多少</div><span class="home-recommend__points">+20 护理值</span></div></div></div>
+        </div>
+
+        <!-- 政策速递 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>政策速递</h3>
+          </div>
+          <div class="home-news" id="homeNews"><div class="home-news__item"><div class="home-news__dot"></div><div class="home-news__content"><div class="home-news__title">南宁市长护险委托经办服务管理办法正式施行</div><div class="home-news__meta"><span>2024-05-01</span><span>南宁市医保局</span></div></div></div><div class="home-news__item"><div class="home-news__dot"></div><div class="home-news__content"><div class="home-news__title">2026-2028年度长护险服务项目中标公告发布</div><div class="home-news__meta"><span>2026-01-06</span><span>广西科文招标</span></div></div></div><div class="home-news__item"><div class="home-news__dot"></div><div class="home-news__content"><div class="home-news__title">居家护理月最高支付限额提升至1850元</div><div class="home-news__meta"><span>2025-12-15</span><span>南宁市医保局</span></div></div></div></div>
+        </div>
+
+        <!-- 底部留白 -->
+        <div style="height:20px"></div>
+      </div>
+
+      <!-- ===================== 科普页 ===================== -->
+      <div class="page" id="page-education" style="display:none">
+        <!-- 方言选择器 -->
+        <div class="edu-dialect">
+          <div class="edu-dialect__label">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3z" stroke="currentColor" stroke-width="1.8"></path><path d="M5 11a7 7 0 0014 0M12 18v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>
+            <span>方言选择</span>
+          </div>
+          <div class="edu-dialect__btns" id="eduDialectBtns"></div>
+        </div>
+
+        <!-- 认知阶段进度 -->
+        <div class="edu-stages" id="eduStages"></div>
+
+        <!-- 内容列表 -->
+        <div class="edu-content" id="eduContent"></div>
+
+        <!-- 短视频系列 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>护阿婆说长护险</h3>
+            <span class="section__tag">4期系列</span>
+          </div>
+          <div class="edu-videos" id="eduVideos"></div>
+        </div>
+
+        <div style="height:20px"></div>
+      </div>
+
+      <!-- ===================== AI问答页 ===================== -->
+      <div class="page page--qa" id="page-qa" style="display:none">
+        <div class="qa-header">
+          <div class="qa-header__avatar" id="huapoAvatarQA"></div>
+          <div class="qa-header__info">
+            <div class="qa-header__name">护阿婆</div>
+            <div class="qa-header__status">
+              <span class="qa-header__dot"></span>
+              <span id="qaDialectLabel">普通话在线</span>
+            </div>
+          </div>
+          <button class="qa-header__dialect-btn" id="qaDialectBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 5h10M9 3v2c0 4-2 7-5 9M5 9c0 4 3 7 7 7M12 12c2 0 4-2 4-4s-2-4-4-4M16 19l3-3-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+        </div>
+
+        <div class="qa-messages" id="qaMessages"></div>
+
+        <div class="qa-quick" id="qaQuick"></div>
+
+        <div class="qa-input-bar">
+          <input type="text" class="qa-input" id="qaInput" placeholder="向护阿婆提问..." maxlength="200">
+          <button class="qa-send" id="qaSendBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12l20-8-8 20-2-9-10-3z" fill="currentColor"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===================== 我的页 ===================== -->
+      <div class="page" id="page-profile" style="display:none">
+        <!-- 用户信息卡 -->
+        <div class="profile-hero" id="profileHero"></div>
+
+        <!-- 护理值概览 -->
+        <div class="profile-points" id="profilePoints"></div>
+
+        <!-- 用户画像标签 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>用户画像</h3>
+            <span class="section__tag">36维度标签</span>
+          </div>
+          <div class="profile-tags" id="profileTags"></div>
+        </div>
+
+        <!-- 功能菜单 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>我的服务</h3>
+          </div>
+          <div class="profile-menu" id="profileMenu"></div>
+        </div>
+
+        <!-- 合规信息 -->
+        <div class="profile-compliance">
+          <div class="profile-compliance__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#065A82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="12" cy="12" r="9" stroke="#065A82" stroke-width="1.5"></circle></svg>
+            <span>账户权限隔离已启用</span>
+          </div>
+          <div class="profile-compliance__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z" stroke="#065A82" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+            <span>数据国密加密存储</span>
+          </div>
+          <div class="profile-compliance__item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4zM4 9h16M9 4v16" stroke="#065A82" stroke-width="1.5"></path></svg>
+            <span>全程审计日志记录</span>
+          </div>
+        </div>
+
+        <div style="height:20px"></div>
+      </div>
+
+      <!-- ===================== 数据看板页 ===================== -->
+      <div class="page" id="page-dashboard" style="display:none">
+        <div class="dash-tabs" id="dashTabs"></div>
+        <div class="dash-content" id="dashContent"></div>
+        <div style="height:20px"></div>
+      </div>
+
+    </div><!-- /content-area -->
+
+    <!-- ========== 子页面容器（覆盖层） ========== -->
+    <div class="subpage" id="subPage" style="display:none">
+      <div class="subpage__inner" id="subPageInner"></div>
+    </div>
+
+    <!-- ========== TabBar ========== -->
+    <div class="tabbar" id="tabbar">
+      <div class="tabbar__item tabbar__item--active" data-page="home">
+        <svg class="tabbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10l9-7 9 7v10a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1V10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+        <span class="tabbar__text">首页</span>
+      </div>
+      <div class="tabbar__item" data-page="education">
+        <svg class="tabbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 5a1 1 0 011-1h7v16H5a1 1 0 01-1-1V5zM13 4h6a1 1 0 011 1v14a1 1 0 01-1 1h-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M7 8h2M7 11h2M16 8h2M16 11h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+        <span class="tabbar__text">科普</span>
+      </div>
+      <div class="tabbar__item tabbar__item--center" data-page="qa">
+        <div class="tabbar__center-btn">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-3.5-.5L3 21l1.5-5.5A8.38 8.38 0 0112 3a8.38 8.38 0 019 8.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M8 11h8M8 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+        </div>
+        <span class="tabbar__text tabbar__text--center">问答</span>
+      </div>
+      <div class="tabbar__item" data-page="profile">
+        <svg class="tabbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M4 21v-1a6 6 0 0112 0v1" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M16 3.5a4 4 0 010 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+        <span class="tabbar__text">我的</span>
+      </div>
+      <div class="tabbar__item" data-page="dashboard">
+        <svg class="tabbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span class="tabbar__text">看板</span>
+      </div>
+    </div>
+
+  </div><!-- /phone-screen -->
+</div><!-- /phone-frame -->
+
+<script>
+/**
+ * 智伴长护—长护价值银行 小程序 Mock 数据文件
+ * ============================================================
+ * 项目背景：AI赋能的广西中青年长护险前置培育与商业保障转化方案
+ * 数据来源：南宁市长护险政策文件及经办管理办法（附件二）
+ * 角色原型：护阿婆（韦秀兰），62岁，退休社保工作者，30年工龄
+ * ============================================================
+ */
+
+var MockData = {
+
+  // ============================================================
+  // 1. 用户信息 - 中青年授权账户，35岁
+  // ============================================================
+  userInfo: {
+    name: '韦小明',
+    age: 35,
+    gender: '男',
+    phone: '138****8888',
+    accountType: 'authorized', // 'inclusive' 普惠账户 | 'authorized' 中青年授权账户
+    authorized: true,
+    authorizedDate: '2026-06-15',
+    carePoints: 1280,
+    totalEarned: 3560,
+    totalSpent: 2280,
+    cognitiveStage: 'understanding', // ignorant | aware | understanding | concerned
+    district: '青秀区',
+    // 36个用户标签，分4大维度
+    tags: {
+      // ---------- 人口属性（9个子标签）----------
+      demographic: {
+        ageRange: { name: '年龄段', value: '30-39岁' },
+        gender: { name: '性别', value: '男' },
+        occupation: { name: '职业类型', value: '企业职员' },
+        incomeRange: { name: '月收入区间', value: '8000-12000元' },
+        familyStructure: { name: '家庭结构', value: '三代同堂（父母+配偶+子女）' },
+        insuranceType: { name: '参保类型', value: '职工医保' },
+        district: { name: '所在城区', value: '青秀区' },
+        householdType: { name: '户籍类型', value: '本地城镇户籍' },
+        education: { name: '教育程度', value: '本科' },
+      },
+      // ---------- 认知阶段（9个子标签）----------
+      cognitive: {
+        currentStage: { name: '当前认知阶段', value: '理解期' },
+        readingDuration: { name: '科普阅读时长', value: '累计187分钟' },
+        videoWatched: { name: '视频观看数', value: '12条' },
+        qaInteractions: { name: '问答交互次数', value: '23次' },
+        assessmentCompletion: { name: '测评完成度', value: '85%' },
+        policyAccuracy: { name: '政策理解正确率', value: '78%' },
+        carePointsLevel: { name: '护理值累积等级', value: '银卡（1000-2000分）' },
+        contentPreference: { name: '内容偏好类型', value: '视频+图文' },
+        activePeriod: { name: '活跃时段', value: '晚间20:00-22:00' },
+      },
+      // ---------- 保障缺口（9个子标签）----------
+      coverage: {
+        socialInsurance: { name: '已有社保保障', value: '职工医保+养老险+失业险' },
+        commercialInsurance: { name: '已有商业保险', value: '百万医疗险1份（年保费365元）' },
+        familyDisabilityRisk: { name: '家庭失能风险', value: '高危（父亲68岁脑梗后遗症）' },
+        parentCareBurden: { name: '父母赡养负担', value: '重（双方父母均需照护）' },
+        childRearingPressure: { name: '子女抚养压力', value: '中（1名学龄儿童）' },
+        disposableIncome: { name: '月度可支配收入', value: '4500元' },
+        coverageGapType: { name: '保障缺口类型', value: '长期护理+重疾保障缺口' },
+        productPreference: { name: '推荐产品偏好', value: '商业长护险+重疾险组合' },
+        conversionIntention: { name: '转化意向度', value: '中高（7/10）' },
+      },
+      // ---------- 行为偏好（9个子标签）----------
+      behavior: {
+        contentHabit: { name: '内容消费习惯', value: '短视频为主，图文为辅' },
+        dialectPreference: { name: '方言偏好', value: '桂柳话+南普' },
+        interactionFrequency: { name: '互动频率', value: '每日活跃（3-5次交互）' },
+        pointsPreference: { name: '积分使用偏好', value: '倾向兑换服务类权益' },
+        socialSharing: { name: '社交分享意愿', value: '高（已分享4次至家庭群）' },
+        familyLinkStatus: { name: '家庭关联状态', value: '已关联3位家庭成员' },
+        healthBehavior: { name: '健康行为习惯', value: '每周步行3次，未定期体检' },
+        infoChannel: { name: '信息获取渠道', value: '微信+小程序+短视频' },
+        serviceBooking: { name: '服务预约偏好', value: '线上预约+到店服务' },
+      },
+    },
+  },
+
+  // ============================================================
+  // 2. 政策知识库 - AI问答关键词匹配，22个Q&A对
+  // ============================================================
+  policyKnowledge: [
+    {
+      id: 'qa001',
+      keywords: ['什么是长护险', '长护险是什么', '第六险', '社保第六险'],
+      question: '什么是长期护理保险？为什么叫"第六险"？',
+      answer: '阿婆跟你讲哦，长期护理保险就是专门给那些生活不能自理的人提供护理保障的社会保险。它跟养老、医疗、失业、工伤、生育保险一起，被称为社保的"第六险"。简单讲，就是你年轻健康的时候缴点钱，等将来老了、病了、不能动了，就有专门的钱请人照顾你。南宁市从2020年就开始试点了，目前覆盖了175万职工医保参保人员。这个钱啊，该花的花，该省的省，长护险就是该花的那笔钱。',
+      source: '《国家医保局 财政部关于扩大长期护理保险制度试点的指导意见》（医保发〔2020〕37号）',
+      category: '基础认知',
+    },
+    {
+      id: 'qa002',
+      keywords: ['覆盖范围', '覆盖多少人', '参保人数', '175万', '582万'],
+      question: '南宁市长护险目前覆盖了多少人？',
+      answer: '阿婆跟你讲哦，南宁市目前长护险覆盖了175万职工医保参保人员，占全市医保总参保人口的大约23%。但是呢，还有582万城乡居民医保参保人员暂时还没有纳入长护险覆盖范围。放眼整个广西，60岁以上老年人口有756万，占比15.18%，老龄化压力不小啊。所以政府正在想办法把覆盖面扩大，让更多人享受到这个好政策。政策是好政策，就怕你不知道。',
+      source: '南宁市医疗保障局公开数据（2026年度）',
+      category: '基础认知',
+    },
+    {
+      id: 'qa003',
+      keywords: ['申请条件', '怎么申请', '申请资格', '谁能申请', '职工医保', '失能6个月'],
+      question: '什么人可以申请长护险待遇？',
+      answer: '阿婆跟你讲哦，申请长护险要同时满足三个条件：第一，必须是职工医保参保人员，而且要正常缴费；第二，失能状态要持续6个月以上，不是说今天摔倒了明天就能申请的；第三，要经过专业评估，达到规定的失能等级标准。你才35岁，现在不着急申请，但你要知道这个政策，将来家里老人需要的时候用得上。这个钱啊，该花的花，该省的省，但该知道的政策一定得知道。',
+      source: '《南宁市长护险委托经办服务管理办法》第三章 申请条件',
+      category: '办事指引',
+    },
+    {
+      id: 'qa004',
+      keywords: ['居家护理', '待遇标准', '1850', '生活照护', '医疗护理', '支持性器具'],
+      question: '居家护理能报销多少？具体怎么算？',
+      answer: '阿婆跟你讲哦，居家护理月最高支付限额是1850元一个月，分三块来用。第一块是生活照护，每月不少于8次，每周至少2次，每次不少于90分钟，这块是737.5元；第二块是医疗护理，每月4到6次，每次30到60分钟，这块是750元；第三块是支持性器具，比如轮椅、护理床这些辅助器具的配置，这块是362.5元。你看，加起来正好1850元。这个钱不是直接给你现金，而是由护理机构提供服务后跟医保结算。政策是好政策，就怕你不知道。',
+      source: '南宁市医保局《居家护理月最高支付限额提升至1850元的通知》（2025-12-15）',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa005',
+      keywords: ['机构护理', '床日付费', '66元', '62元', '57元', '重度失能'],
+      question: '住养老院做机构护理，长护险能报多少？',
+      answer: '阿婆跟你讲哦，机构护理是按床日付费的，就是按天算。根据失能等级不同，报销标准也不一样：重度失能Ⅲ级是66元一天，重度失能Ⅱ级是62元一天，重度失能Ⅰ级是57元一天。算下来一个月差不多1700到2000块钱的补贴。这个钱是直接给定点机构的，不用你自己先垫再报销。阿婆算给你听，Ⅲ级一个月30天就是1980元，Ⅱ级是1860元，Ⅰ级是1710元。这个钱啊，该花的花，该省的省，有长护险补贴比全自费省多了。',
+      source: '《南宁市长护险委托经办服务管理办法》第四章 待遇标准',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa006',
+      keywords: ['长护险和医保区别', '医保区别', '有什么不同', '区别'],
+      question: '长护险和医保有什么区别？',
+      answer: '阿婆跟你讲哦，医保是管你看病吃药住院的，是治病的；长护险是管你生活护理的，是照护的。医保报销的是医药费、检查费、手术费这些，长护险报销的是护理费、照护费。打个比方，你住院开刀，医保给你报销手术费；等你出院回家了不能自理，需要请人护理，这时候就是长护险管了。两个保险管的不一样，不冲突也不重复。你35岁现在交医保的时候，其实里面已经包含了一部分长护险的筹资。政策是好政策，就怕你不知道。',
+      source: '《国家医保局 财政部关于扩大长期护理保险制度试点的指导意见》医保发〔2020〕37号',
+      category: '基础认知',
+    },
+    {
+      id: 'qa007',
+      keywords: ['失能评估', '评估流程', '怎么评估', '评估标准', '评估机构'],
+      question: '失能等级评估是怎么做的？流程是什么？',
+      answer: '阿婆跟你讲哦，失能评估分几步走。第一步，申请人提交申请材料；第二步，经办机构受理后安排评估人员上门评估；第三步，评估人员按照国家标准对日常生活活动能力进行评分，包括吃饭、穿衣、洗澡、如厕、移动、控制大小便这6项；第四步，评估结果出来后会公示，没异议就算正式生效了。南宁目前累计已经做了超过2.71万人的失能等级评估了。评估是不收费的，你放心申请。这个钱啊，该花的花，该省的省，评估这关不花钱。',
+      source: '《长期护理保险失能等级评估标准（试行）》及南宁市医保局实施办法',
+      category: '办事指引',
+    },
+    {
+      id: 'qa008',
+      keywords: ['筹资标准', '缴费标准', '怎么缴费', '保费多少', '筹资'],
+      question: '长护险怎么缴费？要交多少钱？',
+      answer: '阿婆跟你讲哦，南宁市长护险的筹资方式是从职工医保基金里面划转的，不需要你额外单独缴费。具体来说，用人单位和个人各按一定比例从职工医保缴费基数中划转。目前政策是单位缴费部分按0.15%的比例划入长护险基金，个人缴费部分按0.05%的比例划入。打个比方，你工资8000块，单位大概每月划12块钱，你自己划4块钱到长护险基金里面。你看，其实每个月就几块钱的事，但将来需要的时候能省大笔开支。政策是好政策，就怕你不知道。',
+      source: '《南宁市长护险委托经办服务管理办法》第二章 筹资标准',
+      category: '基础认知',
+    },
+    {
+      id: 'qa009',
+      keywords: ['承办机构', '经办机构', '人保', '泰康', '太平', '中国人寿', '中标'],
+      question: '长护险由哪些机构负责经办？',
+      answer: '阿婆跟你讲哦，南宁市通过公开招标确定了4家商业保险公司来经办长护险。分标A是人保财险广西分公司，负责西乡塘区和良庆区，覆盖约223万人；分标B是泰康人寿，负责江南区、横州市和隆安县，约221万人；分标C是太平人寿，负责青秀区、邕宁区、马山县和上林县，约219万人；分标D是中国人寿广西分公司，负责兴宁区、武鸣区和宾阳县，约210万人。你在青秀区，对应的经办机构就是太平人寿。这个钱啊，该花的花，该省的省，政府把活交给保险公司干，效率更高。',
+      source: '《2026-2028年度长护险服务项目中标公告》（2026-01-06，广西科文招标）',
+      category: '办事指引',
+    },
+    {
+      id: 'qa010',
+      keywords: ['经办服务费', '5%', '服务费标准', '经办费用'],
+      question: '经办服务费是什么标准？',
+      answer: '阿婆跟你讲哦，经办服务费就是政府付给这些保险公司帮忙管理长护险的钱。按照规定，经办服务费不高于长护险基金年度筹资总额的5%。这个钱是从基金里面出的，不需要参保人另外掏钱。政府为啥要花钱请保险公司来干？因为保险公司有专业的理赔、风控和服务网络，比自己从头建一套体系要省钱省力得多。这个钱啊，该花的花，该省的省，5%以内的经办费是合理成本，关键是把服务做好。',
+      source: '《南宁市长护险委托经办服务管理办法》第六章 经办服务费',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa011',
+      keywords: ['扩面计划', '城乡居民', '582万', '扩大覆盖', '什么时候纳入'],
+      question: '城乡居民什么时候能纳入长护险？',
+      answer: '阿婆跟你讲哦，目前南宁长护险只覆盖了175万职工医保参保人员，还有582万城乡居民暂时没纳入。广西60岁以上老年人口有756万，占比15.18%，这么大的群体都等着呢。政府正在分步推进扩面计划，先在职工医保里把制度跑通跑稳，下一步再逐步向城乡居民扩展。这个过程需要时间，因为城乡居民的筹资渠道和标准跟职工不一样，需要单独设计。政策是好政策，就怕你不知道，知道了才能一起推动它快点扩面。',
+      source: '南宁市医疗保障局扩面工作规划（2026-2028年度）',
+      category: '基础认知',
+    },
+    {
+      id: 'qa012',
+      keywords: ['护理人员', '持证', '1.52万', '护工', '护理服务人员'],
+      question: '长护险的护理人员都是什么资质？',
+      answer: '阿婆跟你讲哦，南宁市目前有持证护理服务人员1.52万人，全部100%持证上岗，一个都没有漏网的。这些护理人员都经过了专业培训，持有了护理员职业资格证书或者相关培训合格证。你去机构或者请居家护理，给你服务的都是这些持证人员，不用担心找来的是没经过培训的生手。阿婆当年在医保所干的时候，就知道这个持证上岗有多重要，关系到老人家的安全和护理质量。这个钱啊，该花的花，该省的省，但护理质量这关不能省。',
+      source: '南宁市医疗保障局护理服务人员管理数据（2026年度）',
+      category: '基础认知',
+    },
+    {
+      id: 'qa013',
+      keywords: ['定点机构', '定点护理机构', '94家', '查询', '机构查询', '辅助器具'],
+      question: '怎么查询定点护理服务机构？',
+      answer: '阿婆跟你讲哦，南宁市目前有94家定点护理服务机构，还有2家辅助器具服务机构。你可以在小程序里面直接查询，按照城区筛选，看看你家附近有哪些定点机构。这些机构都是经过医保部门审核认证的，服务质量和收费都有标准，你放心选。选好机构以后，直接跟机构签服务协议，然后就可以享受长护险待遇了。如果你在青秀区，太平人寿那边管的，可以打他们客服电话问具体机构名单。政策是好政策，就怕你不知道。',
+      source: '南宁市医疗保障局定点机构名录（2026年度更新）',
+      category: '办事指引',
+    },
+    {
+      id: 'qa014',
+      keywords: ['经济困难', '补贴', '200元', '低保', '70岁', '老人补贴'],
+      question: '经济困难的失能老人有什么补贴政策？',
+      answer: '阿婆跟你讲哦，对于70周岁及以上的低保重度失能老人，南宁市还有一笔额外的经济困难失能老人护理补贴，标准是每人每月200元。这个补贴跟长护险待遇是不冲突的，可以叠加享受。也就是说，符合条件的老人既可以用长护险1850元的居家护理待遇，又能再拿200元的补贴。你要家里有符合条件的长辈，一定要去社区或者民政部门申请。这个钱啊，该花的花，该省的省，但该拿的补贴一定要拿到手。',
+      source: '南宁市民政局《经济困难失能老人护理补贴实施办法》',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa015',
+      keywords: ['评估机构', '谁来评估', '评估机构有哪些'],
+      question: '失能评估由什么机构来做？',
+      answer: '阿婆跟你讲哦，失能等级评估是由经办机构委托的第三方专业评估机构来做的，不是医院也不是保险公司自己评。评估人员都是经过专业培训的，上门评估的时候会带证件，按照国家统一标准逐项打分。南宁市累计已经有超过2.71万人接受过失能等级评估服务了。评估结果是严格保密的，你不用担心隐私泄露。评估如果对结果有异议，还可以申请复评。这个钱啊，该花的花，该省的省，评估环节全程不收费用。',
+      source: '《南宁市长护险委托经办服务管理办法》第五章 失能评估',
+      category: '办事指引',
+    },
+    {
+      id: 'qa016',
+      keywords: ['护理服务清单', '服务项目', '服务内容', '护理项目'],
+      question: '长护险护理服务具体包括哪些项目？',
+      answer: '阿婆跟你讲哦，长护险护理服务清单分三大类。生活照护类包括洗脸、洗头、口腔清洁、擦浴、会阴护理、翻身扣背、压疮预防、进食护理、排泄护理这些日常照护项目。医疗护理类包括压疮护理、鼻饲护理、造口护理、导尿管护理、灌肠、血糖监测、生命体征监测、康复训练指导等。支持性器具类包括轮椅、助行器、护理床、防褥疮气垫床等辅助器具的配置和租赁。你看，从头到脚都管了，不是光给钱就完事的。政策是好政策，就怕你不知道。',
+      source: '《南宁市长护险护理服务项目清单》（2026版）',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa017',
+      keywords: ['适老化', '辅助器具', '器具补贴', '362.5', '轮椅', '护理床'],
+      question: '适老化产品和辅助器具怎么补贴？',
+      answer: '阿婆跟你讲哦，长护险居家护理里面有一块叫支持性器具类，每月有362.5元的额度。这些钱可以用来配置轮椅、助行器、护理床、防褥疮气垫床、坐便椅等辅助器具。有两种方式：一种是直接购买，按目录价格报销；另一种是租赁，按月付租金。一般建议先租后买，用着合适了再买。南宁市目前有2家辅助器具服务机构，你可以在小程序里查到他们的地址和联系方式。这个钱啊，该花的花，该省的省，器具选对了能大大减轻护理负担。',
+      source: '《南宁市长护险辅助器具配置管理办法》及器具目录',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa018',
+      keywords: ['惠邕保', '商业保险', '保障责任', '长护保障'],
+      question: '惠邕保里的长护保障责任是什么？',
+      answer: '阿婆跟你讲哦，惠邕保是南宁市的城市定制型商业医疗保险，里面包含了长期护理保障责任。它的特点是：保费低，一年几百块，不像纯商业长护险那么贵；参保门槛低，不限健康状况，有职工医保或者居民医保都能买；保障责任覆盖了重度失能状态下的护理费用补偿。如果你觉得长护险的待遇还不够覆盖全部护理费用，可以考虑惠邕保做一个补充。但要注意，惠邕保和长护险是两套体系，理赔要分开申请。这个钱啊，该花的花，该省的省，多一层保障多一份安心。',
+      source: '南宁市医疗保障局指导，惠邕保产品条款（2026版）',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa019',
+      keywords: ['申请材料', '需要什么材料', '准备材料', '申请文件'],
+      question: '申请长护险待遇需要准备哪些材料？',
+      answer: '阿婆跟你讲哦，申请长护险待遇需要准备这几样东西：第一，身份证和医保卡原件及复印件；第二，近期的病历资料，包括住院病历、诊断证明、出院小结这些，证明你的失能跟什么病有关；第三，失能状态持续6个月以上的证明材料，比如就诊记录、护理记录等；第四，填写完整的《长期护理保险待遇申请表》；第五，如果有委托代理人，还要带代理人的身份证和委托书。材料齐全了经办机构一般5个工作日内就会受理。这个钱啊，该花的花，该省的省，材料备齐了申请就快。',
+      source: '《南宁市长护险委托经办服务管理办法》第三章 申请材料',
+      category: '办事指引',
+    },
+    {
+      id: 'qa020',
+      keywords: ['护理值', '积分', '怎么用', '价值银行', '护理值是什么'],
+      question: '护理值是什么？怎么获取和使用？',
+      answer: '阿婆跟你讲哦，护理值就是我们这个"长护价值银行"小程序里的积分系统。你通过学政策、看视频、做问答、打卡健康行为这些方式来赚护理值。比如学一个政策可以得20分，答对一道题得15分，看一条视频得10分。攒够了护理值可以兑换各种权益，比如500分可以抵扣商业险保费，800分可以体验短期护理服务，1200分可以兑换居家护理服务。这个护理值不光是积分，它记录的是你对长护险的认知成长，将来申请长护险待遇的时候也是个参考。政策是好政策，就怕你不知道，知道了就来赚护理值吧。',
+      source: '智伴长护—长护价值银行小程序产品说明',
+      category: '基础认知',
+    },
+    {
+      id: 'qa021',
+      keywords: ['知晓率', '38.92', '80%', '宣传', '提升'],
+      question: '南宁市长护险知晓率是多少？有什么提升计划？',
+      answer: '阿婆跟你讲哦，说实话这个数字不太好看——南宁市目前长护险政策知晓率只有38.92%，也就是说十个人里面有六个不知道长护险是啥。政府的目标是把这个知晓率提升到80%以上。怎么提升呢？就是靠我们这种小程序，用方言视频、护阿婆讲解、趣味问答这些接地气的方式，让大家听得懂、记得住、用得上。阿婆当年在巴马医保所干政策宣传30年，最知道老百姓需要什么样的宣传——不是念文件，是说人话。这个钱啊，该花的花，该省的省，宣传的钱该花就得花。',
+      source: '南宁市医疗保障局长护险知晓率调查报告（2026年一季度）',
+      category: '基础认知',
+    },
+    {
+      id: 'qa022',
+      keywords: ['商业长护险', '商业保险推荐', '保险产品', '百万医疗', '重疾险'],
+      question: '除了社保长护险，还需要买商业保险吗？',
+      answer: '阿婆跟你讲哦，社保长护险是基础保障，但它每月最多1850元的居家护理额度，如果你家老人需要全天候护理，这点钱可能不够。南宁本地请一个全职护工一个月至少4500块，机构床位一个月3500块左右。所以如果经济条件允许，建议补充商业保险。百万医疗险一年三百多块，管大病住院费用；重疾险一次性赔付，得了重病给一笔钱自由支配；商业长护险专门管长期护理费用，跟社保长护险是互补的。你看你的保障缺口在哪，缺啥补啥。这个钱啊，该花的花，该省的省，但保障的钱该花就得花。',
+      source: '智伴长护—长护价值银行保障测评模块',
+      category: '待遇解读',
+    },
+  ],
+
+  // ============================================================
+  // 3. 科普内容 - 三级内容体系
+  // ============================================================
+  educationContent: {
+    // ---------- 基础认知 ----------
+    basic: [
+      {
+        id: 'b001',
+        title: '一文看懂：什么是长期护理保险',
+        desc: '从"第六险"说起，讲清楚长护险的前世今生',
+        content: '长期护理保险被称为社保"第六险"，是国家为应对人口老龄化建立的专项社会保险制度。南宁市于2020年启动试点，目前覆盖175万职工医保参保人员。长护险的核心功能是为失能人员提供基本护理保障，减轻家庭照护负担。广西60岁以上老年人口达756万，占比15.18%，长护险的重要性日益凸显。',
+        readingTime: 5,
+        points: 20,
+      },
+      {
+        id: 'b002',
+        title: '长护险的钱从哪来？筹资标准详解',
+        desc: '用人单位和个人各缴多少？算给你看',
+        content: '南宁市长护险基金从职工医保基金中划转，单位按0.15%、个人按0.05%的比例从医保缴费基数中划入。以月薪8000元为例，单位每月划转12元，个人每月划转4元，合计16元/月。基金独立核算，专款专用。经办服务费不高于基金筹资总额的5%，用于支付中标保险公司的经办管理成本。',
+        readingTime: 4,
+        points: 20,
+      },
+      {
+        id: 'b003',
+        title: '缴费模式：你不需要额外掏钱',
+        desc: '长护险费从医保里自动划扣，无需单独缴费',
+        content: '与商业保险不同，长护险不需要参保人额外缴费。只要你是职工医保参保人，长护险费就会从你每月的医保缴费中自动划转。你可以在医保缴费记录中查看长护险划转明细。城乡居民医保参保人员目前暂未纳入覆盖范围，待扩面计划推进后另行安排。',
+        readingTime: 3,
+        points: 15,
+      },
+    ],
+    // ---------- 待遇解读 ----------
+    benefit: [
+      {
+        id: 'be001',
+        title: '居家护理1850元/月，到底怎么花？',
+        desc: '生活照护、医疗护理、支持性器具三块明细全解析',
+        content: '居家护理月最高支付限额1850元，分三部分：生活照护类737.5元，每月不少于8次、每次不少于90分钟；医疗护理类750元，每月4-6次、每次30-60分钟；支持性器具类362.5元，用于轮椅、护理床等辅助器具配置。三部分可组合使用，当月额度当月有效。护理服务由定点机构提供，费用由医保基金与机构直接结算。',
+        readingTime: 6,
+        points: 25,
+      },
+      {
+        id: 'be002',
+        title: '机构护理按床日付费，三个等级差多少？',
+        desc: '重度失能Ⅰ级到Ⅲ级，每天报销金额一览',
+        content: '机构护理采用按床日付费方式：重度失能Ⅲ级66元/天，月均约1980元；重度失能Ⅱ级62元/天，月均约1860元；重度失能Ⅰ级57元/天，月均约1710元。费用直接结算给定点机构，参保人只需支付个人承担部分。相比市场均价（机构床位月费约3500元），长护险可覆盖约50%-57%的费用。',
+        readingTime: 5,
+        points: 20,
+      },
+      {
+        id: 'be003',
+        title: '失能评估标准：6项日常生活活动能力打分',
+        desc: '吃饭、穿衣、洗澡、如厕、移动、控制大小便',
+        content: '失能等级评估依据《长期护理保险失能等级评估标准（试行）》，对6项日常生活活动能力进行评分：进食、穿衣、洗浴、如厕、床椅转移、控制大小便。每项根据完成程度评分，综合得分确定失能等级（轻度、中度、重度Ⅰ-Ⅲ级）。南宁市累计已完成超2.71万人次的失能评估服务。评估全程免费，结果不满意可申请复评。',
+        readingTime: 5,
+        points: 20,
+      },
+    ],
+    // ---------- 办事指引 ----------
+    guide: [
+      {
+        id: 'g001',
+        title: '长护险申请条件：三个必须同时满足',
+        desc: '职工医保参保+失持续6个月+达到评估标准',
+        content: '申请长护险待遇需同时满足：1.职工医保正常参保缴费；2.失能状态持续6个月以上（需提供病历等佐证材料）；3.经评估达到规定的失能等级标准。注意：城乡居民医保参保人员目前暂不在覆盖范围内。申请不收费，评估不收费。已有2.71万余人通过评估享受待遇。',
+        readingTime: 4,
+        points: 15,
+      },
+      {
+        id: 'g002',
+        title: '从申请到享受待遇：完整流程图解',
+        desc: '提交申请→受理审核→上门评估→公示→签订协议→享受待遇',
+        content: '完整流程为：第一步提交申请材料（身份证、病历、申请表等）至经办机构；第二步经办机构5个工作日内审核受理；第三步安排第三方评估机构上门评估；第四步评估结果公示7天；第五步公示无异议后与定点机构签订服务协议；第六步正式享受长护险待遇。全流程约15-20个工作日。',
+        readingTime: 6,
+        points: 20,
+      },
+      {
+        id: 'g003',
+        title: '定点机构查询：94家护理机构+2家器具机构',
+        desc: '按城区查找你身边的定点护理服务机构',
+        content: '南宁市现有94家定点护理服务机构和2家辅助器具服务机构。按区域分布：青秀区、邕宁区、马山县、上林县由太平人寿经办；西乡塘区、良庆区由人保财险经办；江南区、横州市、隆安县由泰康人寿经办；兴宁区、武鸣区、宾阳县由中国人寿经办。你可在小程序内按城区筛选查看机构列表、地址、联系方式和可提供服务项目。',
+        readingTime: 4,
+        points: 15,
+      },
+    ],
+  },
+
+  // ============================================================
+  // 4. 四阶段短视频数据（对应护阿婆脚本）
+  // ============================================================
+  videos: [
+    {
+      id: 'v001',
+      stageFrom: 'ignorant',
+      stageTo: 'aware',
+      title: '你每个月交的钱里面，有一笔叫长护险',
+      desc: '护阿婆从工资条说起，告诉你长护险是什么',
+      duration: 180,
+      coverImage: '/images/video1_cover.png',
+      script: '阿婆跟你讲哦，你每个月工资条上扣的医保，里面有一笔叫长护险，你晓不晓得？南宁175万职工医保参保人都在交，但十个人里头有六个不知道这个钱是干嘛的。阿婆今天跟你讲清楚……',
+      points: 10,
+      watched: false,
+    },
+    {
+      id: 'v002',
+      stageFrom: 'aware',
+      stageTo: 'understanding',
+      title: '长护险到底管什么？不管什么？',
+      desc: '生活照护、医疗护理、辅助器具，三大块讲明白',
+      duration: 210,
+      coverImage: '/images/video2_cover.png',
+      script: '阿婆跟你讲哦，上次讲了长护险是啥，今天讲讲它管啥。居家护理一个月最多1850块，生活照护8次以上、每次90分钟，医疗护理4到6次，还能配轮椅护理床。住机构的话按天算，66块、62块、57块三个档。不管啥呢？不管看病吃药，那是医保的事……',
+      points: 10,
+      watched: false,
+    },
+    {
+      id: 'v003',
+      stageFrom: 'understanding',
+      stageTo: 'concerned',
+      title: '什么样的人能申请长护险？',
+      desc: '三个条件一个不能少，阿婆帮你对号入座',
+      duration: 195,
+      coverImage: '/images/video3_cover.png',
+      script: '阿婆跟你讲哦，申请长护险要满足三个条件。第一，你是职工医保参保人，正常缴费的；第二，失能要持续6个月以上；第三，要过评估。你家里有老人脑梗后半身不遂的、老年痴呆不能自理的，都可以去申请评估。南宁已经2.71万人做过了，评估不收钱的……',
+      points: 10,
+      watched: false,
+    },
+    {
+      id: 'v004',
+      stageFrom: 'concerned',
+      stageTo: 'action',
+      title: '你的长护险，还能这样用',
+      desc: '从知道到行动，阿婆手把手教你申请',
+      duration: 240,
+      coverImage: '/images/video4_cover.png',
+      script: '阿婆跟你讲哦，前面三期你都看完了，现在该行动了。你在青秀区，找太平人寿经办。带上身份证、医保卡、病历资料，填一张申请表，5天就能受理。评估人员上门来看你家里人情况，打个分，7天公示完就能签协议享受待遇了。1850块一个月的护理，这个钱该花的花，该省的省，该拿的一定要拿到……',
+      points: 10,
+      watched: false,
+    },
+  ],
+
+  // ============================================================
+  // 5. 方言内容样本 - 4种方言科普片段
+  // ============================================================
+  dialectSamples: {
+    mandarin: '各位街坊邻居大家好，我是护阿婆韦秀兰。今天跟大家讲一讲长护险这个好政策。你每个月交的医保里面，有一笔就是长护险的钱。将来你要是失能了、不能自理了，这笔钱就能用来请人照顾你。居家护理一个月最高1850块，机构护理按天算，一天57到66块不等。这个政策好不好？好得很！就怕你不知道。',
+    guiliu: '阿婆跟你讲哦，这个长护险嘛，就是我们柳州人讲的"老来福"。你在邕江边、在南湖边上散步的时候，看到那些坐在轮椅上的老人家，你想想，要是将来自己也走不动了，哪个来照顾你？长护险就是帮你解决这个问题的。一个月最多1850块护理费，请人来家头帮你洗脸洗澡、翻身拍背。这个钱嘛，该花的花，该省的省，但是这个保险你要晓得。',
+    baihua: '阿婆同你讲啊，长护险呢，就系你每个月医保里面已经扣左嘅一笔钱。你识唔晓得？南宁175万职工都在交，但好多人唔知呢笔钱系用来做咩嘅。阿婆话你知，将来你老左唔识得自己照顾自己嘅时候，呢笔钱就可以请人来帮你。居家护理一个月最多1850蚊，住机构嘅话一天补贴57到66蚊。你话抵唔抵？好抵嘎！政策系好政策，就怕你唔知。',
+    zhuang: '阿婆跟你讲哦，这个长护险嘛，在我们壮乡也是一样的。巴马的长寿老人多，但是老了不能动了也要人照顾。你每个月医保里头扣的那点钱，有一笔就是长护险。将来你要是失能了，居家护理一个月最多1850块，可以请人来家里帮忙。我们壮话讲"布洛陀保佑"，但是光靠保佑不够，还得靠政策。这个钱该花的花，该省的省，政策是好政策，就怕你不知道。',
+  },
+
+  // ============================================================
+  // 6. 保险产品 - 3个产品，含三维评分
+  // ============================================================
+  insuranceProducts: [
+    {
+      id: 'ins001',
+      name: '惠邕保·长护版',
+      type: '商业长护险',
+      company: '太平人寿',
+      premium: 365,
+      premiumUnit: '元/年',
+      coverage: 100000,
+      coverageUnit: '元',
+      scores: {
+        coverage: 72,
+        rate: 88,
+        claims: 85,
+      },
+      features: [
+        '重度失能状态每月给付护理金3000元',
+        '保证续保至80周岁',
+        '不限健康状况，带病可投保',
+        '与社保长护险叠加给付',
+      ],
+      exclusions: [
+        '投保前已患约定的失能相关疾病',
+        '战争、军事冲突导致的失能',
+        '先天性残疾及精神疾病导致的失能',
+      ],
+      traceId: 'TRC-2026-HP-001',
+      commissionRate: 0,
+    },
+    {
+      id: 'ins002',
+      name: '百万医疗险·2026旗舰版',
+      type: '百万医疗险',
+      company: '泰康人寿',
+      premium: 328,
+      premiumUnit: '元/年',
+      coverage: 3000000,
+      coverageUnit: '元',
+      scores: {
+        coverage: 95,
+        rate: 82,
+        claims: 78,
+      },
+      features: [
+        '一般医疗年报销额度300万',
+        '重大疾病医疗年报销额度600万',
+        '含质子重离子治疗费用',
+        '住院前后门急诊费用覆盖',
+        '院外特药100种直付',
+      ],
+      exclusions: [
+        '投保前已确诊的既往症',
+        '美容整形、矫形治疗费用',
+        '职业运动及高风险运动伤害',
+      ],
+      traceId: 'TRC-2026-MM-002',
+      commissionRate: 0,
+    },
+    {
+      id: 'ins003',
+      name: '康健一生·重大疾病保险',
+      type: '重疾险',
+      company: '中国人寿广西分公司',
+      premium: 4800,
+      premiumUnit: '元/年',
+      coverage: 500000,
+      coverageUnit: '元',
+      scores: {
+        coverage: 80,
+        rate: 75,
+        claims: 90,
+      },
+      features: [
+        '覆盖120种重大疾病',
+        '确诊即一次性赔付50万',
+        '含中症3次赔付，每次30万',
+        '含轻症5次赔付，每次15万',
+        '豁免后续保费（确诊轻症/中症后）',
+      ],
+      exclusions: [
+        '投保前已确诊的重大疾病',
+        '遗传性疾病、先天性畸形',
+        '酒驾、吸毒导致的重大疾病',
+      ],
+      traceId: 'TRC-2026-CI-003',
+      commissionRate: 0,
+    },
+  ],
+
+  // ============================================================
+  // 7. 积分任务
+  // ============================================================
+  pointsTasks: [
+    {
+      id: 'task001',
+      name: '政策学习',
+      category: 'policy',
+      points: 20,
+      dailyLimit: 3,
+      completed: true,
+      desc: '阅读一篇政策科普文章并完成阅读确认',
+    },
+    {
+      id: 'task002',
+      name: '知识问答',
+      category: 'policy',
+      points: 15,
+      dailyLimit: 5,
+      completed: false,
+      desc: '回答长护险政策相关问题，答对得分',
+    },
+    {
+      id: 'task003',
+      name: '健康打卡',
+      category: 'health',
+      points: 10,
+      dailyLimit: 1,
+      completed: true,
+      desc: '每日记录健康行为（步行、运动、睡眠等）',
+    },
+    {
+      id: 'task004',
+      name: '家庭关联',
+      category: 'policy',
+      points: 50,
+      dailyLimit: 1,
+      completed: true,
+      desc: '关联家庭成员，共同关注长护险',
+    },
+    {
+      id: 'task005',
+      name: '方言学习',
+      category: 'policy',
+      points: 30,
+      dailyLimit: 1,
+      completed: false,
+      desc: '学习一种方言版长护险科普内容并完成测验',
+    },
+    {
+      id: 'task006',
+      name: '视频观看',
+      category: 'policy',
+      points: 10,
+      dailyLimit: 4,
+      completed: true,
+      desc: '观看护阿婆科普短视频',
+    },
+    {
+      id: 'task007',
+      name: '成本测算',
+      category: 'health',
+      points: 25,
+      dailyLimit: 1,
+      completed: false,
+      desc: '完成个人护理成本测算，了解保障缺口',
+    },
+  ],
+
+  // ============================================================
+  // 8. 积分兑换权益
+  // ============================================================
+  pointsRewards: [
+    {
+      id: 'rw001',
+      name: '商业险保费抵扣券',
+      cost: 500,
+      category: 'insurance',
+      desc: '抵扣合作保险公司商业保险保费200元',
+    },
+    {
+      id: 'rw002',
+      name: '短期护理体验服务',
+      cost: 800,
+      category: 'service',
+      desc: '定点机构提供3天居家护理体验服务',
+    },
+    {
+      id: 'rw003',
+      name: '居家护理服务券',
+      cost: 1200,
+      category: 'service',
+      desc: '兑换定点机构1次专业居家护理服务（含生活照护+健康评估）',
+    },
+    {
+      id: 'rw004',
+      name: '健康体检套餐',
+      cost: 600,
+      category: 'health',
+      desc: '合作医院基础健康体检套餐（含血常规、肝肾功能、心电图等）',
+    },
+    {
+      id: 'rw005',
+      name: '中医理疗体验',
+      cost: 400,
+      category: 'health',
+      desc: '合作中医馆2次理疗体验（含推拿、艾灸或拔罐）',
+    },
+    {
+      id: 'rw006',
+      name: '护阿婆周边礼盒',
+      cost: 300,
+      category: 'merchandise',
+      desc: '护阿婆IP周边礼盒（含保温杯、帆布袋、政策手册）',
+    },
+  ],
+
+  // ============================================================
+  // 9. 积分记录 - 最近10条
+  // ============================================================
+  pointsHistory: [
+    { date: '2026-08-25', type: 'earn', desc: '观看视频《长护险到底管什么？不管什么？》', amount: 10, balance: 1280 },
+    { date: '2026-08-25', type: 'earn', desc: '健康打卡', amount: 10, balance: 1270 },
+    { date: '2026-08-24', type: 'earn', desc: '政策学习《居家护理1850元/月详解》', amount: 20, balance: 1260 },
+    { date: '2026-08-24', type: 'earn', desc: '知识问答答对5题', amount: 15, balance: 1240 },
+    { date: '2026-08-23', type: 'spend', desc: '兑换护阿婆周边礼盒', amount: -300, balance: 1225 },
+    { date: '2026-08-23', type: 'earn', desc: '方言学习（桂柳话版）', amount: 30, balance: 1525 },
+    { date: '2026-08-22', type: 'transfer', desc: '护理值转入家庭账户（父亲）', amount: -200, balance: 1495 },
+    { date: '2026-08-22', type: 'earn', desc: '视频观看《你每个月交的钱里面，有一笔叫长护险》', amount: 10, balance: 1695 },
+    { date: '2026-08-21', type: 'earn', desc: '家庭关联奖励', amount: 50, balance: 1685 },
+    { date: '2026-08-21', type: 'earn', desc: '政策学习《一文看懂：什么是长期护理保险》', amount: 20, balance: 1635 },
+  ],
+
+  // ============================================================
+  // 10. 看板数据
+  // ============================================================
+  dashboardData: {
+    gov: {
+      totalUsers: 32500,
+      awarenessRate: 38.92,
+      targetAwarenessRate: 80,
+      countyCoverage: 32,
+      contentCompletionRate: 68,
+      regionDistribution: [
+        { region: '青秀区', users: 8200, awareness: 72 },
+        { region: '兴宁区', users: 5100, awareness: 65 },
+        { region: '西乡塘区', users: 6800, awareness: 58 },
+        { region: '江南区', users: 4200, awareness: 45 },
+        { region: '良庆区', users: 3100, awareness: 42 },
+        { region: '邕宁区', users: 2800, awareness: 38 },
+        { region: '武鸣区', users: 2300, awareness: 35 },
+      ],
+      monthlyTrend: [
+        { month: '3月', users: 5000, awareness: 38.92 },
+        { month: '4月', users: 12000, awareness: 45 },
+        { month: '5月', users: 18500, awareness: 52 },
+        { month: '6月', users: 25000, awareness: 63 },
+        { month: '7月', users: 32500, awareness: 71 },
+      ],
+    },
+    insurance: {
+      totalViews: 45600,
+      leads: 3240,
+      applications: 892,
+      conversionRate: 9.8,
+      funnel: [
+        { stage: '科普浏览', count: 45600, rate: 100 },
+        { stage: '留资咨询', count: 3240, rate: 7.1 },
+        { stage: '保障评估', count: 1850, rate: 4.1 },
+        { stage: '方案推荐', count: 1200, rate: 2.6 },
+        { stage: '投保转化', count: 892, rate: 1.96 },
+      ],
+      productDistribution: [
+        { name: '百万医疗险', count: 420 },
+        { name: '重疾险', count: 318 },
+        { name: '商业长护险', count: 154 },
+      ],
+    },
+  },
+
+  // ============================================================
+  // 11. 护理成本测算数据
+  // ============================================================
+  nursingCostData: {
+    homeCare: {
+      monthlyLimit: 1850,
+      items: [
+        { name: '生活照护', frequency: '每月≥8次，每次≥90分钟', amount: 737.5 },
+        { name: '医疗护理', frequency: '每月4-6次，每次30-60分钟', amount: 750 },
+        { name: '支持性器具', frequency: '按需配置', amount: 362.5 },
+      ],
+    },
+    institutionalCare: {
+      levels: [
+        { level: '重度失能Ⅲ级', dailyRate: 66, monthlyEst: 1980 },
+        { level: '重度失能Ⅱ级', dailyRate: 62, monthlyEst: 1860 },
+        { level: '重度失能Ⅰ级', dailyRate: 57, monthlyEst: 1710 },
+      ],
+    },
+    marketAverage: {
+      fullTimeNursing: 4500,
+      partTimeNursing: 2800,
+      institutionBed: 3500,
+    },
+  },
+
+  // ============================================================
+  // 12. 认知阶段定义
+  // ============================================================
+  cognitiveStages: [
+    { id: 'ignorant', name: '无知期', desc: '不知道长护险的存在', color: '#C0392B' },
+    { id: 'aware', name: '感知期', desc: '知道有长护险但不了解', color: '#E8A838' },
+    { id: 'understanding', name: '理解期', desc: '理解保障范围和申请条件', color: '#1C7293' },
+    { id: 'concerned', name: '关注意愿期', desc: '关注自身保障缺口', color: '#065A82' },
+  ],
+
+  // ============================================================
+  // 13. 首页快捷入口
+  // ============================================================
+  homeFeatures: [
+    { id: 'education', name: '政策科普', icon: 'book', color: '#D97706', desc: '多方言政策解读' },
+    { id: 'qa', name: 'AI问答', icon: 'chat', color: '#1C7293', desc: '护阿婆在线解答' },
+    { id: 'points', name: '积分商城', icon: 'gift', color: '#E8A838', desc: '护理值兑换' },
+    { id: 'recommendation', name: '保障测评', icon: 'shield', color: '#065A82', desc: '缺口评估推荐' },
+    { id: 'calculator', name: '成本测算', icon: 'calculator', color: '#C0392B', desc: '护理费用估算' },
+    { id: 'dashboard', name: '数据看板', icon: 'chart', color: '#1A2744', desc: '运营数据追踪' },
+  ],
+
+  // ============================================================
+  // 14. 今日推荐
+  // ============================================================
+  todayRecommendation: {
+    type: 'article',
+    title: '你的工资条上，有一笔叫长护险',
+    desc: '阿婆帮你算算，每月交了多少，又能用回来多少',
+    stage: 'ignorant',
+    points: 20,
+  },
+
+  // ============================================================
+  // 15. 政策速递
+  // ============================================================
+  policyNews: [
+    { title: '南宁市长护险委托经办服务管理办法正式施行', date: '2024-05-01', source: '南宁市医保局' },
+    { title: '2026-2028年度长护险服务项目中标公告发布', date: '2026-01-06', source: '广西科文招标' },
+    { title: '居家护理月最高支付限额提升至1850元', date: '2025-12-15', source: '南宁市医保局' },
+  ],
+};
+
+// ============================================================
+// 模块导出（兼容 CommonJS 和浏览器环境）
+// ============================================================
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = MockData;
+}
+if (typeof window !== 'undefined') {
+  window.MockData = MockData;
+}
+
+</script>
+<script>
+/**
+ * 智伴长护—长护价值银行 小程序 AI 问答引擎模块
+ * ============================================================
+ * 项目背景：AI赋能的广西中青年长护险前置培育与商业保障转化方案
+ * 角色原型：护阿婆（韦秀兰），62岁，退休社保工作者，30年工龄
+ * 依赖数据：js/data.js 中的 MockData.policyKnowledge（22个Q&A对）
+ *           与 MockData.dialectSamples（4种方言样本）
+ * 运行环境：浏览器（window.MockData）/ CommonJS（require('./data.js')）
+ * ------------------------------------------------------------
+ * 使用示例：
+ *   var res = AIQA.searchAnswer('什么是长护险？');
+ *   if (res.found) {
+ *     var text = AIQA.applyDialect(res.answer, 'guiliu');
+ *     // text 即可直接渲染到聊天气泡
+ *   }
+ * ============================================================
+ */
+
+// ============================================================
+// 0. AI 接口配置（预留接入 DeepSeek / 通义千问 / 文心一言 等）
+// ============================================================
+var AIConfig = {
+  // 是否使用真实大模型API（设为 false 时使用本地知识库匹配）
+  useRealAPI: false,
+  // API 端点（预留，当前不使用）
+  apiEndpoint: '',
+  apiKey: '',
+  model: 'deepseek-chat',
+  // RAG 召回率（模拟）
+  ragRecallRate: 92,
+};
+
+// ============================================================
+// 1. 常量：兜底回复 / 方言前缀 / 末尾语气词适配规则
+// ============================================================
+
+// 未匹配到知识库时的护阿婆风格兜底回复
+var FALLBACK_REPLY =
+  '这个问题阿婆暂时还没整理到知识库里，但你问得好！你可以试试这样问：\n' +
+  "1. '什么是长护险？'\n" +
+  "2. '长护险怎么申请？'\n" +
+  "3. '居家护理能报多少？'\n" +
+  "4. '申请需要什么材料？'\n" +
+  '阿婆慢慢补充，你慢慢问，政策嘛，就是要多问才知道。';
+
+// 各方言的问候语前缀（mandarin 不加前缀，原样返回）
+var DIALECT_PREFIX = {
+  mandarin: '',
+  guiliu: '阿婆跟你讲哦，',
+  baihua: '阿婆同你讲啊，',
+  zhuang: '阿婆跟你讲哦，',
+};
+
+// 回答末尾语气词的方言适配规则（仅处理结尾命中项，避免误伤正文）
+var DIALECT_END_RULES = {
+  mandarin: [],
+  guiliu: [
+    { from: '就怕你不知道。', to: '就怕你晓不得。' },
+    { from: '不知道。', to: '晓不得。' },
+  ],
+  baihua: [
+    { from: '就怕你不知道。', to: '就怕你唔知嘎。' },
+    { from: '不知道。', to: '唔知啦。' },
+    { from: '拿到手。', to: '拿到手嘎。' },
+  ],
+  zhuang: [
+    { from: '就怕你不知道。', to: '就怕你晓不得。' },
+  ],
+};
+
+// 用于归一化的标点集合（中英文标点 + 空白）
+var PUNCT_RE = /[\s？！，。、；：\u201c\u201d\u2018\u2019《》【】（）()!?,.;:]/g;
+
+// ============================================================
+// 2. 数据访问（兼容浏览器与 CommonJS）
+// ============================================================
+
+/**
+ * 获取 MockData（policyKnowledge / dialectSamples 等的来源）
+ */
+function getMockData() {
+  // 浏览器：<script src="js/data.js"><\/script> 已挂到 window.MockData
+  if (typeof window !== 'undefined' && window.MockData) return window.MockData;
+  // 直接引用了全局 MockData 的场景
+  if (typeof MockData !== 'undefined') return MockData; // eslint-disable-line no-undef
+  // CommonJS：Node 环境下 require data.js
+  if (typeof require === 'function') {
+    try { return require('./data.js'); } catch (e) { return null; }
+  }
+  return null;
+}
+
+/**
+ * 获取政策知识库（22个Q&A对）
+ */
+function getKnowledgeBase() {
+  var md = getMockData();
+  return (md && md.policyKnowledge) ? md.policyKnowledge : [];
+}
+
+/**
+ * 获取方言样本（用于校验 dialect 参数是否合法）
+ */
+function getDialectSamples() {
+  var md = getMockData();
+  return (md && md.dialectSamples) ? md.dialectSamples : {};
+}
+
+// ============================================================
+// 3. 文本工具
+// ============================================================
+
+/**
+ * 文本归一化：去首尾空白、去除中英文标点、英文转小写
+ * 用于关键词/问题匹配，避免标点干扰命中判断
+ */
+function normalize(s) {
+  return String(s == null ? '' : s).replace(PUNCT_RE, '').toLowerCase();
+}
+
+function startsWith(str, prefix) {
+  if (!prefix) return true;
+  return str.length >= prefix.length && str.slice(0, prefix.length) === prefix;
+}
+
+function endsWith(str, suffix) {
+  if (!suffix) return true;
+  var n = str.length, m = suffix.length;
+  return n >= m && str.slice(n - m) === suffix;
+}
+
+/**
+ * 由已归一化字符串生成字符二元组（bigram）数组
+ */
+function strBigrams(s) {
+  s = s || '';
+  var arr = [];
+  for (var i = 0; i < s.length - 1; i++) {
+    arr.push(s.slice(i, i + 2));
+  }
+  return arr;
+}
+
+/**
+ * 对任意文本归一化后生成 bigram
+ */
+function bigrams(s) {
+  return strBigrams(normalize(s));
+}
+
+// ============================================================
+// 4. 匹配算法：关键词命中 + 问题子串匹配
+// ============================================================
+
+/**
+ * 计算单个关键词与用户提问的相似度（0~1）
+ * - 完全包含（用户问里出现完整关键词）→ 1.0
+ * - 关键词包含用户问（用户问是关键词的子串，且长度>=2）→ 1.0
+ * - 否则用 bigram 重叠率衡量（关键词视角：关键词的 bigram 有多少出现在提问里）
+ */
+function keywordMatchScore(query, keyword) {
+  var q = normalize(query);
+  var k = normalize(keyword);
+  if (!k || q.length === 0) return 0;
+  if (q.indexOf(k) !== -1) return 1.0;             // 用户问里完整出现关键词
+  if (k.indexOf(q) !== -1 && q.length >= 2) return 1.0; // 用户问是关键词的一部分
+  // bigram 相似度（Jaccard-like，关键词视角）
+  var kBi = strBigrams(k);
+  if (kBi.length === 0) return 0;
+  var qBi = strBigrams(q);
+  var qSet = {};
+  for (var i = 0; i < qBi.length; i++) qSet[qBi[i]] = true;
+  var hit = 0;
+  for (var j = 0; j < kBi.length; j++) {
+    if (qSet[kBi[j]]) hit++;
+  }
+  return hit / kBi.length;
+}
+
+/**
+ * 计算用户提问与某条Q&A问题（question字段）的匹配得分（0~20）
+ * - 完全子串命中（提问是问题的子串，或问题是提问的子串）→ 20
+ * - 否则按 bigram 重叠率折算（最高 15）
+ */
+function getQuestionScore(query, question) {
+  var q = normalize(query);
+  var ques = normalize(question);
+  if (!q || !ques) return 0;
+  if (q.length >= 2 && ques.indexOf(q) !== -1) return 20;
+  if (ques.length >= 2 && q.indexOf(ques) !== -1) return 20;
+  var qBi = strBigrams(q);
+  if (qBi.length === 0) return 0;
+  var quesBi = strBigrams(ques);
+  var set = {};
+  for (var i = 0; i < quesBi.length; i++) set[quesBi[i]] = true;
+  var hit = 0;
+  for (var j = 0; j < qBi.length; j++) {
+    if (set[qBi[j]]) hit++;
+  }
+  return Math.round((hit / qBi.length) * 15);
+}
+
+/**
+ * 对单条 Q&A 计算综合匹配分（0~100）
+ * 综合维度：关键词最大相似度、关键词命中率、命中数、平均相似度、问题子串匹配
+ */
+function scoreQA(query, qa) {
+  var q = normalize(query);
+  if (!q) return { score: 0, keywordHits: 0, maxSim: 0, avgSim: 0, keywordRatio: 0 };
+  var kws = qa.keywords || [];
+  var sims = [];
+  for (var i = 0; i < kws.length; i++) {
+    sims.push(keywordMatchScore(q, kws[i]));
+  }
+  var keywordHits = 0, sumSim = 0, maxSim = 0;
+  for (var j = 0; j < sims.length; j++) {
+    if (sims[j] >= 0.6) keywordHits++;     // 相似度>=0.6 视为有效命中
+    sumSim += sims[j];
+    if (sims[j] > maxSim) maxSim = sims[j];
+  }
+  var keywordRatio = kws.length ? keywordHits / kws.length : 0;
+  var avgSim = kws.length ? sumSim / kws.length : 0;
+
+  // 弱匹配抑制：最高相似度不足 0.6 时大幅折扣，避免"怎么/什么"等通用词误命中
+  var maxSimTerm = (maxSim < 0.6) ? (maxSim * 0.4) : maxSim;
+  // 关键词维度：最大相似度(≤55) + 命中率(≤20) + 命中数加分(≤15) + 平均相似度(≤10)
+  var keywordScore = maxSimTerm * 55 + keywordRatio * 20 + Math.min(keywordHits * 5, 15) + avgSim * 10;
+  // 问题子串维度（≤20）
+  var questionScore = getQuestionScore(q, qa.question || '');
+  var score = Math.min(keywordScore + questionScore, 100);
+  return {
+    score: score,
+    keywordHits: keywordHits,
+    maxSim: maxSim,
+    avgSim: avgSim,
+    keywordRatio: keywordRatio,
+  };
+}
+
+// ============================================================
+// 5. 搜索引擎入口 searchAnswer
+// ============================================================
+
+/**
+ * 构造"未匹配"兜底返回结构
+ */
+function fallbackResult(score) {
+  return {
+    found: false,
+    answer: FALLBACK_REPLY,
+    source: '护阿婆兜底回复',
+    category: '兜底',
+    matchScore: score || 0,
+    matchedQA: null,
+  };
+}
+
+/**
+ * 关键词匹配搜索引擎
+ * @param {string} query 用户输入的问题文本
+ * @returns {{found:boolean, answer:string, source:string, category:string, matchScore:number, matchedQA:(object|null)}}
+ *          最高匹配分低于 30 时，found=false 并返回护阿婆兜底回复
+ */
+function searchAnswer(query) {
+  var q = normalize(query);
+  // 输入过短或为空，直接兜底
+  if (!q || q.length < 2) {
+    return fallbackResult(0);
+  }
+  var kb = getKnowledgeBase();
+  if (!kb || kb.length === 0) {
+    // 知识库未加载，无法匹配
+    return fallbackResult(0);
+  }
+
+  var bestQA = null;
+  var bestScore = 0;
+  for (var i = 0; i < kb.length; i++) {
+    var r = scoreQA(q, kb[i]);
+    if (r.score > bestScore) {
+      bestScore = r.score;
+      bestQA = kb[i];
+    }
+  }
+
+  // 低于 30 分视为未命中，走兜底
+  if (bestQA && bestScore >= 30) {
+    return {
+      found: true,
+      answer: bestQA.answer,
+      source: bestQA.source,
+      category: bestQA.category,
+      matchScore: Math.round(bestScore),
+      matchedQA: bestQA,
+    };
+  }
+  return fallbackResult(Math.round(bestScore));
+}
+
+// ============================================================
+// 6. 方言适配 applyDialect
+// ============================================================
+
+/**
+ * 根据方言设置适配护阿婆的回答
+ * - mandarin：原样返回
+ * - guiliu / baihua / zhuang：替换开场问候语前缀，并对结尾语气词做方言替换
+ * @param {string} text 原始回答
+ * @param {string} dialect mandarin | guiliu | baihua | zhuang
+ * @returns {string} 方言适配后的回答
+ */
+function applyDialect(text, dialect) {
+  if (text == null) return text;
+  text = String(text);
+
+  // 以方言样本为准校验 dialect 合法性，不合法则退回普通话
+  var samples = getDialectSamples();
+  var validDialects = (samples && Object.keys(samples).length)
+    ? Object.keys(samples)
+    : Object.keys(DIALECT_PREFIX);
+  if (!dialect || validDialects.indexOf(dialect) === -1) {
+    dialect = 'mandarin';
+  }
+
+  // 普通话：不加前缀，原样返回
+  if (dialect === 'mandarin') return text;
+
+  // 1) 去除已有的开场前缀，避免"阿婆…阿婆…"重复
+  var knownPrefixes = ['阿婆跟你讲哦，', '阿婆同你讲啊，'];
+  var body = text;
+  for (var i = 0; i < knownPrefixes.length; i++) {
+    if (startsWith(body, knownPrefixes[i])) {
+      body = body.slice(knownPrefixes[i].length);
+      break;
+    }
+  }
+
+  // 2) 加入方言问候语前缀
+  var prefix = (DIALECT_PREFIX[dialect] != null) ? DIALECT_PREFIX[dialect] : '';
+  var result = prefix + body;
+
+  // 3) 末尾语气词方言适配（仅替换结尾命中项）
+  var rules = DIALECT_END_RULES[dialect] || [];
+  for (var r = 0; r < rules.length; r++) {
+    if (endsWith(result, rules[r].from)) {
+      result = result.slice(0, result.length - rules[r].from.length) + rules[r].to;
+      break;
+    }
+  }
+  return result;
+}
+
+// ============================================================
+// 7. 快捷问题 getQuickQuestions
+// ============================================================
+
+/**
+ * 返回6个常见问题的快捷入口
+ * @returns {Array<{id:string,text:string,category:string}>}
+ */
+function getQuickQuestions() {
+  return [
+    { id: 'qq1', text: '什么是长护险？', category: '基础认知' },
+    { id: 'qq2', text: '怎么申请待遇？', category: '办事指引' },
+    { id: 'qq3', text: '居家护理报多少？', category: '待遇解读' },
+    { id: 'qq4', text: '申请要什么材料？', category: '办事指引' },
+    { id: 'qq5', text: '有哪些承办机构？', category: '办事指引' },
+    { id: 'qq6', text: '护理值怎么用？', category: '基础认知' },
+  ];
+}
+
+// ============================================================
+// 8. 模拟打字延迟
+// ============================================================
+
+/**
+ * 模拟 AI 思考的延迟时间（800~1500ms 随机）
+ * @returns {number}
+ */
+function getTypingDelay() {
+  return Math.floor(Math.random() * (1500 - 800 + 1)) + 800;
+}
+
+/**
+ * 根据回复文本长度计算"逐字打字"的总时长
+ * 每字 30ms，最少 500ms，最多 3000ms
+ * @param {string} text 回复文本
+ * @returns {number}
+ */
+function getTypingDuration(text) {
+  var len = String(text == null ? '' : text).length;
+  var dur = len * 30;
+  if (dur < 500) dur = 500;
+  if (dur > 3000) dur = 3000;
+  return dur;
+}
+
+// ============================================================
+// 9. 真实大模型 API 预留 callRealAPI
+// ============================================================
+
+/**
+ * 构造发送给大模型的请求体（预留结构，供后续接入参考）
+ */
+function buildRequestBody(query) {
+  return {
+    model: AIConfig.model,
+    messages: [
+      {
+        role: 'system',
+        content: '你是"护阿婆"韦秀兰，62岁，退休社保工作者，在巴马医保所干了30年政策宣传。' +
+                 '你擅长用广西方言（桂柳话、白话、壮语）亲切、口语化地讲解长护险政策，' +
+                 '语气像邻家奶奶，但内容要准确、专业。',
+      },
+      { role: 'user', content: String(query == null ? '' : query) },
+    ],
+    temperature: 0.6,
+    max_tokens: 1024,
+    stream: false,
+    // RAG 检索增强预留
+    rag: {
+      enabled: true,
+      recallRate: AIConfig.ragRecallRate,
+      knowledgeBase: 'MockData.policyKnowledge',
+      topK: 5,
+    },
+  };
+}
+
+/**
+ * 构造"未实现"提示结果（含完整预留结构）
+ */
+function notImplementedResult(query) {
+  return {
+    ok: false,
+    implemented: false,
+    error: 'NOT_IMPLEMENTED',
+    message: '阿婆还没接上大模型呢~ 当前已自动用本地知识库给你匹配答案。' +
+             '要启用真实API，请在 ai-qa.js 里把 AIConfig.useRealAPI 设为 true，并填好 apiEndpoint 和 apiKey。',
+    query: query,
+    request: buildRequestBody(query),
+    response: null,
+    fetchedAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * 预留的真实大模型调用接口（异步函数）
+ * - 当前 useRealAPI 默认为 false，直接返回 not implemented 提示
+ * - 配置好 apiEndpoint / apiKey 并将 useRealAPI 设为 true 后，
+ *   即会走下方 fetch 流程，可接入 DeepSeek / 通义千问 / 文心一言 等
+ * @param {string} query 用户输入的问题文本
+ * @returns {Promise<object>}
+ */
+async function callRealAPI(query) {
+  // 默认未启用真实大模型 → 返回 not implemented 提示（含完整预留结构）
+  if (!AIConfig.useRealAPI || !AIConfig.apiEndpoint || !AIConfig.apiKey) {
+    return notImplementedResult(query);
+  }
+
+  // ===== 以下为预留的真实调用结构（配置齐全后才会执行）=====
+  try {
+    var resp = await fetch(AIConfig.apiEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + AIConfig.apiKey,
+      },
+      body: JSON.stringify(buildRequestBody(query)),
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    var data = await resp.json();
+    return {
+      ok: true,
+      implemented: true,
+      query: query,
+      request: buildRequestBody(query),
+      response: data,
+      fetchedAt: new Date().toISOString(),
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      implemented: false,
+      error: 'REQUEST_FAILED',
+      message: '大模型调用失败：' + (e && e.message ? e.message : String(e)),
+      query: query,
+      request: buildRequestBody(query),
+      response: null,
+      fetchedAt: new Date().toISOString(),
+    };
+  }
+}
+
+// ============================================================
+// 10. 模块导出（兼容浏览器和 CommonJS）
+// ============================================================
+var AIQA = {
+  searchAnswer: searchAnswer,
+  applyDialect: applyDialect,
+  getQuickQuestions: getQuickQuestions,
+  getTypingDelay: getTypingDelay,
+  getTypingDuration: getTypingDuration,
+  AIConfig: AIConfig,
+  callRealAPI: callRealAPI,
+};
+
+if (typeof window !== 'undefined') window.AIQA = AIQA;
+if (typeof module !== 'undefined' && module.exports) module.exports = AIQA;
+
+</script>
+<script>
+/**
+ * 智伴长护—长护价值银行 小程序
+ * 数据看板图表渲染模块（charts.js）
+ * ============================================================
+ * 功能说明：纯 SVG / HTML 实现的看板图表组件，返回字符串可直接插入 DOM。
+ *   - renderBarChart    柱状图（圆角顶部、数值标签、Y轴网格线）
+ *   - renderLineChart   折线图（渐变填充区域、数据点、目标虚线）
+ *   - renderProgressBar 水平进度条（div + 内联样式）
+ *   - renderFunnel      漏斗图（颜色由深到浅、右侧数量与转化率）
+ *   - renderDonut       环形图（stroke-dasharray 扇区 + 图例）
+ *   - renderRegionTable 区域分布表格（含认知率进度条）
+ * 设计规范：护阿婆 IP 配色（暖橙 / 深蓝 / 青蓝 / 金黄 / 砖红 / 墨蓝）
+ * 技术要点：所有 SVG 使用 viewBox 自适应缩放，宽度 100% 适配容器。
+ * ============================================================
+ */
+
+/* ===== 颜色方案（来自护阿婆 IP 设计规范）===== */
+var COLORS = {
+  primary: '#D97706',   // 主色暖橙
+  darkBlue: '#065A82',  // 深蓝
+  cyan: '#1C7293',      // 青蓝
+  gold: '#E8A838',      // 金黄
+  cream: '#FAFBFC',     // 米白
+  brick: '#C0392B',     // 砖红
+  inkBlue: '#1A2744',   // 墨蓝
+  grid: '#E8EAED',      // 网格线浅灰
+  text: '#1A2744',      // 正文文字（墨蓝）
+  textLight: '#6B7280' // 次级文字（浅灰）
+};
+
+/* SVG 基准宽度：配合 preserveAspectRatio="none" 实现横向自适应，
+   取值接近移动端常见 CSS 像素宽度，使横向拉伸极小、纵向不变形。 */
+var BASE_W = 360;
+var FONT_FAMILY = '-apple-system, sans-serif';
+
+/* ============================================================
+   辅助函数
+   ============================================================ */
+
+/**
+ * 转义 XML 特殊字符，防止标签文本破坏 SVG / HTML 结构
+ */
+function escapeXml(str) {
+  return String(str == null ? '' : str).replace(/[<>&'"]/g, function (c) {
+    return { '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' }[c];
+  });
+}
+
+/**
+ * 生成“仅顶部圆角”的矩形路径（柱状图专用，底部贴 X 轴保持直角）
+ * @param {number} x  左上角 x
+ * @param {number} y  左上角 y
+ * @param {number} w  宽度
+ * @param {number} h  高度
+ * @param {number} r  圆角半径
+ * @returns {string} SVG path 的 d 属性
+ */
+function roundedTopRect(x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w / 2, h));
+  if (h <= 0 || w <= 0) return '';
+  // 从左下角起笔，沿左侧上行 -> 左上圆弧 -> 顶边 -> 右上圆弧 -> 右侧下行 -> 闭合
+  var x1 = (x + r).toFixed(2);
+  var y1 = y.toFixed(2);
+  var x2 = (x + w - r).toFixed(2);
+  var yL = (y + h).toFixed(2);
+  var yR = (y + h).toFixed(2);
+  var rxL = x.toFixed(2);
+  var yrL = (y + r).toFixed(2);
+  var xR = (x + w).toFixed(2);
+  var yrR = (y + r).toFixed(2);
+  return 'M' + rxL + ',' + yL +
+    ' L' + rxL + ',' + yrL +
+    ' A' + r + ',' + r + ' 0 0 1 ' + x1 + ',' + y1 +
+    ' L' + x2 + ',' + y1 +
+    ' A' + r + ',' + r + ' 0 0 1 ' + xR + ',' + yrR +
+    ' L' + xR + ',' + yR + ' Z';
+}
+
+/**
+ * 向上取整到“好看的整数”（1 / 1.5 / 2 / 3 / 5 / 7 / 10 的整数倍）
+ * 用于柱状图 Y 轴最大值，使网格刻度整齐
+ */
+function niceMax(value) {
+  if (value <= 0) return 10;
+  var exp = Math.floor(Math.log10(value));
+  var base = Math.pow(10, exp);
+  var frac = value / base;
+  var nice;
+  if (frac <= 1) nice = 1;
+  else if (frac <= 1.5) nice = 1.5;
+  else if (frac <= 2) nice = 2;
+  else if (frac <= 3) nice = 3;
+  else if (frac <= 5) nice = 5;
+  else if (frac <= 7) nice = 7;
+  else nice = 10;
+  return nice * base;
+}
+
+/**
+ * 通用数值格式化：≥1万显示“X.X万”，否则千分位整数
+ */
+function formatNum(v) {
+  v = Number(v) || 0;
+  if (Math.abs(v) >= 10000) return (v / 10000).toFixed(1) + '万';
+  return Math.round(v).toLocaleString('zh-CN');
+}
+
+/**
+ * 坐标轴刻度格式化：百分比带 %，其余千分位整数
+ */
+function formatAxisVal(v, unit) {
+  v = Number(v) || 0;
+  if (unit === '%') return Math.round(v) + '%';
+  return Math.round(v).toLocaleString('zh-CN');
+}
+
+/**
+ * 数据点数值格式化：百分比保留 1 位小数，其余走 formatNum
+ */
+function formatVal(v, unit) {
+  v = Number(v) || 0;
+  if (unit === '%') return v.toFixed(1) + '%';
+  return formatNum(v);
+}
+
+/**
+ * 数值保留两位小数（用于 SVG 坐标，避免过长小数）
+ */
+function n2(v) { return (Math.round(v * 100) / 100); }
+
+/* ============================================================
+   1. 柱状图 renderBarChart
+   ============================================================ */
+
+/**
+ * 渲染柱状图（纯 SVG）
+ * @param {Array} data    数据 [{ label: '青秀区', value: 8200 }, ...]
+ * @param {Object} options 配置项
+ *   - height    {number}  图表高度（px），默认 200
+ *   - color     {string}  柱子颜色，默认主色暖橙
+ *   - showValue {boolean} 是否在柱顶显示数值，默认 true
+ *   - unit      {string}  数值单位（如 '人'），默认 ''
+ * @returns {string} SVG 字符串
+ */
+function renderBarChart(data, options) {
+  options = options || {};
+  var height = options.height || 200;
+  var color = options.color || COLORS.primary;
+  var showValue = options.showValue !== false;
+  var unit = options.unit || '';
+
+  var W = BASE_W;
+  var H = height;
+  // 内边距：左留 Y 轴刻度，上留数值标签，下留 X 轴标签（均≥20px）
+  var padL = 36, padR = 20, padT = 28, padB = 34;
+  var plotW = W - padL - padR;
+  var plotH = H - padT - padB;
+
+  // 空数据兜底
+  if (!data || !data.length) {
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<text x="' + (W / 2) + '" y="' + (H / 2) + '" text-anchor="middle" fill="' + COLORS.textLight + '" font-size="12" font-family="' + FONT_FAMILY + '">暂无数据</text></svg>';
+  }
+
+  // 计算 Y 轴最大值（向上取整到 nice 值）
+  var rawMax = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].value > rawMax) rawMax = data[i].value;
+  }
+  var yMax = niceMax(rawMax) || 1;
+
+  // Y 轴网格线（5 等分）+ 刻度文字
+  var gridLines = 5;
+  var gridSvg = '';
+  for (var g = 0; g <= gridLines; g++) {
+    var gy = n2(padT + plotH - (plotH * g / gridLines));
+    var gval = yMax * g / gridLines;
+    gridSvg += '<line x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '" stroke="' + COLORS.grid + '" stroke-width="1"/>';
+    gridSvg += '<text x="' + (padL - 6) + '" y="' + n2(gy + 3) + '" text-anchor="end" fill="' + COLORS.textLight + '" font-size="9" font-family="' + FONT_FAMILY + '">' + formatAxisVal(gval, unit) + '</text>';
+  }
+
+  // 柱子 + 数值标签 + X 轴标签
+  var n = data.length;
+  var slot = plotW / n;            // 每个柱子的槽位宽度
+  var barW = slot * 0.5;           // 柱子实际宽度（留出间隔）
+  var barR = Math.min(barW / 2, 4); // 圆角半径
+  var barsSvg = '';
+  for (var b = 0; b < n; b++) {
+    var d = data[b];
+    var cx = padL + slot * b + slot / 2;     // 槽位中心
+    var bx = cx - barW / 2;
+    var barH = (d.value / yMax) * plotH;
+    var by = padT + plotH - barH;
+
+    // 柱子（仅顶部圆角）
+    var pathD = roundedTopRect(bx, by, barW, barH, barR);
+    if (pathD) {
+      barsSvg += '<path d="' + pathD + '" fill="' + color + '"/>';
+    }
+    // 数值标签（柱顶上方）
+    if (showValue) {
+      barsSvg += '<text x="' + n2(cx) + '" y="' + n2(by - 5) + '" text-anchor="middle" fill="' + COLORS.text + '" font-size="9" font-family="' + FONT_FAMILY + '" font-weight="600">' + formatVal(d.value, unit) + (unit && unit !== '%' ? unit : '') + '</text>';
+    }
+    // X 轴标签（底部）
+    barsSvg += '<text x="' + n2(cx) + '" y="' + n2(H - padB + 14) + '" text-anchor="middle" fill="' + COLORS.textLight + '" font-size="9" font-family="' + FONT_FAMILY + '">' + escapeXml(d.label) + '</text>';
+  }
+
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+    gridSvg + barsSvg + '</svg>';
+}
+
+/* ============================================================
+   2. 折线图 renderLineChart
+   ============================================================ */
+
+/**
+ * 渲染折线图（纯 SVG）
+ * @param {Array} data    数据 [{ label: '3月', value: 38.92 }, ...]
+ * @param {Object} options 配置项
+ *   - height {number}  图表高度（px），默认 200
+ *   - color  {string}  折线颜色，默认深蓝
+ *   - area   {boolean} 是否显示渐变填充区域，默认 true
+ *   - unit   {string}  单位（如 '%'），默认 ''
+ *   - target {number}  目标线值（如 80），可选
+ * @returns {string} SVG 字符串
+ */
+function renderLineChart(data, options) {
+  options = options || {};
+  var height = options.height || 200;
+  var color = options.color || COLORS.darkBlue;
+  var area = options.area !== false;
+  var unit = options.unit || '';
+  var target = options.target;
+
+  var W = BASE_W;
+  var H = height;
+  var padL = 36, padR = 20, padT = 24, padB = 34;
+  var plotW = W - padL - padR;
+  var plotH = H - padT - padB;
+
+  // 空数据兜底
+  if (!data || !data.length) {
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<text x="' + (W / 2) + '" y="' + (H / 2) + '" text-anchor="middle" fill="' + COLORS.textLight + '" font-size="12" font-family="' + FONT_FAMILY + '">暂无数据</text></svg>';
+  }
+
+  // 计算数据极值，并考虑目标线
+  var values = [];
+  var dataMax = -Infinity, dataMin = Infinity;
+  for (var i = 0; i < data.length; i++) {
+    var v = Number(data[i].value) || 0;
+    values.push(v);
+    if (v > dataMax) dataMax = v;
+    if (v < dataMin) dataMin = v;
+  }
+  var topVal = Math.max(dataMax, target != null ? target : -Infinity);
+  // Y 轴范围：下限归 0，上限向上取整到 nice 值
+  var yMin = 0;
+  var yMax = niceMax(topVal) || 1;
+  var yRange = yMax - yMin || 1;
+
+  // 坐标转换函数
+  var stepX = data.length > 1 ? plotW / (data.length - 1) : 0;
+  function px(i) { return padL + (data.length > 1 ? stepX * i : plotW / 2); }
+  function py(val) { return padT + plotH - ((val - yMin) / yRange) * plotH; }
+
+  // 渐变定义（区域填充用）
+  var gradId = 'lineGrad_' + Math.random().toString(36).slice(2, 9);
+  var defs = '';
+  if (area) {
+    defs = '<defs><linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="' + color + '" stop-opacity="0.35"/>' +
+      '<stop offset="100%" stop-color="' + color + '" stop-opacity="0.02"/>' +
+      '</linearGradient></defs>';
+  }
+
+  // Y 轴网格线 + 刻度
+  var gridLines = 5;
+  var gridSvg = '';
+  for (var gl = 0; gl <= gridLines; gl++) {
+    var ly = n2(padT + plotH - (plotH * gl / gridLines));
+    var lval = yMin + yRange * gl / gridLines;
+    gridSvg += '<line x1="' + padL + '" y1="' + ly + '" x2="' + (W - padR) + '" y2="' + ly + '" stroke="' + COLORS.grid + '" stroke-width="1"/>';
+    gridSvg += '<text x="' + (padL - 6) + '" y="' + n2(ly + 3) + '" text-anchor="end" fill="' + COLORS.textLight + '" font-size="9" font-family="' + FONT_FAMILY + '">' + formatAxisVal(lval, unit) + '</text>';
+  }
+
+  // 计算各数据点坐标
+  var pts = [];
+  for (var p = 0; p < data.length; p++) {
+    pts.push([n2(px(p)), n2(py(values[p]))]);
+  }
+  var ptsStr = pts.map(function (pt) { return pt[0] + ',' + pt[1]; }).join(' ');
+
+  // 区域填充路径（从基线起，经所有点，再回到基线闭合）
+  var areaPath = '';
+  if (area) {
+    var baseY = n2(py(yMin));
+    var areaD = 'M' + pts[0][0] + ',' + baseY;
+    for (var a = 0; a < pts.length; a++) {
+      areaD += ' L' + pts[a][0] + ',' + pts[a][1];
+    }
+    areaD += ' L' + pts[pts.length - 1][0] + ',' + baseY + ' Z';
+    areaPath = '<path d="' + areaD + '" fill="url(#' + gradId + ')"/>';
+  }
+
+  // 折线
+  var polyline = '<polyline points="' + ptsStr + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+
+  // 目标线（虚线）
+  var targetSvg = '';
+  if (target != null && !isNaN(target)) {
+    var ty = n2(py(target));
+    targetSvg = '<line x1="' + padL + '" y1="' + ty + '" x2="' + (W - padR) + '" y2="' + ty + '" stroke="' + COLORS.brick + '" stroke-width="1" stroke-dasharray="4,3"/>';
+    targetSvg += '<text x="' + (W - padR) + '" y="' + n2(ty - 4) + '" text-anchor="end" fill="' + COLORS.brick + '" font-size="9" font-family="' + FONT_FAMILY + '">目标' + target + unit + '</text>';
+  }
+
+  // 数据点 + 数值标签 + X 轴标签
+  var pointsSvg = '';
+  for (var d = 0; d < data.length; d++) {
+    var dx = pts[d][0], dy = pts[d][1];
+    pointsSvg += '<circle cx="' + dx + '" cy="' + dy + '" r="3" fill="#fff" stroke="' + color + '" stroke-width="2"/>';
+    pointsSvg += '<text x="' + dx + '" y="' + n2(dy - 8) + '" text-anchor="middle" fill="' + COLORS.text + '" font-size="9" font-family="' + FONT_FAMILY + '" font-weight="600">' + formatVal(values[d], unit) + '</text>';
+    pointsSvg += '<text x="' + dx + '" y="' + n2(H - padB + 14) + '" text-anchor="middle" fill="' + COLORS.textLight + '" font-size="9" font-family="' + FONT_FAMILY + '">' + escapeXml(data[d].label) + '</text>';
+  }
+
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="' + H + '" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">' +
+    defs + gridSvg + areaPath + targetSvg + polyline + pointsSvg + '</svg>';
+}
+
+/* ============================================================
+   3. 水平进度条 renderProgressBar
+   ============================================================ */
+
+/**
+ * 渲染水平进度条（HTML div + 内联样式）
+ * @param {number} value   当前值
+ * @param {number} max     最大值
+ * @param {Object} options 配置项
+ *   - color     {string}  进度条颜色，默认主色暖橙
+ *   - height    {number}  进度条高度（px），默认 8
+ *   - showLabel {boolean} 是否显示标签与百分比，默认 true
+ *   - label     {string}  左侧标签文字，默认 ''
+ * @returns {string} HTML 字符串
+ */
+function renderProgressBar(value, max, options) {
+  options = options || {};
+  var color = options.color || COLORS.primary;
+  var barH = options.height || 8;
+  var showLabel = options.showLabel !== false;
+  var label = options.label || '';
+
+  value = Number(value) || 0;
+  max = Number(max) || 0;
+  var pct = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
+  var radius = (barH / 2);
+
+  var html = '';
+  // 标签行：左侧名称 + 右侧百分比
+  if (showLabel) {
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-family:' + FONT_FAMILY + ';">';
+    if (label) {
+      html += '<span style="font-size:12px;color:' + COLORS.textLight + ';">' + escapeXml(label) + '</span>';
+    } else {
+      html += '<span></span>';
+    }
+    html += '<span style="font-size:13px;color:' + color + ';font-weight:600;">' + pct.toFixed(1) + '%</span>';
+    html += '</div>';
+  }
+  // 轨道 + 填充
+  html += '<div style="width:100%;height:' + barH + 'px;background:' + COLORS.grid + ';border-radius:' + radius + 'px;overflow:hidden;">';
+  html += '<div style="width:' + pct.toFixed(2) + '%;height:100%;background:' + color + ';border-radius:' + radius + 'px;transition:width 0.6s ease;"></div>';
+  html += '</div>';
+  return html;
+}
+
+/* ============================================================
+   4. 漏斗图 renderFunnel
+   ============================================================ */
+
+/**
+ * 渲染漏斗图（HTML，每个阶段一个水平条）
+ * @param {Array} data 数据 [{ stage: '科普浏览', count: 45600, rate: 100 }, ...]
+ * @returns {string} HTML 字符串
+ * 特点：条颜色从深到浅渐变，右侧显示数量与转化率
+ */
+function renderFunnel(data) {
+  if (!data || !data.length) {
+    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:12px;padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
+  }
+
+  // 颜色从深到浅渐变（基于深蓝色系）
+  var palette = ['#065A82', '#1C7293', '#2E7E9E', '#4A95B0', '#6BA9C2', '#9DC3D6'];
+
+  // 最大值用于计算各条相对宽度
+  var maxCount = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].count > maxCount) maxCount = data[i].count;
+  }
+
+  var html = '';
+  for (var j = 0; j < data.length; j++) {
+    var d = data[j];
+    var color = palette[j % palette.length];
+    var widthPct = maxCount > 0 ? (d.count / maxCount) * 100 : 0;
+
+    html += '<div style="display:flex;align-items:center;margin-bottom:10px;font-family:' + FONT_FAMILY + ';">';
+    // 阶段名称
+    html += '<div style="width:72px;font-size:12px;color:' + COLORS.text + ';flex-shrink:0;">' + escapeXml(d.stage) + '</div>';
+    // 进度条（轨道 + 填充）
+    html += '<div style="flex:1;height:24px;background:' + COLORS.grid + ';border-radius:4px;overflow:hidden;">';
+    html += '<div style="width:' + widthPct.toFixed(2) + '%;height:100%;background:' + color + ';border-radius:4px;transition:width 0.6s ease;"></div>';
+    html += '</div>';
+    // 右侧数量与转化率
+    html += '<div style="margin-left:8px;text-align:right;flex-shrink:0;min-width:72px;">';
+    html += '<div style="font-size:12px;color:' + COLORS.text + ';font-weight:600;">' + formatNum(d.count) + '</div>';
+    html += '<div style="font-size:10px;color:' + COLORS.textLight + ';">转化率 ' + d.rate + '%</div>';
+    html += '</div>';
+    html += '</div>';
+  }
+  return html;
+}
+
+/* ============================================================
+   5. 环形图 renderDonut
+   ============================================================ */
+
+/**
+ * 渲染环形图（纯 SVG，含图例）
+ * @param {Array} data    数据 [{ name: '百万医疗险', count: 420, color: '#D97706' }, ...]
+ *                        （未提供 color 时自动使用默认色板）
+ * @param {Object} options 配置项
+ *   - size      {number}  环形图直径（px），默认 160
+ *   - thickness {number}  环厚度（px），默认 24
+ *   - showLegend {boolean} 是否显示图例，默认 true
+ * @returns {string} SVG 字符串
+ * 实现方式：用 stroke-dasharray 实现各扇区，rotate(-90) 让起点位于顶部
+ */
+function renderDonut(data, options) {
+  options = options || {};
+  var size = options.size || 160;
+  var thickness = options.thickness || 24;
+  var showLegend = options.showLegend !== false;
+
+  if (!data || !data.length) {
+    return '<svg viewBox="0 0 ' + size + ' ' + size + '" width="' + size + '" height="' + size + '" xmlns="http://www.w3.org/2000/svg">' +
+      '<text x="' + (size / 2) + '" y="' + (size / 2) + '" text-anchor="middle" fill="' + COLORS.textLight + '" font-size="12" font-family="' + FONT_FAMILY + '">暂无数据</text></svg>';
+  }
+
+  // 默认色板（data 未指定 color 时使用）
+  var defaultColors = [COLORS.primary, COLORS.darkBlue, COLORS.cyan, COLORS.gold, COLORS.brick, COLORS.inkBlue];
+
+  // 计算总量
+  var total = 0;
+  for (var i = 0; i < data.length; i++) {
+    total += Number(data[i].count) || 0;
+  }
+  if (total <= 0) total = 1;
+
+  var cx = size / 2;
+  var cy = size / 2;
+  var r = (size - thickness) / 2;     // 半径取环中线，保证 stroke 完整落在 viewBox 内
+  var circumference = 2 * Math.PI * r;
+
+  // 逐段绘制扇区（stroke-dasharray + 累积 dashoffset）
+  var offset = 0;
+  var segments = '';
+  for (var s = 0; s < data.length; s++) {
+    var d = data[s];
+    var segColor = d.color || defaultColors[s % defaultColors.length];
+    var len = ((Number(d.count) || 0) / total) * circumference;
+    segments += '<circle cx="' + n2(cx) + '" cy="' + n2(cy) + '" r="' + n2(r) + '" fill="none" stroke="' + segColor + '" stroke-width="' + thickness + '" stroke-dasharray="' + n2(len) + ' ' + n2(circumference - len) + '" stroke-dashoffset="' + n2(-offset) + '"/>';
+    offset += len;
+  }
+
+  // 中心文字：总量 + “总计”
+  var centerText =
+    '<text x="' + n2(cx) + '" y="' + n2(cy - 4) + '" text-anchor="middle" fill="' + COLORS.text + '" font-size="' + n2(size * 0.13) + '" font-family="' + FONT_FAMILY + '" font-weight="700">' + formatNum(total) + '</text>' +
+    '<text x="' + n2(cx) + '" y="' + n2(cy + size * 0.12) + '" text-anchor="middle" fill="' + COLORS.textLight + '" font-size="' + n2(size * 0.08) + '" font-family="' + FONT_FAMILY + '">总计</text>';
+
+  // 图例（右侧，用 SVG rect + text 绘制，整体保持为一个 SVG）
+  var legendW = 130;
+  var totalW = size + (showLegend ? legendW : 0);
+  var totalH = size;
+  var legendItems = '';
+  if (showLegend) {
+    var itemH = 18;
+    var legendStartY = (size - data.length * itemH) / 2 + 9;
+    for (var l = 0; l < data.length; l++) {
+      var ld = data[l];
+      var lc = ld.color || defaultColors[l % defaultColors.length];
+      var lpct = (((Number(ld.count) || 0) / total) * 100).toFixed(1);
+      var ly = legendStartY + l * itemH;
+      legendItems += '<rect x="' + (size + 8) + '" y="' + n2(ly - 6) + '" width="8" height="8" rx="1" fill="' + lc + '"/>';
+      legendItems += '<text x="' + (size + 20) + '" y="' + n2(ly + 1) + '" fill="' + COLORS.text + '" font-size="9" font-family="' + FONT_FAMILY + '">' + escapeXml(ld.name) + '</text>';
+      legendItems += '<text x="' + (totalW - 4) + '" y="' + n2(ly + 1) + '" text-anchor="end" fill="' + COLORS.textLight + '" font-size="9" font-family="' + FONT_FAMILY + '">' + lpct + '%</text>';
+    }
+  }
+
+  // 环形旋转 -90° 让起点位于顶部；中心文字单独放置不旋转
+  return '<svg viewBox="0 0 ' + totalW + ' ' + totalH + '" width="100%" height="' + totalH + '" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' +
+    '<g transform="rotate(-90 ' + n2(cx) + ' ' + n2(cy) + ')">' + segments + '</g>' +
+    centerText + legendItems + '</svg>';
+}
+
+/* ============================================================
+   6. 区域分布表格 renderRegionTable
+   ============================================================ */
+
+/**
+ * 渲染区域分布表格（HTML 表格，含认知率进度条）
+ * @param {Array} data 数据 [{ region: '青秀区', users: 8200, awareness: 72 }, ...]
+ * @returns {string} HTML 表格字符串
+ */
+function renderRegionTable(data) {
+  if (!data || !data.length) {
+    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:12px;padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
+  }
+
+  var html = '<table style="width:100%;border-collapse:collapse;font-family:' + FONT_FAMILY + ';font-size:12px;">';
+  // 表头
+  html += '<thead><tr>' +
+    '<th style="text-align:left;padding:8px 6px;color:' + COLORS.textLight + ';font-weight:500;border-bottom:1px solid ' + COLORS.grid + ';">区域</th>' +
+    '<th style="text-align:right;padding:8px 6px;color:' + COLORS.textLight + ';font-weight:500;border-bottom:1px solid ' + COLORS.grid + ';">用户数</th>' +
+    '<th style="text-align:left;padding:8px 6px;color:' + COLORS.textLight + ';font-weight:500;border-bottom:1px solid ' + COLORS.grid + ';">认知率</th>' +
+    '</tr></thead><tbody>';
+
+  // 数据行
+  for (var i = 0; i < data.length; i++) {
+    var d = data[i];
+    var aware = Number(d.awareness) || 0;
+    html += '<tr>';
+    html += '<td style="padding:8px 6px;color:' + COLORS.text + ';border-bottom:1px solid ' + COLORS.grid + ';">' + escapeXml(d.region) + '</td>';
+    html += '<td style="padding:8px 6px;text-align:right;color:' + COLORS.text + ';border-bottom:1px solid ' + COLORS.grid + ';">' + formatNum(d.users) + '</td>';
+    // 认知率列：进度条 + 百分比
+    html += '<td style="padding:8px 6px;border-bottom:1px solid ' + COLORS.grid + ';">';
+    html += '<div style="display:flex;align-items:center;">';
+    html += '<div style="flex:1;height:6px;background:' + COLORS.grid + ';border-radius:3px;overflow:hidden;margin-right:6px;">';
+    html += '<div style="width:' + aware.toFixed(1) + '%;height:100%;background:' + COLORS.primary + ';border-radius:3px;transition:width 0.5s;"></div>';
+    html += '</div>';
+    html += '<span style="font-size:11px;color:' + COLORS.text + ';min-width:32px;text-align:right;">' + aware + '%</span>';
+    html += '</div>';
+    html += '</td>';
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  return html;
+}
+
+/* ============================================================
+   模块导出（兼容浏览器与 CommonJS 环境）
+   ============================================================ */
+var Charts = {
+  renderBarChart: renderBarChart,
+  renderLineChart: renderLineChart,
+  renderProgressBar: renderProgressBar,
+  renderFunnel: renderFunnel,
+  renderDonut: renderDonut,
+  renderRegionTable: renderRegionTable
+};
+if (typeof window !== 'undefined') window.Charts = Charts;
+if (typeof module !== 'undefined') module.exports = Charts;
+
+</script>
+<script>
+/**
+ * 智伴长护—长护价值银行 小程序 主应用逻辑
+ * ============================================================
+ * 负责：页面路由、页面渲染、交互逻辑、状态管理
+ * 依赖：data.js (MockData), ai-qa.js (AIQA), charts.js (Charts)
+ * ============================================================
+ */
+
+(function () {
+  'use strict';
+
+  // ===== 全局状态 =====
+  var state = {
+    currentPage: 'home',
+    currentDialect: 'mandarin', // mandarin | guiliu | baihua | zhuang
+    subPageOpen: false,
+    subPageData: null,
+    qaMessages: [],
+    dashTab: 'gov', // gov | insurance
+    recForm: { age: 35, hasSocial: true, hasCommercial: false, familyRisk: 'medium', budget: '5000-10000' },
+    recResultShown: false,
+  };
+
+  // ===== 工具函数 =====
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  }
+  function toast(msg) {
+    var t = el('div', 'toast', msg);
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 2000);
+  }
+  function fmtNum(n) {
+    if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '万';
+    return n.toLocaleString();
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // ===== 护阿婆SVG头像生成器 =====
+  function huapoSVG(size) {
+    var s = size || 48;
+    return '<svg class="huapo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs><clipPath id="hc' + s + '"><circle cx="50" cy="50" r="48"/></clipPath></defs>' +
+      '<circle cx="50" cy="50" r="48" fill="#FEF3E7"/>' +
+      '<g clip-path="url(#hc' + s + ')">' +
+      // 背景南宁天际线
+      '<rect x="0" y="70" width="100" height="30" fill="#E8F1F8"/>' +
+      '<rect x="10" y="55" width="8" height="15" fill="#B0D4E8"/>' +
+      '<rect x="20" y="48" width="10" height="22" fill="#B0D4E8"/>' +
+      '<rect x="32" y="52" width="6" height="18" fill="#B0D4E8"/>' +
+      '<rect x="62" y="50" width="8" height="20" fill="#B0D4E8"/>' +
+      '<rect x="72" y="45" width="10" height="25" fill="#B0D4E8"/>' +
+      '<rect x="84" y="55" width="6" height="15" fill="#B0D4E8"/>' +
+      // 亭阁
+      '<polygon points="40,70 50,60 60,70" fill="#065A82" opacity="0.3"/>' +
+      // 头发
+      '<path d="M25,42 Q22,28 35,22 Q50,15 65,22 Q78,28 75,42 Q75,35 72,32 Q70,28 65,26 Q55,22 50,22 Q45,22 35,26 Q30,28 28,32 Q25,35 25,42Z" fill="#E8E8E8"/>' +
+      '<circle cx="30" cy="32" r="3" fill="#E8E8E8"/>' +
+      // 脸
+      '<ellipse cx="50" cy="48" rx="20" ry="19" fill="#FDE8D0"/>' +
+      // 脸颊
+      '<circle cx="36" cy="54" r="5" fill="#FBC8A0" opacity="0.5"/>' +
+      '<circle cx="64" cy="54" r="5" fill="#FBC8A0" opacity="0.5"/>' +
+      // 眼睛（笑眯眯）
+      '<path d="M36,47 Q40,44 44,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+      '<path d="M56,47 Q60,44 64,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+      // 鼻子
+      '<path d="M50,50 Q48,53 50,55 Q52,53 50,50" stroke="#D4A576" stroke-width="1" fill="none"/>' +
+      // 嘴巴（笑）
+      '<path d="M42,58 Q50,64 58,58" stroke="#C0392B" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+      // 老花镜
+      '<circle cx="40" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"/>' +
+      '<circle cx="60" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"/>' +
+      '<line x1="47" y1="47" x2="53" y2="47" stroke="#E8A838" stroke-width="1.5"/>' +
+      // 眼镜链
+      '<line x1="33" y1="47" x2="28" y2="52" stroke="#E8A838" stroke-width="1"/>' +
+      '<line x1="67" y1="47" x2="72" y2="52" stroke="#E8A838" stroke-width="1"/>' +
+      // 背心
+      '<path d="M28,67 Q26,75 24,100 L76,100 Q74,75 72,67 Q65,70 50,70 Q35,70 28,67Z" fill="#065A82"/>' +
+      // 衬衫领口
+      '<path d="M40,67 Q50,74 60,67 L58,62 L50,65 L42,62Z" fill="#7BB3D4"/>' +
+      // 胸牌
+      '<circle cx="68" cy="80" r="6" fill="#D97706"/>' +
+      '<circle cx="68" cy="80" r="3.5" fill="#FFF"/>' +
+      '</g>' +
+      '<circle cx="50" cy="50" r="48" stroke="#065A82" stroke-width="1.5" fill="none"/>' +
+      '</svg>';
+  }
+
+  // ===== SVG图标库 =====
+  var icons = {
+    book: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 5a1 1 0 011-1h7v16H5a1 1 0 01-1-1V5zM13 4h6a1 1 0 011 1v14a1 1 0 01-1 1h-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 8h2M7 11h2M16 8h2M16 11h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    chat: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-3.5-.5L3 21l1.5-5.5A8.38 8.38 0 0112 3a8.38 8.38 0 019 8.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    gift: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="13" rx="1" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h18M12 8v13M12 8S8 8 8 5a2.5 2.5 0 015 0M12 8s4 0 4-3a2.5 2.5 0 00-4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    shield: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    calculator: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M16 11h0M16 15h0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    chart: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    arrow: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    check: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    clock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    coin: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v10M9.5 9.5C9.5 8 10.5 7 12 7s2.5 1 2.5 2.5-1 2.5-2.5 2.5M12 12c1.5 0 2.5 1 2.5 2.5S13.5 17 12 17s-2.5-1-2.5-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+    transfer: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 7h11l-3-3M17 17H6l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    exchange: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h14l-3-3M20 16H6l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    heart: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-7-10.5C5 7 7.5 5 10 5c1.5 0 2.5.8 3 1.5C13.5 5.8 14.5 5 16 5c2.5 0 5 2 5 5.5 0 6-7 10.5-7 10.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+    doc: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 2h8l4 4v16H6V2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v4h4M9 12h6M9 16h6M9 8h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+    play: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+    settings: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    user: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21v-1a6 6 0 0112 0v1" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+    logout: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    link: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  };
+
+  function getIcon(name, size) {
+    var s = size || 22;
+    var iconHtml = icons[name] || icons.doc;
+    if (s !== 22) {
+      iconHtml = iconHtml.replace(/width="\d+"/, 'width="' + s + '"').replace(/height="\d+"/, 'height="' + s + '"');
+    }
+    return iconHtml;
+  }
+
+  // ===== 页面路由 =====
+  function navigateTo(pageId) {
+    // 隐藏所有页面
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) {
+      pages[i].style.display = 'none';
+      pages[i].classList.remove('page--active');
+    }
+    // 显示目标页面
+    var target = $('page-' + pageId);
+    if (target) {
+      target.style.display = pageId === 'qa' ? 'flex' : 'block';
+      target.classList.add('page--active');
+    }
+    // 更新TabBar
+    var tabs = document.querySelectorAll('.tabbar__item');
+    for (var j = 0; j < tabs.length; j++) {
+      tabs[j].classList.remove('tabbar__item--active');
+      if (tabs[j].getAttribute('data-page') === pageId) {
+        tabs[j].classList.add('tabbar__item--active');
+      }
+    }
+    state.currentPage = pageId;
+    // 滚动到顶部
+    var ca = $('contentArea');
+    if (ca) ca.scrollTop = 0;
+    // 渲染对应页面内容
+    renderPage(pageId);
+  }
+
+  // ===== 页面渲染分发 =====
+  function renderPage(pageId) {
+    switch (pageId) {
+      case 'home': renderHome(); break;
+      case 'education': renderEducation(); break;
+      case 'qa': renderQA(); break;
+      case 'profile': renderProfile(); break;
+      case 'dashboard': renderDashboard(); break;
+    }
+  }
+
+  // ===== 首页渲染 =====
+  function renderHome() {
+    var ui = MockData.userInfo;
+    var stages = MockData.cognitiveStages;
+    var stageObj = null;
+    for (var i = 0; i < stages.length; i++) {
+      if (stages[i].id === ui.cognitiveStage) { stageObj = stages[i]; break; }
+    }
+
+    // 护阿婆头像
+    $('huapoAvatarHome').innerHTML = huapoSVG(64);
+
+    // 问候语
+    var hour = new Date().getHours();
+    var greeting = '';
+    if (hour < 11) greeting = '早上好！阿婆跟你讲哦，今天又是了解长护险的好日子';
+    else if (hour < 14) greeting = '中午好！吃饱了来看看政策，阿婆陪你';
+    else if (hour < 18) greeting = '下午好！阿婆跟你讲哦，今天又来了解长护险了？';
+    else greeting = '晚上好！睡前学点政策，阿婆给你讲故事';
+    $('homeGreeting').textContent = greeting;
+    $('homeSubGreeting').textContent = '你的护理值又涨了，当前' + ui.carePoints + '分，离兑换"居家护理服务"还差' + (1200 - ui.carePoints) + '分';
+
+    // 统计数据
+    $('homePoints').textContent = ui.carePoints.toLocaleString();
+    $('homeStage').textContent = stageObj ? stageObj.name : '理解期';
+    $('homeAccount').textContent = ui.accountType === 'authorized' ? '授权' : '普惠';
+
+    // 功能入口
+    var featuresHtml = '';
+    MockData.homeFeatures.forEach(function (f) {
+      featuresHtml += '<div class="home-features__item" onclick="app.openSubPage(\'' + f.id + '\')">' +
+        '<div class="home-features__icon" style="background:' + f.color + '">' + getIcon(f.icon, 24) + '</div>' +
+        '<div class="home-features__name">' + f.name + '</div>' +
+        '<div class="home-features__desc">' + f.desc + '</div>' +
+        '</div>';
+    });
+    $('homeFeatures').innerHTML = featuresHtml;
+
+    // 今日推荐
+    var rec = MockData.todayRecommendation;
+    var recHtml = '<div class="home-recommend" onclick="app.openSubPage(\'todayRecommend\')">' +
+      '<div class="home-recommend__badge">荐</div>' +
+      '<div class="home-recommend__content">' +
+      '<div class="home-recommend__title">' + escapeHtml(rec.title) + '</div>' +
+      '<div class="home-recommend__desc">' + escapeHtml(rec.desc) + '</div>' +
+      '<span class="home-recommend__points">+' + rec.points + ' 护理值</span>' +
+      '</div>' +
+      '</div>';
+    $('homeRecommend').innerHTML = recHtml;
+
+    // 政策速递
+    var newsHtml = '';
+    MockData.policyNews.forEach(function (n) {
+      newsHtml += '<div class="home-news__item">' +
+        '<div class="home-news__dot"></div>' +
+        '<div class="home-news__content">' +
+        '<div class="home-news__title">' + escapeHtml(n.title) + '</div>' +
+        '<div class="home-news__meta"><span>' + n.date + '</span><span>' + escapeHtml(n.source) + '</span></div>' +
+        '</div></div>';
+    });
+    $('homeNews').innerHTML = newsHtml;
+  }
+
+  // ===== 科普页渲染 =====
+  function renderEducation() {
+    // 方言选择器
+    var dialects = [
+      { id: 'mandarin', name: '普通话' },
+      { id: 'guiliu', name: '桂柳话' },
+      { id: 'baihua', name: '白话' },
+      { id: 'zhuang', name: '壮语' },
+    ];
+    var dialectHtml = '';
+    dialects.forEach(function (d) {
+      dialectHtml += '<button class="edu-dialect__btn' + (state.currentDialect === d.id ? ' edu-dialect__btn--active' : '') + '" onclick="app.setDialect(\'' + d.id + '\')">' + d.name + '</button>';
+    });
+    $('eduDialectBtns').innerHTML = dialectHtml;
+
+    // 认知阶段进度
+    var stages = MockData.cognitiveStages;
+    var currentIdx = 2; // understanding
+    for (var si = 0; si < stages.length; si++) {
+      if (stages[si].id === MockData.userInfo.cognitiveStage) { currentIdx = si; break; }
+    }
+    var stagesHtml = '<div class="edu-stages__title">认知阶段进度</div>' +
+      '<div class="edu-stages__track">' +
+      '<div class="edu-stages__progress" style="width:' + (currentIdx / (stages.length - 1) * 100) + '%"></div>';
+    stages.forEach(function (s, idx) {
+      var cls = 'edu-stages__node';
+      if (idx < currentIdx) cls += ' edu-stages__node--done';
+      if (idx === currentIdx) cls += ' edu-stages__node--current';
+      stagesHtml += '<div class="' + cls + '">' +
+        '<div class="edu-stages__dot">' + (idx + 1) + '</div>' +
+        '<div class="edu-stages__name">' + s.name + '</div>' +
+        '</div>';
+    });
+    stagesHtml += '</div>';
+    $('eduStages').innerHTML = stagesHtml;
+
+    // 内容列表
+    var contentHtml = '';
+    var sections = [
+      { key: 'basic', title: '基础认知', color: '#D97706', data: MockData.educationContent.basic },
+      { key: 'benefit', title: '待遇解读', color: '#065A82', data: MockData.educationContent.benefit },
+      { key: 'guide', title: '办事指引', color: '#1C7293', data: MockData.educationContent.guide },
+    ];
+    sections.forEach(function (sec) {
+      contentHtml += '<div class="edu-content__section">' +
+        '<div class="edu-content__section-title">' + sec.title + '</div>';
+      sec.data.forEach(function (item) {
+        contentHtml += '<div class="edu-card" onclick="app.openContentDetail(\'' + sec.key + '\',\'' + item.id + '\')">' +
+          '<div class="edu-card__img" style="background:linear-gradient(135deg,' + sec.color + ',' + sec.color + 'CC)">' + getIcon('book', 36) + '</div>' +
+          '<div class="edu-card__body">' +
+          '<div class="edu-card__title">' + escapeHtml(item.title) + '</div>' +
+          '<div class="edu-card__desc">' + escapeHtml(item.desc) + '</div>' +
+          '<div class="edu-card__meta">' +
+          '<span class="edu-card__tag" style="background:' + sec.color + '22;color:' + sec.color + '">' + sec.title + '</span>' +
+          '<span style="font-size:11px;color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + ' ' + item.readingTime + '分钟</span>' +
+          '<span class="edu-card__points">+' + item.points + '分</span>' +
+          '</div></div></div>';
+      });
+      contentHtml += '</div>';
+    });
+    $('eduContent').innerHTML = contentHtml;
+
+    // 短视频系列
+    var videosHtml = '';
+    MockData.videos.forEach(function (v, idx) {
+      var stageColors = ['#C0392B', '#E8A838', '#1C7293', '#065A82'];
+      videosHtml += '<div class="edu-video" onclick="app.openVideoDetail(\'' + v.id + '\')">' +
+        '<div class="edu-video__thumb" style="background:linear-gradient(135deg,' + stageColors[idx] + ',' + stageColors[idx] + 'CC)">' +
+        getIcon('play', 24) +
+        '<div class="edu-video__duration">' + Math.floor(v.duration / 60) + ':' + String(v.duration % 60).padStart(2, '0') + '</div>' +
+        '</div><div class="edu-video__body">' +
+        '<div class="edu-video__title">' + escapeHtml(v.title) + '</div>' +
+        '<div class="edu-video__stage">第' + (idx + 1) + '期 · +' + v.points + '护理值</div>' +
+        '</div></div>';
+    });
+    $('eduVideos').innerHTML = videosHtml;
+  }
+
+  // ===== AI问答页渲染 =====
+  function renderQA() {
+    // 头像
+    $('huapoAvatarQA').innerHTML = huapoSVG(40);
+
+    // 方言标签
+    var dialectNames = { mandarin: '普通话', guiliu: '桂柳话', baihua: '白话', zhuang: '壮语' };
+    $('qaDialectLabel').textContent = dialectNames[state.currentDialect] + '在线';
+
+    // 初始化消息
+    if (state.qaMessages.length === 0) {
+      var welcomeText = '阿婆跟你讲哦，我是护阿婆韦秀兰，退休社保工作者，干了30年医保政策。你有什么长护险的问题，尽管问我！选了' + dialectNames[state.currentDialect] + '模式，阿婆就用' + dialectNames[state.currentDialect] + '跟你讲。';
+      state.qaMessages.push({
+        type: 'ai',
+        text: welcomeText,
+        source: '护阿婆欢迎语',
+      });
+      renderQAMessages();
+    } else {
+      renderQAMessages();
+    }
+
+    // 快捷问题
+    var quickQs = AIQA.getQuickQuestions();
+    var quickHtml = '';
+    quickQs.forEach(function (q) {
+      quickHtml += '<div class="qa-quick__chip" onclick="app.askQuickQuestion(\'' + q.text.replace(/'/g, "\\'") + '\')">' + q.text + '</div>';
+    });
+    $('qaQuick').innerHTML = quickHtml;
+  }
+
+  function renderQAMessages() {
+    var html = '';
+    state.qaMessages.forEach(function (msg) {
+      var avatarHtml = msg.type === 'ai' ?
+        '<div class="qa-msg__avatar">' + huapoSVG(36) + '</div>' :
+        '<div class="qa-msg__avatar">' + getIcon('user', 20) + '</div>';
+      var sourceHtml = msg.source ? '<div class="qa-msg__source">' + getIcon('doc', 12) + ' 来源：' + escapeHtml(msg.source) + '</div>' : '';
+      html += '<div class="qa-msg qa-msg--' + msg.type + '">' +
+        avatarHtml +
+        '<div><div class="qa-msg__bubble">' + escapeHtml(msg.text).replace(/\n/g, '<br>') + '</div>' + sourceHtml + '</div>' +
+        '</div>';
+    });
+    $('qaMessages').innerHTML = html;
+    // 滚动到底部
+    var msgBox = $('qaMessages');
+    msgBox.scrollTop = msgBox.scrollHeight;
+  }
+
+  function askQuestion(text) {
+    if (!text || !text.trim()) return;
+    // 添加用户消息
+    state.qaMessages.push({ type: 'user', text: text });
+    renderQAMessages();
+    // 清空输入
+    $('qaInput').value = '';
+
+    // 显示打字中
+    var typingHtml = '<div class="qa-msg qa-msg--ai" id="typingIndicator">' +
+      '<div class="qa-msg__avatar">' + huapoSVG(36) + '</div>' +
+      '<div class="qa-msg__bubble"><div class="qa-typing"><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div></div></div>' +
+      '</div>';
+    $('qaMessages').insertAdjacentHTML('beforeend', typingHtml);
+    var msgBox = $('qaMessages');
+    msgBox.scrollTop = msgBox.scrollHeight;
+
+    // 模拟AI思考
+    var delay = AIQA.getTypingDelay();
+    setTimeout(function () {
+      var typingEl = $('typingIndicator');
+      if (typingEl) typingEl.remove();
+
+      // 搜索答案
+      var result = AIQA.searchAnswer(text);
+      var answerText, source;
+
+      if (result.found) {
+        answerText = AIQA.applyDialect(result.answer, state.currentDialect);
+        source = result.source;
+      } else {
+        answerText = AIQA.applyDialect(result.answer, state.currentDialect);
+        source = null;
+      }
+
+      state.qaMessages.push({
+        type: 'ai',
+        text: answerText,
+        source: source,
+      });
+      renderQAMessages();
+    }, delay);
+  }
+
+  // ===== 我的页渲染 =====
+  function renderProfile() {
+    var ui = MockData.userInfo;
+    var stages = MockData.cognitiveStages;
+    var stageObj = null;
+    for (var i = 0; i < stages.length; i++) {
+      if (stages[i].id === ui.cognitiveStage) { stageObj = stages[i]; break; }
+    }
+
+    // 用户信息卡
+    var badgeText = ui.accountType === 'authorized' ? '中青年授权账户' : '普惠账户';
+    var badgeColor = ui.accountType === 'authorized' ? 'var(--c-gold)' : 'var(--c-cyan)';
+    $('profileHero').innerHTML =
+      '<div class="profile-hero__top">' +
+      '<div class="profile-hero__avatar">' + huapoSVG(56) + '</div>' +
+      '<div class="profile-hero__info">' +
+      '<div class="profile-hero__name">' + escapeHtml(ui.name) + '</div>' +
+      '<div class="profile-hero__meta">' +
+      '<span>' + ui.age + '岁 · ' + ui.gender + '</span>' +
+      '<span>·</span>' +
+      '<span>' + escapeHtml(ui.district) + '</span>' +
+      '</div>' +
+      '<div style="margin-top:6px"><span class="profile-hero__badge" style="color:' + badgeColor + ';border-color:' + badgeColor + '44">' + badgeText + '</span></div>' +
+      '</div></div>';
+
+    // 护理值概览
+    var nextLevel = 2000;
+    var progressPct = Math.round(ui.carePoints / nextLevel * 100);
+    $('profilePoints').innerHTML =
+      '<div class="profile-points__row">' +
+      '<span class="profile-points__label">护理值余额</span>' +
+      '<span class="profile-points__value">' + ui.carePoints.toLocaleString() + '</span>' +
+      '</div>' +
+      '<div class="profile-points__bar"><div class="profile-points__bar-fill" style="width:' + progressPct + '%"></div></div>' +
+      '<div class="profile-points__meta">' +
+      '<span>累计获得 ' + ui.totalEarned + ' 分</span>' +
+      '<span>距金卡还差 ' + (nextLevel - ui.carePoints) + ' 分</span>' +
+      '</div>';
+
+    // 用户画像标签
+    var tagGroups = [
+      { key: 'demographic', title: '人口属性', tags: ui.tags.demographic },
+      { key: 'cognitive', title: '认知阶段', tags: ui.tags.cognitive },
+      { key: 'coverage', title: '保障缺口', tags: ui.tags.coverage },
+      { key: 'behavior', title: '行为偏好', tags: ui.tags.behavior },
+    ];
+    var tagsHtml = '';
+    tagGroups.forEach(function (g) {
+      tagsHtml += '<div class="profile-tags__group">' +
+        '<div class="profile-tags__group-title">' + g.title + '</div>' +
+        '<div class="profile-tags__list">';
+      for (var key in g.tags) {
+        if (g.tags.hasOwnProperty(key)) {
+          var t = g.tags[key];
+          tagsHtml += '<div class="profile-tags__tag"><span class="profile-tags__tag-key">' + t.name + ':</span> <span class="profile-tags__tag-val">' + escapeHtml(t.value) + '</span></div>';
+        }
+      }
+      tagsHtml += '</div></div>';
+    });
+    $('profileTags').innerHTML = tagsHtml;
+
+    // 功能菜单
+    var menuItems = [
+      { id: 'points', name: '护理值中心', icon: 'coin', color: '#D97706', badge: ui.carePoints + '分' },
+      { id: 'recommendation', name: '保障缺口测评', icon: 'shield', color: '#065A82' },
+      { id: 'calculator', name: '护理成本测算', icon: 'calculator', color: '#C0392B' },
+      { id: 'family', name: '家庭成员关联', icon: 'link', color: '#1C7293', badge: '3人' },
+      { id: 'records', name: '我的积分记录', icon: 'doc', color: '#1A2744' },
+      { id: 'settings', name: '账户与授权', icon: 'settings', color: '#6B7280' },
+    ];
+    var menuHtml = '';
+    menuItems.forEach(function (m) {
+      var badgeHtml = m.badge ? '<span class="profile-menu__badge">' + m.badge + '</span>' : '';
+      menuHtml += '<div class="profile-menu__item" onclick="app.openSubPage(\'' + m.id + '\')">' +
+        '<div class="profile-menu__icon" style="background:' + m.color + '">' + getIcon(m.icon, 18) + '</div>' +
+        '<span class="profile-menu__text">' + m.name + '</span>' +
+        badgeHtml +
+        '<span class="profile-menu__arrow">' + getIcon('arrow', 20) + '</span>' +
+        '</div>';
+    });
+    $('profileMenu').innerHTML = menuHtml;
+  }
+
+  // ===== 数据看板渲染 =====
+  function renderDashboard() {
+    var tabs = [
+      { id: 'gov', name: '政务端' },
+      { id: 'insurance', name: '保险端' },
+    ];
+    var tabsHtml = '';
+    tabs.forEach(function (t) {
+      tabsHtml += '<div class="dash-tab' + (state.dashTab === t.id ? ' dash-tab--active' : '') + '" onclick="app.setDashTab(\'' + t.id + '\')">' + t.name + '</div>';
+    });
+    $('dashTabs').innerHTML = tabsHtml;
+
+    var data = MockData.dashboardData[state.dashTab];
+    var html = '';
+
+    if (state.dashTab === 'gov') {
+      // 政务端
+      html += '<div class="dash-overview">' +
+        '<div class="dash-stat dash-stat--accent"><div class="dash-stat__label">覆盖用户</div><div class="dash-stat__value">' + fmtNum(data.totalUsers) + '</div><div class="dash-stat__trend dash-stat__trend--up">↑ 较上月+30%</div></div>' +
+        '<div class="dash-stat dash-stat--blue"><div class="dash-stat__label">知晓率</div><div class="dash-stat__value">' + data.awarenessRate + '%</div><div class="dash-stat__trend dash-stat__trend--up">↑ 目标80%</div></div>' +
+        '<div class="dash-stat"><div class="dash-stat__label">县域覆盖</div><div class="dash-stat__value">' + data.countyCoverage + '%</div><div class="dash-stat__trend dash-stat__trend--up">↑ 目标≥30%</div></div>' +
+        '<div class="dash-stat"><div class="dash-stat__label">内容完成率</div><div class="dash-stat__value">' + data.contentCompletionRate + '%</div><div class="dash-stat__trend">→ 持续提升中</div></div>' +
+        '</div>';
+
+      // 月度趋势折线图
+      var lineData = data.monthlyTrend.map(function (d) { return { label: d.month, value: d.awareness }; });
+      html += '<div class="dash-chart-card"><div class="dash-chart-card__title">知晓率月度趋势<span class="dash-chart-card__title-tag">目标80%</span></div><div class="dash-chart">' + Charts.renderLineChart(lineData, { height: 180, color: '#065A82', area: true, unit: '%', target: 80 }) + '</div></div>';
+
+      // 区域分布柱状图
+      var barData = data.regionDistribution.map(function (r) { return { label: r.region, value: r.users }; });
+      html += '<div class="dash-chart-card"><div class="dash-chart-card__title">各区用户分布<span class="dash-chart-card__title-tag">单位：人</span></div><div class="dash-chart">' + Charts.renderBarChart(barData, { height: 180, color: '#D97706', unit: '人' }) + '</div></div>';
+
+      // 区域明细表
+      html += '<div class="dash-chart-card"><div class="dash-chart-card__title">区域认知率明细</div>' + Charts.renderRegionTable(data.regionDistribution) + '</div>';
+    } else {
+      // 保险端
+      html += '<div class="dash-overview">' +
+        '<div class="dash-stat dash-stat--accent"><div class="dash-stat__label">科普浏览</div><div class="dash-stat__value">' + fmtNum(data.totalViews) + '</div><div class="dash-stat__trend dash-stat__trend--up">↑ 全链路入口</div></div>' +
+        '<div class="dash-stat dash-stat--blue"><div class="dash-stat__label">留资咨询</div><div class="dash-stat__value">' + fmtNum(data.leads) + '</div><div class="dash-stat__trend dash-stat__trend--up">↑ 转化率7.1%</div></div>' +
+        '<div class="dash-stat"><div class="dash-stat__label">投保转化</div><div class="dash-stat__value">' + fmtNum(data.applications) + '</div><div class="dash-stat__trend dash-stat__trend--up">↑ 同比+45%</div></div>' +
+        '<div class="dash-stat"><div class="dash-stat__label">转化率</div><div class="dash-stat__value">' + data.conversionRate + '%</div><div class="dash-stat__trend dash-stat__trend--up">↑ 行业均值<2%</div></div>' +
+        '</div>';
+
+      // 转化漏斗
+      html += '<div class="dash-chart-card"><div class="dash-chart-card__title">全链路转化漏斗<span class="dash-chart-card__title-tag">五步链路</span></div>' + Charts.renderFunnel(data.funnel) + '</div>';
+
+      // 产品分布环形图
+      var donutData = data.productDistribution.map(function (p, idx) {
+        var colors = ['#D97706', '#065A82', '#1C7293'];
+        return { name: p.name, count: p.count, color: colors[idx] };
+      });
+      html += '<div class="dash-chart-card"><div class="dash-chart-card__title">投保产品分布</div><div style="display:flex;align-items:center;gap:12px"><div style="flex-shrink:0">' + Charts.renderDonut(donutData, { size: 140, thickness: 22, showLegend: false }) + '</div><div style="flex:1">' + donutLegend(donutData) + '</div></div></div>';
+    }
+
+    $('dashContent').innerHTML = html;
+  }
+
+  function donutLegend(data) {
+    var total = 0;
+    data.forEach(function (d) { total += d.count; });
+    var html = '';
+    data.forEach(function (d) {
+      var pct = Math.round(d.count / total * 100);
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+        '<div style="width:12px;height:12px;border-radius:3px;background:' + d.color + '"></div>' +
+        '<span style="font-size:13px;color:var(--c-ink);font-weight:500">' + d.name + '</span>' +
+        '<span style="flex:1"></span>' +
+        '<span style="font-size:13px;color:var(--c-text-secondary)">' + d.count + '单</span>' +
+        '<span style="font-size:13px;font-weight:700;color:var(--c-deep-blue)">' + pct + '%</span>' +
+        '</div>';
+    });
+    return html;
+  }
+
+  // ===== 子页面系统 =====
+  function openSubPage(type, data) {
+    state.subPageOpen = true;
+    state.subPageData = data || null;
+    var inner = $('subPageInner');
+    var html = '';
+
+    // 导航栏
+    var navTitle = '';
+    var navRight = '';
+    switch (type) {
+      case 'education': navTitle = '政策科普'; break;
+      case 'qa': navTitle = 'AI问答'; break;
+      case 'points': navTitle = '护理值中心'; break;
+      case 'recommendation': navTitle = '保障缺口测评'; break;
+      case 'calculator': navTitle = '护理成本测算'; break;
+      case 'dashboard': navTitle = '数据看板'; break;
+      case 'todayRecommend': navTitle = '今日推荐'; break;
+      case 'family': navTitle = '家庭成员关联'; break;
+      case 'records': navTitle = '积分记录'; break;
+      case 'settings': navTitle = '账户与授权'; break;
+      case 'contentDetail': navTitle = '内容详情'; break;
+      case 'videoDetail': navTitle = '视频播放'; break;
+      default: navTitle = '详情'; break;
+    }
+
+    html += '<div class="nav-bar">' +
+      '<button class="nav-bar__back" onclick="app.closeSubPage()">' + getIcon('arrow', 24).replace('M9 6l6 6-6 6', 'M15 18l-6-6 6-6') + '</button>' +
+      '<span class="nav-bar__title">' + navTitle + '</span>' +
+      '<span class="nav-bar__right"></span>' +
+      '</div>';
+    html += '<div class="subpage__inner">';
+
+    // 子页面内容
+    switch (type) {
+      case 'points': html += renderPointsCenter(); break;
+      case 'recommendation': html += renderRecommendation(); break;
+      case 'calculator': html += renderCalculator(); break;
+      case 'todayRecommend': html += renderTodayRecommend(); break;
+      case 'family': html += renderFamily(); break;
+      case 'records': html += renderRecords(); break;
+      case 'settings': html += renderSettings(); break;
+      case 'contentDetail': html += renderContentDetail(data); break;
+      case 'videoDetail': html += renderVideoDetail(data); break;
+      case 'education': html += '<div style="padding:20px;text-align:center;color:var(--c-text-tertiary)">请在底部Tab栏"科普"页查看</div>'; break;
+      case 'qa': navigateTo('qa'); closeSubPage(); return; break;
+      case 'dashboard': navigateTo('dashboard'); closeSubPage(); return; break;
+      default: html += '<div style="padding:40px 20px;text-align:center;color:var(--c-text-tertiary)">功能开发中...</div>'; break;
+    }
+
+    html += '</div>';
+
+    inner.innerHTML = html;
+    $('subPage').style.display = 'flex';
+    inner.scrollTop = 0;
+  }
+
+  function closeSubPage() {
+    state.subPageOpen = false;
+    state.subPageData = null;
+    $('subPage').style.display = 'none';
+    $('subPageInner').innerHTML = '';
+  }
+
+  // ===== 子页面：护理值中心 =====
+  function renderPointsCenter() {
+    var ui = MockData.userInfo;
+    var html = '';
+
+    // 顶部余额
+    html += '<div class="sp-points__hero">' +
+      '<div class="sp-points__balance">' + ui.carePoints + '</div>' +
+      '<div class="sp-points__label">当前护理值</div>' +
+      '<div class="sp-points__actions">' +
+      '<div class="sp-points__action" onclick="app.toast(\'转赠功能演示中\')"><div class="sp-points__action-icon">' + getIcon('transfer', 20) + '</div><span class="sp-points__action-text">转赠长辈</span></div>' +
+      '<div class="sp-points__action" onclick="app.openSubPage(\'records\')"><div class="sp-points__action-icon">' + getIcon('doc', 20) + '</div><span class="sp-points__action-text">积分记录</span></div>' +
+      '<div class="sp-points__action" onclick="app.toast(\'规则说明演示中\')"><div class="sp-points__action-icon">' + getIcon('shield', 20) + '</div><span class="sp-points__action-text">规则说明</span></div>' +
+      '</div></div>';
+
+    // 积分任务
+    html += '<div class="sp-section-title">每日任务</div>';
+    MockData.pointsTasks.forEach(function (t) {
+      var iconColor = t.category === 'policy' ? '#D97706' : '#065A82';
+      var btnClass = t.completed ? 'sp-task__btn--done' : '';
+      var btnText = t.completed ? '已完成' : '去完成';
+      var iconBg = t.completed ? '#E8EAED' : iconColor;
+      var iconColor2 = t.completed ? '#9CA3AF' : '#fff';
+      html += '<div class="sp-task">' +
+        '<div class="sp-task__icon" style="background:' + iconBg + ';color:' + iconColor2 + '">' + getIcon(t.category === 'policy' ? 'book' : 'heart', 20) + '</div>' +
+        '<div class="sp-task__info"><div class="sp-task__name">' + t.name + '</div><div class="sp-task__desc">' + escapeHtml(t.desc) + ' · 每日上限' + t.dailyLimit + '次</div></div>' +
+        '<span style="font-size:13px;font-weight:700;color:var(--c-orange)">+' + t.points + '</span>' +
+        '<button class="sp-task__btn ' + btnClass + '" onclick="app.doTask(\'' + t.id + '\')" ' + (t.completed ? 'disabled' : '') + '>' + btnText + '</button>' +
+        '</div>';
+    });
+
+    // 兑换权益
+    html += '<div class="sp-section-title">积分兑换</div>';
+    MockData.pointsRewards.forEach(function (r) {
+      var canAfford = ui.carePoints >= r.cost;
+      var iconColors = { insurance: '#D97706', service: '#065A82', health: '#1C7293', merchandise: '#E8A838' };
+      var iconNames = { insurance: 'shield', service: 'heart', health: 'check', merchandise: 'gift' };
+      var ic = iconColors[r.category] || '#6B7280';
+      var in_ = iconNames[r.category] || 'gift';
+      html += '<div class="sp-reward">' +
+        '<div class="sp-reward__row">' +
+        '<div class="sp-reward__icon" style="background:' + ic + '">' + getIcon(in_, 20) + '</div>' +
+        '<div class="sp-reward__info"><div class="sp-reward__name">' + escapeHtml(r.name) + '</div><div class="sp-reward__desc">' + escapeHtml(r.desc) + '</div></div>' +
+        '<div style="text-align:right"><div class="sp-reward__cost">' + r.cost + '分</div>' +
+        '<button class="sp-reward__btn' + (canAfford ? '' : ' sp-reward__btn--disabled') + '" onclick="app.exchangeReward(\'' + r.id + '\')" ' + (canAfford ? '' : 'disabled') + '>' + (canAfford ? '兑换' : '不足') + '</button></div>' +
+        '</div></div>';
+    });
+
+    return html;
+  }
+
+  // ===== 子页面：保障缺口测评 =====
+  function renderRecommendation() {
+    var html = '';
+    html += '<div class="sp-rec__hero">' +
+      '<div class="sp-rec__hero-title">保障缺口测评</div>' +
+      '<div class="sp-rec__hero-desc">AI根据你的家庭状况、已有保障、护理成本，智能匹配最合适的保障方案</div>' +
+      '</div>';
+
+    // 表单
+    html += '<div class="sp-rec__form">' +
+      '<div class="sp-rec__form-title">基本信息填写</div>' +
+      '<div class="sp-rec__field"><div class="sp-rec__field-label">年龄</div>' +
+      '<input type="number" class="sp-rec__field-input" id="recAge" value="' + state.recForm.age + '" min="18" max="59">' +
+      '</div>' +
+      '<div class="sp-rec__field"><div class="sp-rec__field-label">已有社保保障</div>' +
+      '<div class="sp-rec__field-select" id="recSocial">' +
+      '<div class="sp-rec__option sp-rec__option--active" onclick="app.recSelect(\'social\',true,this)">有职工医保</div>' +
+      '<div class="sp-rec__option" onclick="app.recSelect(\'social\',false,this)">无</div>' +
+      '</div></div>' +
+      '<div class="sp-rec__field"><div class="sp-rec__field-label">已有商业保险</div>' +
+      '<div class="sp-rec__field-select" id="recCommercial">' +
+      '<div class="sp-rec__option ' + (state.recForm.hasCommercial ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'commercial\',true,this)">有百万医疗险</div>' +
+      '<div class="sp-rec__option ' + (!state.recForm.hasCommercial ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'commercial\',false,this)">无</div>' +
+      '</div></div>' +
+      '<div class="sp-rec__field"><div class="sp-rec__field-label">家庭失能风险</div>' +
+      '<div class="sp-rec__field-select" id="recRisk">' +
+      '<div class="sp-rec__option ' + (state.recForm.familyRisk === 'high' ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'risk\',\'high\',this)">高（有失能家人）</div>' +
+      '<div class="sp-rec__option ' + (state.recForm.familyRisk === 'medium' ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'risk\',\'medium\',this)">中</div>' +
+      '<div class="sp-rec__option ' + (state.recForm.familyRisk === 'low' ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'risk\',\'low\',this)">低</div>' +
+      '</div></div>' +
+      '<div class="sp-rec__field"><div class="sp-rec__field-label">年度保险预算</div>' +
+      '<div class="sp-rec__field-select" id="recBudget">' +
+      '<div class="sp-rec__option ' + (state.recForm.budget === '3000-5000' ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'budget\',\'3000-5000\',this)">3000-5000元</div>' +
+      '<div class="sp-rec__option ' + (state.recForm.budget === '5000-10000' ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'budget\',\'5000-10000\',this)">5000-10000元</div>' +
+      '<div class="sp-rec__option ' + (state.recForm.budget === '10000+' ? 'sp-rec__option--active' : '') + '" onclick="app.recSelect(\'budget\',\'10000+\',this)">10000元以上</div>' +
+      '</div></div>' +
+      '<button class="sp-rec__submit" onclick="app.runRecommendation()">开始AI测评</button>' +
+      '</div>';
+
+    // 结果区域（默认隐藏）
+    html += '<div class="sp-rec__result" id="recResult" style="display:none"></div>';
+
+    return html;
+  }
+
+  function renderRecResult() {
+    var html = '';
+    html += '<div class="sp-rec__gap-card">' +
+      '<div class="sp-rec__gap-title">AI保障缺口分析</div>' +
+      '<div class="sp-rec__gap-desc">根据您填写的信息分析：您已有职工医保（含社保长护险）和百万医疗险，住院医疗费用保障较为充分。但存在以下缺口：1. <b>长期护理保障缺口</b>——社保长护险每月1850元，但南宁全职护工月费4500元，缺口约2650元/月；2. <b>重大疾病保障缺口</b>——百万医疗险仅报销医疗费用，确诊重疾后收入损失和康复费用无保障；3. <b>家庭失能风险较高</b>——父亲68岁脑梗后遗症，未来护理需求大。建议补充商业长护险+重疾险组合方案。</div>' +
+      '</div>';
+
+    // 产品推荐
+    MockData.insuranceProducts.forEach(function (p) {
+      var avgScore = Math.round((p.scores.coverage + p.scores.rate + p.scores.claims) / 3);
+      var logoColors = { '商业长护险': '#D97706', '百万医疗险': '#065A82', '重疾险': '#1C7293' };
+      var lc = logoColors[p.type] || '#6B7280';
+      var initial = p.name.charAt(0);
+
+      html += '<div class="sp-rec__product">' +
+        '<div class="sp-rec__product-header">' +
+        '<div class="sp-rec__product-logo" style="background:' + lc + '">' + initial + '</div>' +
+        '<div class="sp-rec__product-info"><div class="sp-rec__product-name">' + escapeHtml(p.name) + '</div><div class="sp-rec__product-company">' + escapeHtml(p.type) + ' · ' + escapeHtml(p.company) + '</div></div>' +
+        '<div class="sp-rec__product-score"><div class="sp-rec__product-score-val">' + avgScore + '</div><div class="sp-rec__product-score-label">综合评分</div></div>' +
+        '</div>' +
+        '<div class="sp-rec__product-body">' +
+        '<div class="sp-rec__product-row"><span class="sp-rec__product-row-label">年保费</span><span class="sp-rec__product-row-value">' + p.premium + ' ' + p.premiumUnit + '</span></div>' +
+        '<div class="sp-rec__product-row"><span class="sp-rec__product-row-label">保额</span><span class="sp-rec__product-row-value">' + (p.coverage >= 10000 ? fmtNum(p.coverage) : p.coverage) + ' ' + p.coverageUnit + '</span></div>' +
+        '<div class="sp-rec__product-row"><span class="sp-rec__product-row-label">佣金率</span><span class="sp-rec__product-row-value" style="color:#16A34A">0%（不纳入推荐排序）</span></div>' +
+        '</div>' +
+        '<div class="sp-rec__product-body" style="padding-top:0">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--c-text-secondary);margin-bottom:6px">保障责任</div>';
+      p.features.forEach(function (f) {
+        html += '<div style="font-size:12px;color:var(--c-ink);padding:2px 0;display:flex;gap:6px"><span style="color:#16A34A">' + getIcon('check', 14) + '</span>' + escapeHtml(f) + '</div>';
+      });
+      html += '<div style="font-size:12px;font-weight:600;color:var(--c-text-secondary);margin:8px 0 6px">免责条款</div>';
+      p.exclusions.forEach(function (e) {
+        html += '<div style="font-size:12px;color:var(--c-text-secondary);padding:2px 0;display:flex;gap:6px"><span style="color:var(--c-red)">·</span>' + escapeHtml(e) + '</div>';
+      });
+      html += '</div>' +
+        '<div class="sp-rec__product-scores" style="padding:8px 16px">' +
+        '<div class="sp-rec__score-bar"><div class="sp-rec__score-bar-label">保障覆盖</div><div class="sp-rec__score-bar-track"><div class="sp-rec__score-bar-fill" style="width:' + p.scores.coverage + '%;background:#D97706"></div></div><div class="sp-rec__score-bar-val">' + p.scores.coverage + '</div></div>' +
+        '<div class="sp-rec__score-bar"><div class="sp-rec__score-bar-label">费率水平</div><div class="sp-rec__score-bar-track"><div class="sp-rec__score-bar-fill" style="width:' + p.scores.rate + '%;background:#065A82"></div></div><div class="sp-rec__score-bar-val">' + p.scores.rate + '</div></div>' +
+        '<div class="sp-rec__score-bar"><div class="sp-rec__score-bar-label">理赔服务</div><div class="sp-rec__score-bar-track"><div class="sp-rec__score-bar-fill" style="width:' + p.scores.claims + '%;background:#1C7293"></div></div><div class="sp-rec__score-bar-val">' + p.scores.claims + '</div></div>' +
+        '</div>' +
+        '<div class="sp-rec__trace">' + getIcon('shield', 12) + ' 推荐追溯ID：' + p.traceId + ' · 全程可追溯可解释</div>' +
+        '</div>';
+    });
+
+    html += '<div style="padding:12px 16px;font-size:12px;color:var(--c-text-tertiary);line-height:1.5" id="recDisclaimer">温馨提示：以上推荐基于AI保障缺口评估模型，以保障覆盖度、费率水平、理赔服务三维评分排序，产品入库和推荐排序均不纳入佣金率。推荐结果仅供参考，具体投保请咨询持证保险顾问。复杂条款问题可一键转接人工顾问。</div>';
+
+    return html;
+  }
+
+  // ===== 子页面：护理成本测算 =====
+  function renderCalculator() {
+    var data = MockData.nursingCostData;
+    var html = '';
+
+    html += '<div class="sp-calc__hero">' +
+      '<div class="sp-calc__hero-title">护理成本测算</div>' +
+      '<div class="sp-calc__hero-desc">基于南宁本地护理行业均价与政策性长护险报销规则，直观呈现护理成本与保障缺口</div>' +
+      '</div>';
+
+    // 居家护理
+    html += '<div class="sp-calc__card">' +
+      '<div class="sp-calc__card-title">居家护理 · 社保长护险报销</div>';
+    data.homeCare.items.forEach(function (item) {
+      html += '<div class="sp-calc__item">' +
+        '<div><span class="sp-calc__item-label">' + item.name + '</span><span class="sp-calc__item-freq">' + item.frequency + '</span></div>' +
+        '<span class="sp-calc__item-value">' + item.amount.toFixed(1) + '元/月</span>' +
+        '</div>';
+    });
+    html += '<div class="sp-calc__total"><span class="sp-calc__total-label">月最高支付限额</span><span class="sp-calc__total-value">' + data.homeCare.monthlyLimit + '元</span></div>' +
+      '</div>';
+
+    // 机构护理
+    html += '<div class="sp-calc__card">' +
+      '<div class="sp-calc__card-title">机构护理 · 按床日付费</div>';
+    data.institutionalCare.levels.forEach(function (l) {
+      html += '<div class="sp-calc__item">' +
+        '<div><span class="sp-calc__item-label">' + l.level + '</span><span class="sp-calc__item-freq">' + l.dailyRate + '元/天</span></div>' +
+        '<span class="sp-calc__item-value">月均约' + l.monthlyEst + '元</span>' +
+        '</div>';
+    });
+    html += '</div>';
+
+    // 市场均价对比
+    var m = data.marketAverage;
+    html += '<div class="sp-calc__compare">' +
+      '<div class="sp-calc__compare-title">南宁本地护理市场均价 vs 社保报销</div>' +
+      '<div class="sp-calc__compare-row"><span>全职护工月费（市场价）</span><span style="font-weight:600">' + m.fullTimeNursing + '元</span></div>' +
+      '<div class="sp-calc__compare-row"><span>社保长护险居家护理报销</span><span style="font-weight:600;color:var(--c-deep-blue)">' + data.homeCare.monthlyLimit + '元</span></div>' +
+      '<div class="sp-calc__compare-row"><span>保障缺口（需自付）</span><span class="sp-calc__compare-gap">' + (m.fullTimeNursing - data.homeCare.monthlyLimit) + '元/月</span></div>' +
+      '</div>';
+
+    html += '<div class="sp-calc__compare">' +
+      '<div class="sp-calc__compare-title">机构护理 vs 社保报销</div>' +
+      '<div class="sp-calc__compare-row"><span>机构床位月费（市场价）</span><span style="font-weight:600">' + m.institutionBed + '元</span></div>' +
+      '<div class="sp-calc__compare-row"><span>社保长护险Ⅲ级月报销</span><span style="font-weight:600;color:var(--c-deep-blue)">1980元</span></div>' +
+      '<div class="sp-calc__compare-row"><span>保障缺口（需自付）</span><span class="sp-calc__compare-gap">' + (m.institutionBed - 1980) + '元/月</span></div>' +
+      '</div>';
+
+    html += '<div style="padding:12px 16px;font-size:12px;color:var(--c-text-tertiary);line-height:1.5">以上数据基于南宁市医保局2026年度政策标准及本地护理行业市场调研均价。实际费用因机构等级、护理等级、服务频次不同而有差异。建议结合保障缺口测评，补充商业保险保障。</div>';
+
+    return html;
+  }
+
+  // ===== 子页面：今日推荐 =====
+  function renderTodayRecommend() {
+    var rec = MockData.todayRecommendation;
+    var html = '<div class="sp-detail">' +
+      '<div class="sp-detail__title">' + escapeHtml(rec.title) + '</div>' +
+      '<div class="sp-detail__meta"><span>护阿婆推荐</span><span>·</span><span>阅读约5分钟</span><span>·</span><span style="color:var(--c-orange)">+' + rec.points + '护理值</span></div>' +
+      '<div class="sp-detail__content">' +
+      '<p>阿婆跟你讲哦，你每个月工资条上扣的医保，里面有一笔叫长护险，你晓不晓得？</p>' +
+      '<p>南宁175万职工医保参保人都在交，但十个人里头有六个不知道这个钱是干嘛的。阿婆今天跟你讲清楚——这笔钱是专门用来给你将来失能了、不能自理了的时候，请人照顾你的。</p>' +
+      '<div class="sp-detail__highlight">' +
+      '<strong>关键数字：</strong>居家护理月最高支付限额1850元，机构护理按床日付费57-66元/天。这笔钱从你医保里自动划扣，不需要额外掏钱。' +
+      '</div>' +
+      '<h4>阿婆帮你算笔账</h4>' +
+      '<p>假设你月薪8000元，单位每月划12元，你自己划4元到长护险基金。一年下来也就192元。但将来如果你家老人需要全职护理，市场价月费4500元，社保长护险能报1850元，帮你省了四成。这个钱啊，该花的花，该省的省，长护险就是该花的那笔钱。</p>' +
+      '<h4>下一步该做什么？</h4>' +
+      '<p>1. 在小程序里完成政策科普学习，赚护理值积分<br>2. 做一次保障缺口测评，看看你家保障够不够<br>3. 用护理成本测算工具，算算你家可能的护理费用</p>' +
+      '<p>政策是好政策，就怕你不知道。知道了就来赚护理值吧！</p>' +
+      '</div>' +
+      '<div class="sp-detail__source">来源：南宁市医疗保障局公开数据 · 护阿婆科普内容团队整理</div>' +
+      '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.toast(\'已阅读，+20护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>' +
+      '</div>';
+    return html;
+  }
+
+  // ===== 子页面：家庭成员关联 =====
+  function renderFamily() {
+    var html = '<div style="padding:16px">' +
+      '<div style="font-size:14px;color:var(--c-text-secondary);margin-bottom:16px;line-height:1.5">通过家庭关联，你可以将护理值转赠给直系长辈，帮助他们兑换养老服务。已关联的家庭成员可共享政策科普内容。</div>';
+
+    var members = [
+      { name: '韦父', age: 68, relation: '父亲', risk: '高危（脑梗后遗症）', linked: true },
+      { name: '韦母', age: 65, relation: '母亲', risk: '中危', linked: true },
+      { name: '李父', age: 70, relation: '岳父', risk: '中危', linked: true },
+    ];
+
+    members.forEach(function (m) {
+      html += '<div class="sp-task" style="margin:0 0 8px">' +
+        '<div class="sp-task__icon" style="background:' + (m.linked ? '#065A82' : '#E8EAED') + ';color:' + (m.linked ? '#fff' : '#9CA3AF') + '">' + getIcon('user', 20) + '</div>' +
+        '<div class="sp-task__info"><div class="sp-task__name">' + m.name + '（' + m.age + '岁·' + m.relation + '）</div><div class="sp-task__desc">失能风险：' + m.risk + '</div></div>' +
+        (m.linked ? '<span style="font-size:11px;color:#16A34A;background:#DCFCE7;padding:2px 8px;border-radius:10px">已关联</span>' : '<button class="sp-task__btn" onclick="app.toast(\'关联请求已发送\')">关联</button>') +
+        '</div>';
+    });
+
+    html += '<div style="margin-top:16px">' +
+      '<button class="sp-rec__submit" onclick="app.toast(\'添加家庭成员功能演示中\')">+ 添加家庭成员</button>' +
+      '</div>' +
+      '<div style="margin-top:12px;padding:12px;background:var(--c-blue-light);border-radius:8px;font-size:12px;color:var(--c-deep-blue);line-height:1.5">' +
+      '<strong>护理值转赠规则：</strong>每人每日转赠上限200分，转赠后进入冷静期24小时。非中青年家庭成员停留普惠账户，不接触商业保险产品。' +
+      '</div></div>';
+    return html;
+  }
+
+  // ===== 子页面：积分记录 =====
+  function renderRecords() {
+    var html = '<div style="padding:12px 0">';
+    MockData.pointsHistory.forEach(function (h) {
+      var typeLabel = h.type === 'earn' ? '获' : (h.type === 'spend' ? '兑' : '转');
+      var typeClass = 'sp-history__type--' + h.type;
+      var amountClass = 'sp-history__amount--' + h.type;
+      var amountSign = h.amount > 0 ? '+' : '';
+      html += '<div class="sp-history__item">' +
+        '<div class="sp-history__type ' + typeClass + '">' + typeLabel + '</div>' +
+        '<div class="sp-history__info"><div class="sp-history__desc">' + escapeHtml(h.desc) + '</div><div class="sp-history__date">' + h.date + '</div></div>' +
+        '<div class="sp-history__amount ' + amountClass + '">' + amountSign + Math.abs(h.amount) + '</div>' +
+        '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  // ===== 子页面：账户与授权 =====
+  function renderSettings() {
+    var ui = MockData.userInfo;
+    var html = '<div style="padding:16px">' +
+      '<div class="sp-calc__card">' +
+      '<div class="sp-calc__card-title">账户信息</div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">姓名</span><span class="sp-calc__item-value">' + escapeHtml(ui.name) + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">年龄</span><span class="sp-calc__item-value">' + ui.age + '岁</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">手机号</span><span class="sp-calc__item-value">' + ui.phone + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">所在城区</span><span class="sp-calc__item-value">' + escapeHtml(ui.district) + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户类型</span><span class="sp-calc__item-value" style="color:var(--c-orange)">' + (ui.accountType === 'authorized' ? '中青年授权账户' : '普惠账户') + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">授权日期</span><span class="sp-calc__item-value">' + ui.authorizedDate + '</span></div>' +
+      '</div>';
+
+    html += '<div class="sp-calc__card">' +
+      '<div class="sp-calc__card-title">授权管理</div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">商业推荐授权</span><span class="sp-calc__item-value" style="color:#16A34A">已授权</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">数据使用授权</span><span class="sp-calc__item-value" style="color:#16A34A">已授权</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">家庭关联授权</span><span class="sp-calc__item-value" style="color:#16A34A">已授权</span></div>' +
+      '</div>';
+
+    html += '<div class="sp-calc__card">' +
+      '<div class="sp-calc__card-title">合规保障</div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户权限隔离</span><span class="sp-calc__item-value" style="color:#16A34A">已启用</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">数据加密方式</span><span class="sp-calc__item-value">国密算法</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">敏感信息脱敏</span><span class="sp-calc__item-value" style="color:#16A34A">已启用</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">审计日志</span><span class="sp-calc__item-value" style="color:#16A34A">全程记录</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">推荐抽检比例</span><span class="sp-calc__item-value">≥10%</span></div>' +
+      '</div>';
+
+    html += '<div style="padding:12px 0"><button class="sp-rec__submit" style="background:var(--c-red)" onclick="app.toast(\'撤回授权后将无法使用积分与推荐功能\')">撤回商业推荐授权</button></div>';
+    html += '<div style="padding:8px 0"><button class="sp-rec__submit" style="background:var(--c-gray);color:var(--c-text-secondary)" onclick="app.toast(\'退出登录功能演示中\')">退出登录</button></div>';
+
+    html += '<div style="padding:12px;background:var(--c-gray);border-radius:8px;font-size:11px;color:var(--c-text-tertiary);line-height:1.5;margin-top:8px">' +
+      '智伴长护—长护价值银行 v1.0.0 · 广西财经学院金融学院 智伴长护团队 · 指导教师：刘家养教授 李瑾专业教师<br>数据来源：南宁市医疗保障局 · 政策截至2026年7月' +
+      '</div></div>';
+    return html;
+  }
+
+  // ===== 子页面：内容详情 =====
+  function renderContentDetail(data) {
+    if (!data) return '<div style="padding:40px;text-align:center;color:var(--c-text-tertiary)">内容加载失败</div>';
+    var section = data.section; // 'basic' | 'benefit' | 'guide'
+    var itemId = data.id;
+    var items = MockData.educationContent[section];
+    var item = null;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === itemId) { item = items[i]; break; }
+    }
+    if (!item) return '<div style="padding:40px;text-align:center;color:var(--c-text-tertiary)">内容未找到</div>';
+
+    var sectionNames = { basic: '基础认知', benefit: '待遇解读', guide: '办事指引' };
+    var html = '<div class="sp-detail">' +
+      '<div class="sp-detail__title">' + escapeHtml(item.title) + '</div>' +
+      '<div class="sp-detail__meta"><span>' + sectionNames[section] + '</span><span>·</span><span>阅读约' + item.readingTime + '分钟</span><span>·</span><span style="color:var(--c-orange)">+' + item.points + '护理值</span></div>' +
+      '<div class="sp-detail__content"><p>' + escapeHtml(item.content).replace(/\n/g, '</p><p>') + '</p></div>' +
+      '<div class="sp-detail__source">来源：南宁市医疗保障局公开政策文件 · 护阿婆科普内容团队整理</div>';
+
+    // 方言版本
+    html += '<div style="padding:12px 0"><div style="font-size:13px;font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆方言版讲解</div>';
+    var dialectNames = { mandarin: '普通话', guiliu: '桂柳话', baihua: '白话', zhuang: '壮语' };
+    for (var d in MockData.dialectSamples) {
+      html += '<div style="padding:8px 12px;background:var(--c-gray);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="app.toast(\'' + dialectNames[d] + '语音播放演示\')">' +
+        '<div style="font-size:12px;color:var(--c-text-secondary);margin-bottom:4px">' + dialectNames[d] + '版</div>' +
+        '<div style="font-size:13px;color:var(--c-ink);line-height:1.4">' + escapeHtml(MockData.dialectSamples[d].substring(0, 80)) + '...</div>' +
+        '<div style="display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--c-cyan)">' + getIcon('play', 14) + '<span style="font-size:11px">播放语音</span></div>' +
+        '</div>';
+    }
+    html += '</div>';
+
+    html += '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.toast(\'已阅读，+' + item.points + '护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>';
+    html += '</div>';
+    return html;
+  }
+
+  // ===== 子页面：视频详情 =====
+  function renderVideoDetail(data) {
+    if (!data) return '<div style="padding:40px;text-align:center;color:var(--c-text-tertiary)">视频加载失败</div>';
+    var video = null;
+    for (var i = 0; i < MockData.videos.length; i++) {
+      if (MockData.videos[i].id === data) { video = MockData.videos[i]; break; }
+    }
+    if (!video) return '<div style="padding:40px;text-align:center;color:var(--c-text-tertiary)">视频未找到</div>';
+
+    var stageNames = { ignorant: '无知期', aware: '感知期', understanding: '理解期', concerned: '关注意愿期', action: '行动期' };
+    var html = '<div style="padding:0">' +
+      // 视频播放区（模拟）
+      '<div style="height:200px;background:linear-gradient(135deg,#065A82,#1C7293);display:flex;align-items:center;justify-content:center;color:#fff;position:relative">' +
+      '<div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center">' + getIcon('play', 28) + '</div>' +
+      '<div style="position:absolute;bottom:10px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:12px;opacity:0.8"><span>护阿婆说长护险</span><span>00:00 / ' + Math.floor(video.duration / 60) + ':' + String(video.duration % 60).padStart(2, '0') + '</span></div>' +
+      '</div>' +
+      '<div style="padding:16px">' +
+      '<div style="font-size:18px;font-weight:700;color:var(--c-ink);line-height:1.4">' + escapeHtml(video.title) + '</div>' +
+      '<div style="display:flex;gap:8px;margin-top:8px">' +
+      '<span class="edu-card__tag" style="background:#D9770622;color:#D97706">' + stageNames[video.stageFrom] + ' → ' + stageNames[video.stageTo] + '</span>' +
+      '<span style="font-size:11px;color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + Math.floor(video.duration / 60) + '分' + (video.duration % 60) + '秒</span>' +
+      '<span style="font-size:11px;color:var(--c-orange);font-weight:600">+' + video.points + '护理值</span>' +
+      '</div>' +
+      '<div style="margin-top:16px;padding:14px;background:var(--c-gray);border-radius:8px">' +
+      '<div style="font-size:13px;font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆台词稿</div>' +
+      '<div style="font-size:14px;color:var(--c-ink);line-height:1.7">' + escapeHtml(video.script) + '</div>' +
+      '</div>' +
+      '<div style="margin-top:16px"><button class="sp-rec__submit" onclick="app.toast(\'观看完成，+' + video.points + '护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已观看，领取护理值</button></div>' +
+      '</div></div>';
+    return html;
+  }
+
+  // ===== 交互方法 =====
+  function setDialect(d) {
+    state.currentDialect = d;
+    renderEducation();
+    toast('已切换为' + ({ mandarin: '普通话', guiliu: '桂柳话', baihua: '白话', zhuang: '壮语' })[d] + '模式');
+  }
+
+  function askQuickQuestion(q) {
+    navigateTo('qa');
+    setTimeout(function () { askQuestion(q); }, 300);
+  }
+
+  function setDashTab(t) {
+    state.dashTab = t;
+    renderDashboard();
+  }
+
+  function doTask(taskId) {
+    var task = null;
+    for (var i = 0; i < MockData.pointsTasks.length; i++) {
+      if (MockData.pointsTasks[i].id === taskId) { task = MockData.pointsTasks[i]; break; }
+    }
+    if (!task) return;
+    task.completed = true;
+    MockData.userInfo.carePoints += task.points;
+    toast('完成"' + task.name + '"，+' + task.points + '护理值！');
+    // 重新渲染子页面
+    openSubPage('points');
+  }
+
+  function exchangeReward(rewardId) {
+    var reward = null;
+    for (var i = 0; i < MockData.pointsRewards.length; i++) {
+      if (MockData.pointsRewards[i].id === rewardId) { reward = MockData.pointsRewards[i]; break; }
+    }
+    if (!reward) return;
+    if (MockData.userInfo.carePoints < reward.cost) {
+      toast('护理值不足，还差' + (reward.cost - MockData.userInfo.carePoints) + '分');
+      return;
+    }
+    MockData.userInfo.carePoints -= reward.cost;
+    toast('兑换成功！"' + reward.name + '"已发放，-' + reward.cost + '护理值');
+    openSubPage('points');
+  }
+
+  function recSelect(field, value, btnEl) {
+    var parent = btnEl.parentNode;
+    var siblings = parent.querySelectorAll('.sp-rec__option');
+    for (var i = 0; i < siblings.length; i++) {
+      siblings[i].classList.remove('sp-rec__option--active');
+    }
+    btnEl.classList.add('sp-rec__option--active');
+    // 更新状态
+    if (field === 'social') state.recForm.hasSocial = value;
+    if (field === 'commercial') state.recForm.hasCommercial = value;
+    if (field === 'risk') state.recForm.familyRisk = value;
+    if (field === 'budget') state.recForm.budget = value;
+  }
+
+  function runRecommendation() {
+    var resultEl = $('recResult');
+    if (!resultEl) return;
+    resultEl.style.display = 'block';
+    resultEl.innerHTML = '<div style="text-align:center;padding:20px"><div class="qa-typing" style="justify-content:center"><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div></div><div style="font-size:13px;color:var(--c-text-secondary);margin-top:8px">AI正在分析保障缺口...</div></div>';
+    setTimeout(function () {
+      resultEl.innerHTML = renderRecResult();
+      resultEl.scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+  }
+
+  function openContentDetail(section, id) {
+    openSubPage('contentDetail', { section: section, id: id });
+  }
+
+  function openVideoDetail(videoId) {
+    openSubPage('videoDetail', videoId);
+  }
+
+  // ===== 状态栏时间 =====
+  function updateStatusBarTime() {
+    var now = new Date();
+    var h = String(now.getHours()).padStart(2, '0');
+    var m = String(now.getMinutes()).padStart(2, '0');
+    var el = $('statusTime');
+    if (el) el.textContent = h + ':' + m;
+  }
+
+  // ===== 初始化 =====
+  function init() {
+    // TabBar点击
+    var tabs = document.querySelectorAll('.tabbar__item');
+    for (var i = 0; i < tabs.length; i++) {
+      (function (tab) {
+        tab.addEventListener('click', function () {
+          var page = tab.getAttribute('data-page');
+          if (page) navigateTo(page);
+        });
+      })(tabs[i]);
+    }
+
+    // AI问答输入
+    var qaInput = $('qaInput');
+    var qaSendBtn = $('qaSendBtn');
+    if (qaInput) {
+      qaInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); askQuestion(qaInput.value); }
+      });
+    }
+    if (qaSendBtn) {
+      qaSendBtn.addEventListener('click', function () { askQuestion(qaInput.value); });
+    }
+
+    // 方言按钮
+    var dialectBtn = $('qaDialectBtn');
+    if (dialectBtn) {
+      dialectBtn.addEventListener('click', function () {
+        var dialects = [
+          { id: 'mandarin', name: '普通话' },
+          { id: 'guiliu', name: '桂柳话' },
+          { id: 'baihua', name: '白话' },
+          { id: 'zhuang', name: '壮语' },
+        ];
+        var idx = 0;
+        for (var i = 0; i < dialects.length; i++) {
+          if (dialects[i].id === state.currentDialect) { idx = i; break; }
+        }
+        var next = dialects[(idx + 1) % dialects.length];
+        state.currentDialect = next.id;
+        renderQA();
+        toast('切换为' + next.name);
+      });
+    }
+
+    // 状态栏时间
+    updateStatusBarTime();
+    setInterval(updateStatusBarTime, 30000);
+
+    // 首页渲染
+    renderHome();
+  }
+
+  // ===== 暴露API =====
+  var app = {
+    navigateTo: navigateTo,
+    openSubPage: openSubPage,
+    closeSubPage: closeSubPage,
+    setDialect: setDialect,
+    askQuickQuestion: askQuickQuestion,
+    setDashTab: setDashTab,
+    doTask: doTask,
+    exchangeReward: exchangeReward,
+    recSelect: recSelect,
+    runRecommendation: runRecommendation,
+    openContentDetail: openContentDetail,
+    openVideoDetail: openVideoDetail,
+    toast: toast,
+  };
+
+  // DOM Ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  if (typeof window !== 'undefined') window.app = app;
+})();
+
+</script>
+
+
+
+<!-- ========== 二维码分享浮窗 ========== -->
+<div id="qrFloatBtn" style="position:fixed;top:12px;right:12px;z-index:9999;width:36px;height:36px;border-radius:50%;background:rgba(217,119,6,0.9);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.2);" onclick="toggleQRCode()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm9-2h7v7h-7V3zm2 2v3h3V5h-3zM3 14h7v7H3v-7zm2 2v3h3v-3H5zm9-2h3v3h-3v-3zm5 0h2v2h-2v-2zm-5 5h3v2h-3v-2zm5 0h2v2h-2v-2zm0-3h2v2h-2v-2z" fill="white"></path>
+  </svg>
+</div>
+
+<div id="qrOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10000;align-items:center;justify-content:center;" onclick="toggleQRCode()">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px 20px;text-align:center;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
+    <div style="font-size:16px;font-weight:700;color:#1A2744;margin-bottom:4px;">微信扫码访问</div>
+    <div style="font-size:12px;color:#6B7280;margin-bottom:16px;">扫一扫，在手机上体验小程序</div>
+    <div id="qrCodeContainer" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
+    <div id="qrLocalWarn" style="display:none;background:#FEF3E7;border-radius:8px;padding:12px;margin-bottom:12px;text-align:left;">
+      <div style="font-size:12px;font-weight:600;color:#D97706;margin-bottom:4px;">当前是本地地址，手机无法直接访问</div>
+      <div style="font-size:11px;color:#6B7280;line-height:1.6;">请将此文件上传到任意公网服务器（如 GitHub Pages、Vercel 等），通过公网链接打开后，二维码即可扫码访问。</div>
+      <div style="margin-top:8px;font-size:11px;color:#065A82;cursor:pointer;text-decoration:underline;" onclick="showDeployGuide()">查看部署方法</div>
+    </div>
+    <div style="font-size:11px;color:#9CA3AF;line-height:1.5;">当前链接：<span id="qrUrlDisplay" style="word-break:break-all"></span></div>
+    <button id="copyLinkBtn" onclick="copyCurrentLink()" style="margin-top:10px;padding:8px 18px;border-radius:20px;background:#E8F1F8;color:#065A82;font-size:12px;font-weight:600;border:1px solid #065A82;cursor:pointer;">复制链接</button>
+    <button onclick="toggleQRCode()" style="margin-top:10px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;">关闭</button>
+  </div>
+</div>
+
+<div id="deployGuide" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;" onclick="document.getElementById('deployGuide').style.display='none'">
+  <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
+    <div style="font-size:16px;font-weight:700;color:#1A2744;margin-bottom:12px;">如何部署到公网</div>
+    <div style="font-size:12px;color:#374151;line-height:1.8;text-align:left;">
+      <div style="margin-bottom:12px;">
+        <b>方法一：Vercel（推荐，免费）</b><br>
+        1. 注册 vercel.com 账号<br>
+        2. 安装 CLI：npm i -g vercel<br>
+        3. 在文件目录运行：vercel deploy<br>
+        4. 获得公网链接后，用该链接打开本页面<br>
+        5. 点击二维码按钮即可扫码访问
+      </div>
+      <div style="margin-bottom:12px;">
+        <b>方法二：GitHub Pages</b><br>
+        1. 在 GitHub 创建新仓库<br>
+        2. 上传 zhbch-app.html 文件<br>
+        3. 开启 Settings &gt; Pages<br>
+        4. 通过公网链接打开后扫码
+      </div>
+      <div style="margin-bottom:12px;">
+        <b>方法三：手机直接打开</b><br>
+        1. 将 zhbch-app.html 发送到微信/邮箱<br>
+        2. 在手机上用浏览器打开文件<br>
+        3. 无需扫码，直接体验
+      </div>
+      <div>
+        <b>方法四：电脑开热点分享</b><br>
+        1. 电脑和手机连同一 WiFi<br>
+        2. 用 python -m http.server 8080 启动<br>
+        3. 查看电脑局域网 IP（如 192.168.1.x）<br>
+        4. 将代码中链接改为 http://你的IP:8080/zhbch-app.html<br>
+        5. 手机微信扫码即可打开
+      </div>
+    </div>
+    <button onclick="document.getElementById('deployGuide').style.display='none'" style="margin-top:14px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;">知道了</button>
+  </div>
+</div>
+
+<script>
+// ===== 二维码生成（使用 qrcodejs 库） =====
+// 通过动态加载 qrcodejs CDN 库生成二维码
+(function(){
+  var qrcodeLibLoaded = false;
+  var pendingCallback = null;
+
+  // 动态加载 qrcodejs 库
+  function loadQrcodeLib(callback) {
+    if (typeof QRCode !== 'undefined' && QRCode.make) {
+      qrcodeLibLoaded = true;
+      callback();
+      return;
+    }
+    if (qrcodeLibLoaded) {
+      callback();
+      return;
+    }
+    pendingCallback = callback;
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+    script.onload = function() {
+      qrcodeLibLoaded = true;
+      if (pendingCallback) { pendingCallback(); pendingCallback = null; }
+    };
+    script.onerror = function() {
+      // Fallback: try alternative CDN
+      var alt = document.createElement('script');
+      alt.src = 'https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
+      alt.onload = function() {
+        qrcodeLibLoaded = true;
+        if (pendingCallback) { pendingCallback(); pendingCallback = null; }
+      };
+      alt.onerror = function() {
+        // Final fallback: use QR Server API
+        if (pendingCallback) { pendingCallback(); pendingCallback = null; }
+      };
+      document.head.appendChild(alt);
+    };
+    document.head.appendChild(script);
+  }
+
+  // Generate QR code using qrcode-generator library
+  function generateQRWithLib(url, container) {
+    try {
+      // qrcode-generator API: typeNumber=0 for auto, errorCorrectionLevel='M'
+      var qr = qrcode(0, 'M');
+      qr.addData(url);
+      qr.make();
+      var moduleCount = qr.getModuleCount();
+      var cellSize = Math.floor(220 / moduleCount);
+      var margin = Math.floor((220 - cellSize * moduleCount) / 2);
+      if (margin < 0) margin = 0;
+
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220">';
+      svg += '<rect width="220" height="220" fill="#ffffff"/>';
+
+      for (var r = 0; r < moduleCount; r++) {
+        for (var c = 0; c < moduleCount; c++) {
+          if (qr.isDark(r, c)) {
+            var x = margin + c * cellSize;
+            var y = margin + r * cellSize;
+            svg += '<rect x="' + x + '" y="' + y + '" width="' + cellSize + '" height="' + cellSize + '" fill="#1A2744"/>';
+          }
+        }
+      }
+      svg += '</svg>';
+      container.innerHTML = svg;
+    } catch(e) {
+      console.error('QR generation error:', e);
+      // Fallback to API
+      generateQRWithAPI(url, container);
+    }
+  }
+
+  // Fallback: Generate QR code using QR Server API
+  function generateQRWithAPI(url, container) {
+    var img = document.createElement('img');
+    img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=2&data=' + encodeURIComponent(url);
+    img.width = 220;
+    img.height = 220;
+    img.style.borderRadius = '8px';
+    img.alt = 'QR Code';
+    img.onerror = function() {
+      container.innerHTML = '<div style="color:#C0392B;font-size:13px;padding:20px;">二维码生成失败，请手动复制链接：<br/>' + url + '</div>';
+    };
+    container.innerHTML = '';
+    container.appendChild(img);
+  }
+
+  // Toggle QR code overlay
+  window.toggleQRCode = function() {
+    var overlay = document.getElementById('qrOverlay');
+    if (overlay.style.display == 'none' || overlay.style.display == '') {
+      var url = window.location.href;
+      document.getElementById('qrUrlDisplay').textContent = url;
+      var container = document.getElementById('qrCodeContainer');
+      var localWarn = document.getElementById('qrLocalWarn');
+
+      // Detect if URL is localhost or local file
+      var isLocal = url.indexOf('localhost') >= 0 ||
+                    url.indexOf('127.0.0.1') >= 0 ||
+                    url.indexOf('file://') === 0 ||
+                    url.indexOf('0.0.0.0') >= 0;
+
+      if (isLocal) {
+        // Show local warning, still generate QR code (useful for reference)
+        localWarn.style.display = 'block';
+        container.innerHTML = '<div style="color:#D97706;font-size:13px;padding:20px;text-align:center;line-height:1.6;">二维码已生成<br/>但本地地址手机无法访问<br/>请先部署到公网</div>';
+        // Still try to generate QR code
+        loadQrcodeLib(function() {
+          if (typeof qrcode !== 'undefined') {
+            try {
+              generateQRWithLib(url, container);
+            } catch(e) {
+              container.innerHTML = '<div style="color:#D97706;font-size:13px;padding:20px;text-align:center;line-height:1.6;">二维码已生成<br/>但本地地址手机无法访问<br/>请先部署到公网</div>';
+            }
+          }
+        });
+      } else {
+        // Public URL - hide warning and generate QR code
+        localWarn.style.display = 'none';
+        container.innerHTML = '<div style="color:#9CA3AF;font-size:13px;padding:30px;">正在生成二维码...</div>';
+        loadQrcodeLib(function() {
+          if (typeof qrcode !== 'undefined') {
+            generateQRWithLib(url, container);
+          } else {
+            generateQRWithAPI(url, container);
+          }
+        });
+      }
+      overlay.style.display = 'flex';
+    } else {
+      overlay.style.display = 'none';
+    }
+  };
+
+  // Copy current link to clipboard
+  window.copyCurrentLink = function() {
+    var url = window.location.href;
+    var btn = document.getElementById('copyLinkBtn');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function() {
+        btn.textContent = '已复制!';
+        setTimeout(function() { btn.textContent = '复制链接'; }, 2000);
+      }).catch(function() {
+        fallbackCopy(url, btn);
+      });
+    } else {
+      fallbackCopy(url, btn);
+    }
+  };
+
+  function fallbackCopy(text, btn) {
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      btn.textContent = '已复制!';
+      setTimeout(function() { btn.textContent = '复制链接'; }, 2000);
+    } catch(e) {
+      btn.textContent = '复制失败，请手动选中';
+    }
+    document.body.removeChild(textarea);
+  }
+
+  // Show deploy guide
+  window.showDeployGuide = function() {
+    document.getElementById('deployGuide').style.display = 'flex';
+  };
+})();
+</script>
+
+</body></html>
