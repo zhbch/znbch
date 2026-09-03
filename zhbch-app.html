@@ -3921,8 +3921,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     var gl = { sufficient: ['充足', '#16A34A', '#DCFCE7'], low: ['低', '#D97706', '#FEF3C7'], medium: ['中等', '#C2410C', '#FFEDD5'], high: ['高', '#B91C1C', '#FEE2E2'] }[r.gapLevel];
     var stageName = { ignorant: '无知期', aware: '感知期', understanding: '理解期', concerned: '关注意愿期', action: '行动期' }[MockData.userInfo.cognitiveStage] || '理解期';
     var html = '<div style="padding:16px 18px 20px">';
-    // 标题 + 醒目风险提示（页面直接展示）
-    html += '<div style="font-weight:700;color:var(--c-ink);font-size:calc(28px*var(--fs,1));margin-bottom:8px">个人长期照护保障缺口报告</div>';
+    // 醒目风险提示（页面直接展示）
     html += '<div style="margin-bottom:12px;padding:10px 12px;border-radius:8px;background:#FEE2E2;border:2px solid #DC2626;color:#B91C1C;font-weight:700;font-size:calc(26px*var(--fs,1));line-height:1.6">⚠️ 本报告仅作为参考，不构成投保建议</div>';
     // 三项核心数据
     html += '<div style="padding:14px;border-radius:12px;background:var(--c-gray)">';
@@ -4412,8 +4411,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
   // ===== 问卷页 + 缺口测算 + 36维画像 =====
   function renderGapQuestionnaire() {
     var f = state.gapForm || { age: 35, insured: 'employee', incomeMonthly: 10000, careStatus: 'none', elderlyCount: 1, elderLevel: 'independent', hasSupport: 'yes', spendCap: 2000, hasCommercial: 'none' };
-    var html = '<div class="sp-header" onclick="app.closeSubPage()">' + getIcon('back', 20) + '<span>授权信息 & 保障画像问卷</span></div>';
-    html += '<div style="padding:16px 18px;color:var(--c-text-secondary);font-size:calc(23px*var(--fs,1));line-height:1.6">为了生成你的36维用户画像并计算长期照护保障缺口，请如实填写以下基础信息（演示环境：仅本地留存，不会外发）。</div>';
+    var html = '<div style="padding:16px 18px;color:var(--c-text-secondary);font-size:calc(23px*var(--fs,1));line-height:1.6">为了生成你的36维用户画像并计算长期照护保障缺口，请如实填写以下基础信息（演示环境：仅本地留存，不会外发）。</div>';
     html += '<div style="padding:0 18px 20px">';
     function field(label, body) { return '<div class="dash-field" style="margin-bottom:14px"><label style="display:block;font-size:calc(23px*var(--fs,1));color:var(--c-text-secondary);margin-bottom:4px;font-weight:600">' + label + '</label>' + body + '</div>'; }
     function radio(name, val, label, checked) { return '<label style="display:inline-flex;align-items:center;gap:6px;margin:4px 14px 4px 0;font-size:calc(26px*var(--fs,1));color:var(--c-ink)"><input type="radio" name="'+name+'" value="'+val+'" ' + (checked?'checked':'') + '>'+label+'</label>'; }
