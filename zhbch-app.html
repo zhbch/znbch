@@ -73,11 +73,11 @@ svg { display: block; }
 .status-bar {
   height: 44px; padding: 0 24px 0 28px;
   display: flex; align-items: center; justify-content: space-between;
-  font-size: 14px; font-weight: 600; color: var(--c-ink);
+  font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink);
   flex-shrink: 0; z-index: 50; position: relative;
 }
 .status-bar__icons { display: flex; align-items: center; gap: 5px; color: var(--c-ink); }
-.status-bar__battery { font-size: 13px; font-weight: 500; margin-right: 2px; }
+.status-bar__battery { font-size:calc(28px*var(--fs,1)); font-weight: 500; margin-right: 2px; }
 
 /* ===== 导航栏（子页面） ===== */
 .nav-bar {
@@ -87,8 +87,8 @@ svg { display: block; }
   flex-shrink: 0; z-index: 40; position: relative;
 }
 .nav-bar__back { display: flex; align-items: center; color: var(--c-deep-blue); padding: 4px; }
-.nav-bar__title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--c-ink); }
-.nav-bar__right { width: 32px; font-size: 14px; color: var(--c-deep-blue); text-align: right; }
+.nav-bar__title { flex: 1; text-align: center; font-size:calc(28px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.nav-bar__right { width: 32px; font-size:calc(23px*var(--fs,1)); color: var(--c-deep-blue); text-align: right; }
 
 /* ===== 内容区域 ===== */
 .content-area { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; position: relative; }
@@ -100,9 +100,9 @@ svg { display: block; }
 /* ===== 通用区块 ===== */
 .section { padding: 0 16px; margin-top: 16px; }
 .section__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.section__header h3 { font-size: 17px; font-weight: 700; color: var(--c-ink); }
-.section__more { font-size: 13px; color: var(--c-cyan); cursor: pointer; }
-.section__tag { font-size: 11px; color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
+.section__header h3 { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-ink); }
+.section__more { font-size:calc(28px*var(--fs,1)); color: var(--c-cyan); cursor: pointer; }
+.section__tag { font-size:calc(23px*var(--fs,1)); color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
 
 /* ===== TabBar ===== */
 .tabbar {
@@ -127,7 +127,7 @@ svg { display: block; }
 .tabbar__item--center .tabbar__icon { display: none; }
 .tabbar__item--center.tabbar__item--active .tabbar__text { color: var(--c-orange); }
 .tabbar__icon { width: 24px; height: 24px; }
-.tabbar__text { font-size: 10px; font-weight: 500; }
+.tabbar__text { font-size:calc(28px*var(--fs,1)); font-weight: 500; }
 .tabbar__text--center { margin-top: 28px; }
 
 /* ===== 首页 ===== */
@@ -135,7 +135,7 @@ svg { display: block; }
 .home-hero__bg {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(135deg, var(--c-deep-blue) 0%, var(--c-cyan) 100%);
-  border-radius: 0 0 24px 24px; height: 180px;
+  border-radius: 0 0 24px 24px; height: auto; min-height: 180px;
 }
 .home-hero__bg::after {
   content: ''; position: absolute; top: 0; right: -20px; width: 120px; height: 120px;
@@ -149,8 +149,8 @@ svg { display: block; }
   display: flex; align-items: center; justify-content: center;
 }
 .home-hero__text { color: #fff; flex: 1; }
-.home-hero__greeting { font-size: 15px; font-weight: 600; line-height: 1.4; }
-.home-hero__sub { font-size: 12px; opacity: 0.85; margin-top: 4px; line-height: 1.3; }
+.home-hero__greeting { font-size:calc(19px*var(--fs,1)); font-weight: 600; line-height: 1.9; }
+.home-hero__sub { font-size:calc(26px*var(--fs,1)); opacity: 0.85; margin-top: 4px; line-height: 1.6; }
 
 .home-stats {
   display: flex; align-items: center; margin: 0 16px; margin-top: -20px;
@@ -158,11 +158,11 @@ svg { display: block; }
   box-shadow: var(--shadow-md); position: relative; z-index: 10;
 }
 .home-stats__item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.home-stats__label { font-size: 11px; color: var(--c-text-secondary); }
-.home-stats__value { font-size: 18px; font-weight: 700; color: var(--c-ink); }
-.home-stats__value--accent { color: var(--c-cyan); font-size: 15px; }
+.home-stats__label { font-size:calc(23px*var(--fs,1)); color: var(--c-text-secondary); }
+.home-stats__value { font-size:calc(23px*var(--fs,1)); font-weight: 700; color: var(--c-ink); }
+.home-stats__value--accent { color: var(--c-cyan); font-size:calc(19px*var(--fs,1)); }
 .home-stats__value--badge {
-  font-size: 13px; color: var(--c-deep-blue); background: var(--c-blue-light);
+  font-size:calc(28px*var(--fs,1)); color: var(--c-deep-blue); background: var(--c-blue-light);
   padding: 2px 10px; border-radius: 10px; font-weight: 600;
 }
 .home-stats__divider { width: 1px; height: 28px; background: var(--c-gray-border); }
@@ -179,8 +179,8 @@ svg { display: block; }
   width: 40px; height: 40px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center; color: #fff;
 }
-.home-features__name { font-size: 12px; font-weight: 600; color: var(--c-ink); }
-.home-features__desc { font-size: 10px; color: var(--c-text-tertiary); text-align: center; }
+.home-features__name { font-size:calc(26px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.home-features__desc { font-size:calc(28px*var(--fs,1)); color: var(--c-text-tertiary); text-align: center; }
 
 .home-recommend {
   background: linear-gradient(135deg, var(--c-orange-light) 0%, #FFF8F0 100%);
@@ -192,13 +192,13 @@ svg { display: block; }
 .home-recommend__badge {
   width: 44px; height: 44px; border-radius: 12px; background: var(--c-orange);
   display: flex; align-items: center; justify-content: center; color: #fff;
-  flex-shrink: 0; font-size: 20px; font-weight: 700;
+  flex-shrink: 0; font-size:calc(26px*var(--fs,1)); font-weight: 700;
 }
 .home-recommend__content { flex: 1; }
-.home-recommend__title { font-size: 14px; font-weight: 600; color: var(--c-ink); line-height: 1.3; }
-.home-recommend__desc { font-size: 12px; color: var(--c-text-secondary); margin-top: 3px; }
+.home-recommend__title { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); line-height: 1.6; }
+.home-recommend__desc { font-size:calc(26px*var(--fs,1)); color: var(--c-text-secondary); margin-top: 3px; }
 .home-recommend__points {
-  font-size: 11px; color: var(--c-orange); background: rgba(217,119,6,0.1);
+  font-size:calc(23px*var(--fs,1)); color: var(--c-orange); background: rgba(217,119,6,0.1);
   padding: 2px 8px; border-radius: 10px; margin-top: 6px; display: inline-block;
 }
 
@@ -210,50 +210,50 @@ svg { display: block; }
 .home-news__item:active { transform: scale(0.98); }
 .home-news__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c-orange); margin-top: 6px; flex-shrink: 0; }
 .home-news__content { flex: 1; }
-.home-news__title { font-size: 13px; font-weight: 500; color: var(--c-ink); line-height: 1.4; }
-.home-news__meta { font-size: 11px; color: var(--c-text-tertiary); margin-top: 4px; display: flex; gap: 8px; }
+.home-news__title { font-size:calc(28px*var(--fs,1)); font-weight: 500; color: var(--c-ink); line-height: 1.9; }
+.home-news__meta { font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); margin-top: 4px; display: flex; gap: 8px; }
 
 /* ===== 科普页 ===== */
 .edu-dialect {
   margin: 8px 16px; padding: 12px 14px; background: #fff; border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
-.edu-dialect__label { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 10px; }
+.edu-dialect__label { display: flex; align-items: center; gap: 6px; font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); margin-bottom: 10px; }
 .edu-dialect__btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .edu-dialect__btn {
-  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  padding: 6px 14px; border-radius: 20px; font-size:calc(26px*var(--fs,1)); font-weight: 500;
   background: var(--c-gray); color: var(--c-text-secondary); transition: all 0.2s;
   border: 1px solid transparent; cursor: pointer;
 }
 .edu-dialect__btn--active { background: var(--c-orange); color: #fff; border-color: var(--c-orange); }
 
 .edu-stages { margin: 12px 16px; padding: 16px 14px; background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
-.edu-stages__title { font-size: 13px; font-weight: 600; color: var(--c-text-secondary); margin-bottom: 12px; }
+.edu-stages__title { font-size:calc(28px*var(--fs,1)); font-weight: 600; color: var(--c-text-secondary); margin-bottom: 12px; }
 .edu-stages__track { display: flex; align-items: center; justify-content: space-between; position: relative; }
 .edu-stages__track::before { content: ''; position: absolute; top: 16px; left: 16px; right: 16px; height: 2px; background: var(--c-gray-border); z-index: 0; }
 .edu-stages__progress { position: absolute; top: 16px; left: 16px; height: 2px; background: var(--c-orange); z-index: 1; transition: width 0.5s; }
 .edu-stages__node { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 2; flex: 1; }
-.edu-stages__dot { width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 2px solid var(--c-gray-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--c-text-tertiary); }
+.edu-stages__dot { width: calc(32px*var(--fs,1)); height: calc(32px*var(--fs,1)); border-radius: 50%; background: #fff; border: 2px solid var(--c-gray-border); display: flex; align-items: center; justify-content: center; font-size:calc(26px*var(--fs,1)); font-weight: 600; color: var(--c-text-tertiary); }
 .edu-stages__node--done .edu-stages__dot { background: var(--c-orange); border-color: var(--c-orange); color: #fff; }
 .edu-stages__node--current .edu-stages__dot { background: var(--c-deep-blue); border-color: var(--c-deep-blue); color: #fff; box-shadow: 0 0 0 4px rgba(6,90,130,0.15); }
-.edu-stages__name { font-size: 10px; color: var(--c-text-secondary); text-align: center; }
+.edu-stages__name { font-size:calc(28px*var(--fs,1)); color: var(--c-text-secondary); text-align: center; }
 .edu-stages__node--done .edu-stages__name, .edu-stages__node--current .edu-stages__name { color: var(--c-ink); font-weight: 600; }
 
 .edu-content__section { margin-bottom: 16px; }
-.edu-content__section-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin: 12px 16px 8px; display: flex; align-items: center; gap: 6px; }
+.edu-content__section-title { font-size:calc(19px*var(--fs,1)); font-weight: 700; color: var(--c-ink); margin: 12px 16px 8px; display: flex; align-items: center; gap: 6px; }
 .edu-content__section-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--c-orange); }
 .edu-card {
   margin: 0 16px 10px; background: #fff; border-radius: var(--radius-md); overflow: hidden;
   box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.15s;
 }
 .edu-card:active { transform: scale(0.98); }
-.edu-card__img { width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: #fff; }
+.edu-card__img { width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; font-size:calc(44px*var(--fs,1)); color: #fff; }
 .edu-card__body { padding: 12px 14px; }
-.edu-card__title { font-size: 14px; font-weight: 600; color: var(--c-ink); }
-.edu-card__desc { font-size: 12px; color: var(--c-text-secondary); margin-top: 4px; line-height: 1.4; }
+.edu-card__title { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.edu-card__desc { font-size:calc(26px*var(--fs,1)); color: var(--c-text-secondary); margin-top: 4px; line-height: 1.9; }
 .edu-card__meta { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
-.edu-card__tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
-.edu-card__points { font-size: 11px; color: var(--c-orange); font-weight: 600; }
+.edu-card__tag { font-size:calc(28px*var(--fs,1)); padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+.edu-card__points { font-size:calc(23px*var(--fs,1)); color: var(--c-orange); font-weight: 600; }
 
 .edu-videos { display: flex; gap: 10px; overflow-x: auto; padding: 0 16px; }
 .edu-videos::-webkit-scrollbar { display: none; }
@@ -261,12 +261,12 @@ svg { display: block; }
   flex-shrink: 0; width: 200px; background: #fff; border-radius: var(--radius-md);
   overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer;
 }
-.edu-video__thumb { width: 200px; height: 112px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #fff; position: relative; }
-.edu-video__duration { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 4px; }
+.edu-video__thumb { width: 200px; height: 112px; display: flex; align-items: center; justify-content: center; font-size:calc(32px*var(--fs,1)); color: #fff; position: relative; }
+.edu-video__duration { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size:calc(28px*var(--fs,1)); padding: 1px 6px; border-radius: 4px; }
 .edu-video__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; }
 .edu-video__body { padding: 10px 12px; }
-.edu-video__title { font-size: 13px; font-weight: 600; color: var(--c-ink); line-height: 1.3; }
-.edu-video__stage { font-size: 11px; color: var(--c-text-secondary); margin-top: 4px; }
+.edu-video__title { font-size:calc(28px*var(--fs,1)); font-weight: 600; color: var(--c-ink); line-height: 1.6; }
+.edu-video__stage { font-size:calc(23px*var(--fs,1)); color: var(--c-text-secondary); margin-top: 4px; }
 
 /* ===== AI问答页 ===== */
 .page--qa { display: flex; flex-direction: column; height: 100%; }
@@ -279,8 +279,8 @@ svg { display: block; }
 }
 .qa-header__avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .qa-header__info { flex: 1; }
-.qa-header__name { font-size: 16px; font-weight: 600; }
-.qa-header__status { display: flex; align-items: center; gap: 4px; font-size: 12px; opacity: 0.9; }
+.qa-header__name { font-size:calc(26px*var(--fs,1)); font-weight: 600; }
+.qa-header__status { display: flex; align-items: center; gap: 4px; font-size:calc(26px*var(--fs,1)); opacity: 0.9; }
 .qa-header__dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; }
 .qa-header__dialect-btn { padding: 6px; color: #fff; opacity: 0.9; }
 
@@ -293,12 +293,12 @@ svg { display: block; }
 .qa-msg--ai .qa-msg__avatar { background: var(--c-orange-light); border: 1px solid rgba(217,119,6,0.2); }
 .qa-msg--user .qa-msg__avatar { background: var(--c-blue-light); }
 .qa-msg__bubble {
-  padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.5;
+  padding: 10px 14px; border-radius: 16px; font-size:calc(23px*var(--fs,1)); line-height: 1.8;
   word-break: break-word; position: relative;
 }
 .qa-msg--ai .qa-msg__bubble { background: #fff; color: var(--c-ink); border-top-left-radius: 4px; box-shadow: var(--shadow-sm); }
 .qa-msg--user .qa-msg__bubble { background: var(--c-deep-blue); color: #fff; border-top-right-radius: 4px; }
-.qa-msg__source { font-size: 11px; color: var(--c-text-tertiary); margin-top: 6px; padding: 4px 8px; background: var(--c-gray); border-radius: 6px; display: flex; align-items: center; gap: 4px; }
+.qa-msg__source { font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); margin-top: 6px; padding: 4px 8px; background: var(--c-gray); border-radius: 6px; display: flex; align-items: center; gap: 4px; }
 
 .qa-typing { display: flex; gap: 4px; padding: 12px 14px; }
 .qa-typing__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-text-tertiary); animation: qaTyping 1.2s infinite; }
@@ -309,14 +309,14 @@ svg { display: block; }
 .qa-quick { display: flex; gap: 8px; padding: 8px 16px; overflow-x: auto; flex-shrink: 0; }
 .qa-quick::-webkit-scrollbar { display: none; }
 .qa-quick__chip {
-  flex-shrink: 0; padding: 6px 14px; border-radius: 16px; font-size: 12px;
+  flex-shrink: 0; padding: 6px 14px; border-radius: 16px; font-size:calc(26px*var(--fs,1));
   background: var(--c-blue-light); color: var(--c-deep-blue); white-space: nowrap;
   cursor: pointer; transition: background 0.2s; font-weight: 500;
 }
 .qa-quick__chip:active { background: var(--c-cyan); color: #fff; }
 
 .qa-input-bar { display: flex; gap: 8px; padding: 8px 12px 12px; background: #fff; border-top: 1px solid var(--c-gray-border); flex-shrink: 0; align-items: center; }
-.qa-input { flex: 1; height: 36px; background: var(--c-gray); border-radius: 18px; padding: 0 14px; font-size: 14px; color: var(--c-ink); }
+.qa-input { flex: 1; height: auto; min-height: 36px; background: var(--c-gray); border-radius: 18px; padding: 0 14px; font-size:calc(23px*var(--fs,1)); color: var(--c-ink); }
 .qa-input::placeholder { color: var(--c-text-tertiary); }
 .qa-send { width: 36px; height: 36px; border-radius: 50%; background: var(--c-orange); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .qa-send:active { transform: scale(0.92); }
@@ -328,27 +328,27 @@ svg { display: block; }
 }
 .profile-hero::after { content: ''; position: absolute; top: -30px; right: -30px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(232,168,56,0.12) 0%, transparent 70%); border-radius: 50%; }
 .profile-hero__top { display: flex; align-items: center; gap: 14px; position: relative; }
-.profile-hero__avatar { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; }
+.profile-hero__avatar { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size:calc(28px*var(--fs,1)); font-weight: 700; }
 .profile-hero__info { flex: 1; }
-.profile-hero__name { font-size: 18px; font-weight: 700; }
-.profile-hero__meta { font-size: 12px; opacity: 0.85; margin-top: 2px; display: flex; gap: 8px; align-items: center; }
-.profile-hero__badge { font-size: 11px; background: rgba(232,168,56,0.2); color: var(--c-gold); padding: 2px 8px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(232,168,56,0.3); }
+.profile-hero__name { font-size:calc(23px*var(--fs,1)); font-weight: 700; }
+.profile-hero__meta { font-size:calc(26px*var(--fs,1)); opacity: 0.85; margin-top: 2px; display: flex; gap: 8px; align-items: center; }
+.profile-hero__badge { font-size:calc(23px*var(--fs,1)); background: rgba(232,168,56,0.2); color: var(--c-gold); padding: 2px 8px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(232,168,56,0.3); }
 
 .profile-points { margin: 12px 16px 0; background: #fff; border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
 .profile-points__row { display: flex; justify-content: space-between; align-items: center; }
-.profile-points__label { font-size: 14px; font-weight: 600; color: var(--c-ink); }
-.profile-points__value { font-size: 22px; font-weight: 700; color: var(--c-orange); }
+.profile-points__label { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.profile-points__value { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-orange); }
 .profile-points__bar { height: 6px; background: var(--c-gray); border-radius: 3px; margin-top: 10px; overflow: hidden; }
 .profile-points__bar-fill { height: 100%; background: linear-gradient(90deg, var(--c-orange), var(--c-gold)); border-radius: 3px; transition: width 0.5s; }
-.profile-points__meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--c-text-tertiary); margin-top: 6px; }
+.profile-points__meta { display: flex; justify-content: space-between; font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); margin-top: 6px; }
 
 .profile-tags { display: flex; flex-direction: column; gap: 12px; }
 .profile-tags__group {}
-.profile-tags__group-title { font-size: 13px; font-weight: 600; color: var(--c-deep-blue); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.profile-tags__group-title { font-size:calc(28px*var(--fs,1)); font-weight: 600; color: var(--c-deep-blue); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
 .profile-tags__group-title::before { content: ''; width: 3px; height: 12px; border-radius: 2px; background: var(--c-deep-blue); }
 .profile-tags__list { display: flex; flex-wrap: wrap; gap: 6px; }
 .profile-tags__tag {
-  font-size: 11px; padding: 4px 10px; border-radius: 12px;
+  font-size:calc(23px*var(--fs,1)); padding: 4px 10px; border-radius: 12px;
   background: var(--c-gray); color: var(--c-text-secondary);
   display: flex; align-items: center; gap: 4px;
 }
@@ -360,18 +360,18 @@ svg { display: block; }
 .profile-menu__item:last-child { border-bottom: none; }
 .profile-menu__item:active { background: var(--c-gray); }
 .profile-menu__icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
-.profile-menu__text { flex: 1; font-size: 14px; font-weight: 500; color: var(--c-ink); }
+.profile-menu__text { flex: 1; font-size:calc(23px*var(--fs,1)); font-weight: 500; color: var(--c-ink); }
 .profile-menu__arrow { color: var(--c-text-tertiary); }
-.profile-menu__badge { font-size: 11px; color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
+.profile-menu__badge { font-size:calc(23px*var(--fs,1)); color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
 
 .profile-compliance { margin: 16px 16px 0; display: flex; flex-direction: column; gap: 8px; }
-.profile-compliance__item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--c-deep-blue); }
+.profile-compliance__item { display: flex; align-items: center; gap: 6px; font-size:calc(26px*var(--fs,1)); color: var(--c-deep-blue); }
 
 /* ===== 数据看板页 ===== */
 .dash-tabs { display: flex; padding: 8px 16px; gap: 8px; }
 .dash-tab {
   flex: 1; padding: 8px; text-align: center; border-radius: var(--radius-md);
-  font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  font-size:calc(23px*var(--fs,1)); font-weight: 600; cursor: pointer; transition: all 0.2s;
   background: #fff; color: var(--c-text-secondary); box-shadow: var(--shadow-sm);
 }
 .dash-tab--active { background: var(--c-deep-blue); color: #fff; }
@@ -379,26 +379,26 @@ svg { display: block; }
 .dash-content { padding: 0 16px; }
 .dash-overview { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 .dash-stat { background: #fff; border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-sm); }
-.dash-stat__label { font-size: 12px; color: var(--c-text-secondary); }
-.dash-stat__value { font-size: 22px; font-weight: 700; color: var(--c-ink); margin-top: 4px; }
-.dash-stat__trend { font-size: 11px; margin-top: 4px; display: flex; align-items: center; gap: 2px; }
+.dash-stat__label { font-size:calc(26px*var(--fs,1)); color: var(--c-text-secondary); }
+.dash-stat__value { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-ink); margin-top: 4px; }
+.dash-stat__trend { font-size:calc(23px*var(--fs,1)); margin-top: 4px; display: flex; align-items: center; gap: 2px; }
 .dash-stat__trend--up { color: #16A34A; }
 .dash-stat__trend--down { color: var(--c-red); }
 .dash-stat--accent .dash-stat__value { color: var(--c-orange); }
 .dash-stat--blue .dash-stat__value { color: var(--c-deep-blue); }
 
 .dash-chart-card { background: #fff; border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
-.dash-chart-card__title { font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-.dash-chart-card__title-tag { font-size: 11px; color: var(--c-text-tertiary); font-weight: 400; }
+.dash-chart-card__title { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.dash-chart-card__title-tag { font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); font-weight: 400; }
 .dash-chart { width: 100%; }
 
 .dash-funnel__item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.dash-funnel__label { width: 70px; font-size: 12px; color: var(--c-ink); flex-shrink: 0; }
+.dash-funnel__label { width: 70px; font-size:calc(26px*var(--fs,1)); color: var(--c-ink); flex-shrink: 0; }
 .dash-funnel__bar-wrap { flex: 1; height: 24px; background: var(--c-gray); border-radius: 12px; overflow: hidden; }
-.dash-funnel__bar { height: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 11px; color: #fff; font-weight: 600; transition: width 0.5s; }
-.dash-funnel__count { width: 60px; font-size: 12px; color: var(--c-text-secondary); text-align: right; }
+.dash-funnel__bar { height: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size:calc(23px*var(--fs,1)); color: #fff; font-weight: 600; transition: width 0.5s; }
+.dash-funnel__count { width: 60px; font-size:calc(26px*var(--fs,1)); color: var(--c-text-secondary); text-align: right; }
 
-.dash-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.dash-table { width: 100%; border-collapse: collapse; font-size:calc(26px*var(--fs,1)); }
 .dash-table th { text-align: left; padding: 6px 8px; color: var(--c-text-secondary); font-weight: 600; border-bottom: 1px solid var(--c-gray-border); }
 .dash-table td { padding: 8px; border-bottom: 1px solid var(--c-gray-border); color: var(--c-ink); }
 .dash-table tr:last-child td { border-bottom: none; }
@@ -417,22 +417,22 @@ svg { display: block; }
   background: linear-gradient(135deg, var(--c-orange) 0%, var(--c-gold) 100%);
   padding: 20px 16px; color: #fff; text-align: center;
 }
-.sp-points__balance { font-size: 36px; font-weight: 700; }
-.sp-points__label { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+.sp-points__balance { font-size:calc(44px*var(--fs,1)); font-weight: 700; }
+.sp-points__label { font-size:calc(28px*var(--fs,1)); opacity: 0.9; margin-top: 2px; }
 .sp-points__actions { display: flex; justify-content: center; gap: 20px; margin-top: 16px; }
 .sp-points__action { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
 .sp-points__action-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; }
-.sp-points__action-text { font-size: 11px; }
+.sp-points__action-text { font-size:calc(23px*var(--fs,1)); }
 
-.sp-section-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin: 16px 16px 8px; display: flex; align-items: center; gap: 6px; }
+.sp-section-title { font-size:calc(19px*var(--fs,1)); font-weight: 700; color: var(--c-ink); margin: 16px 16px 8px; display: flex; align-items: center; gap: 6px; }
 .sp-section-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--c-orange); }
 
 .sp-task { margin: 0 16px 8px; background: #fff; border-radius: var(--radius-md); padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
 .sp-task__icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
 .sp-task__info { flex: 1; }
-.sp-task__name { font-size: 14px; font-weight: 600; color: var(--c-ink); }
-.sp-task__desc { font-size: 11px; color: var(--c-text-secondary); margin-top: 2px; }
-.sp-task__btn { padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; color: #fff; background: var(--c-orange); cursor: pointer; transition: opacity 0.2s; }
+.sp-task__name { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.sp-task__desc { font-size:calc(23px*var(--fs,1)); color: var(--c-text-secondary); margin-top: 2px; }
+.sp-task__btn { padding: 6px 14px; border-radius: 16px; font-size:calc(26px*var(--fs,1)); font-weight: 600; color: #fff; background: var(--c-orange); cursor: pointer; transition: opacity 0.2s; }
 .sp-task__btn--done { background: var(--c-gray); color: var(--c-text-tertiary); }
 .sp-task__btn--disabled { opacity: 0.5; }
 
@@ -440,109 +440,109 @@ svg { display: block; }
 .sp-reward__row { display: flex; align-items: center; gap: 12px; padding: 14px; }
 .sp-reward__icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
 .sp-reward__info { flex: 1; }
-.sp-reward__name { font-size: 14px; font-weight: 600; color: var(--c-ink); }
-.sp-reward__desc { font-size: 11px; color: var(--c-text-secondary); margin-top: 2px; }
-.sp-reward__cost { font-size: 13px; font-weight: 700; color: var(--c-orange); }
-.sp-reward__btn { padding: 6px 14px; border-radius: 16px; font-size: 12px; font-weight: 600; background: var(--c-orange-light); color: var(--c-orange); border: 1px solid var(--c-orange); cursor: pointer; }
+.sp-reward__name { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.sp-reward__desc { font-size:calc(23px*var(--fs,1)); color: var(--c-text-secondary); margin-top: 2px; }
+.sp-reward__cost { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-orange); }
+.sp-reward__btn { padding: 6px 14px; border-radius: 16px; font-size:calc(26px*var(--fs,1)); font-weight: 600; background: var(--c-orange-light); color: var(--c-orange); border: 1px solid var(--c-orange); cursor: pointer; }
 .sp-reward__btn--disabled { background: var(--c-gray); color: var(--c-text-tertiary); border-color: var(--c-gray-border); }
 
 .sp-history__item { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--c-gray-border); }
-.sp-history__type { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.sp-history__type { width: calc(32px*var(--fs,1)); height: calc(32px*var(--fs,1)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size:calc(26px*var(--fs,1)); font-weight: 700; flex-shrink: 0; }
 .sp-history__type--earn { background: #DCFCE7; color: #16A34A; }
 .sp-history__type--spend { background: #FEE2E2; color: var(--c-red); }
 .sp-history__type--transfer { background: var(--c-blue-light); color: var(--c-deep-blue); }
 .sp-history__info { flex: 1; }
-.sp-history__desc { font-size: 13px; color: var(--c-ink); }
-.sp-history__date { font-size: 11px; color: var(--c-text-tertiary); }
-.sp-history__amount { font-size: 14px; font-weight: 700; }
+.sp-history__desc { font-size:calc(28px*var(--fs,1)); color: var(--c-ink); }
+.sp-history__date { font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); }
+.sp-history__amount { font-size:calc(23px*var(--fs,1)); font-weight: 700; }
 .sp-history__amount--earn { color: #16A34A; }
 .sp-history__amount--spend { color: var(--c-red); }
 .sp-history__amount--transfer { color: var(--c-deep-blue); }
 
 /* ===== 子页面 - 保障推荐 ===== */
 .sp-rec__hero { padding: 20px 16px; background: linear-gradient(135deg, var(--c-deep-blue) 0%, var(--c-cyan) 100%); color: #fff; }
-.sp-rec__hero-title { font-size: 20px; font-weight: 700; }
-.sp-rec__hero-desc { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+.sp-rec__hero-title { font-size:calc(26px*var(--fs,1)); font-weight: 700; }
+.sp-rec__hero-desc { font-size:calc(28px*var(--fs,1)); opacity: 0.85; margin-top: 4px; }
 
 .sp-rec__form { margin: 12px 16px; background: #fff; border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-sm); }
-.sp-rec__form-title { font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 12px; }
+.sp-rec__form-title { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-ink); margin-bottom: 12px; }
 .sp-rec__field { margin-bottom: 12px; }
-.sp-rec__field-label { font-size: 12px; color: var(--c-text-secondary); margin-bottom: 4px; }
-.sp-rec__field-input { width: 100%; height: 38px; background: var(--c-gray); border-radius: 8px; padding: 0 12px; font-size: 14px; color: var(--c-ink); }
+.sp-rec__field-label { font-size:calc(26px*var(--fs,1)); color: var(--c-text-secondary); margin-bottom: 4px; }
+.sp-rec__field-input { width: 100%; height: auto; min-height: 38px; background: var(--c-gray); border-radius: 8px; padding: 0 12px; font-size:calc(23px*var(--fs,1)); color: var(--c-ink); }
 .sp-rec__field-select { display: flex; gap: 8px; flex-wrap: wrap; }
-.sp-rec__option { padding: 6px 14px; border-radius: 16px; font-size: 12px; background: var(--c-gray); color: var(--c-text-secondary); cursor: pointer; }
+.sp-rec__option { padding: 6px 14px; border-radius: 16px; font-size:calc(26px*var(--fs,1)); background: var(--c-gray); color: var(--c-text-secondary); cursor: pointer; }
 .sp-rec__option--active { background: var(--c-deep-blue); color: #fff; }
-.sp-rec__submit { width: 100%; height: 44px; border-radius: 22px; background: linear-gradient(135deg, var(--c-deep-blue), var(--c-cyan)); color: #fff; font-size: 15px; font-weight: 600; margin-top: 8px; cursor: pointer; }
+.sp-rec__submit { width: 100%; height: auto; min-height: 44px; border-radius: 22px; background: linear-gradient(135deg, var(--c-deep-blue), var(--c-cyan)); color: #fff; font-size:calc(19px*var(--fs,1)); font-weight: 600; margin-top: 8px; cursor: pointer; }
 .sp-rec__submit:active { opacity: 0.85; }
 
 .sp-rec__result { margin: 12px 16px; }
 .sp-rec__gap-card { background: linear-gradient(135deg, #FEF3E7 0%, #FFF8F0 100%); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; border: 1px solid rgba(217,119,6,0.15); }
-.sp-rec__gap-title { font-size: 14px; font-weight: 600; color: var(--c-orange); }
-.sp-rec__gap-desc { font-size: 13px; color: var(--c-ink); margin-top: 6px; line-height: 1.5; }
+.sp-rec__gap-title { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-orange); }
+.sp-rec__gap-desc { font-size:calc(28px*var(--fs,1)); color: var(--c-ink); margin-top: 6px; line-height: 1.8; }
 
 .sp-rec__product { background: #fff; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
 .sp-rec__product-header { padding: 14px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--c-gray-border); }
-.sp-rec__product-logo { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+.sp-rec__product-logo { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size:calc(26px*var(--fs,1)); font-weight: 700; flex-shrink: 0; }
 .sp-rec__product-info { flex: 1; }
-.sp-rec__product-name { font-size: 15px; font-weight: 600; color: var(--c-ink); }
-.sp-rec__product-company { font-size: 11px; color: var(--c-text-secondary); }
+.sp-rec__product-name { font-size:calc(19px*var(--fs,1)); font-weight: 600; color: var(--c-ink); }
+.sp-rec__product-company { font-size:calc(23px*var(--fs,1)); color: var(--c-text-secondary); }
 .sp-rec__product-score { text-align: right; }
-.sp-rec__product-score-val { font-size: 18px; font-weight: 700; color: var(--c-deep-blue); }
-.sp-rec__product-score-label { font-size: 10px; color: var(--c-text-tertiary); }
+.sp-rec__product-score-val { font-size:calc(23px*var(--fs,1)); font-weight: 700; color: var(--c-deep-blue); }
+.sp-rec__product-score-label { font-size:calc(28px*var(--fs,1)); color: var(--c-text-tertiary); }
 .sp-rec__product-body { padding: 12px 16px; }
-.sp-rec__product-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--c-gray-border); }
+.sp-rec__product-row { display: flex; justify-content: space-between; padding: 6px 0; font-size:calc(28px*var(--fs,1)); border-bottom: 1px solid var(--c-gray-border); }
 .sp-rec__product-row:last-child { border-bottom: none; }
 .sp-rec__product-row-label { color: var(--c-text-secondary); }
 .sp-rec__product-row-value { color: var(--c-ink); font-weight: 500; }
 .sp-rec__product-scores { display: flex; gap: 8px; padding: 10px 0 4px; }
 .sp-rec__score-bar { flex: 1; text-align: center; }
-.sp-rec__score-bar-label { font-size: 10px; color: var(--c-text-secondary); }
+.sp-rec__score-bar-label { font-size:calc(28px*var(--fs,1)); color: var(--c-text-secondary); }
 .sp-rec__score-bar-track { height: 4px; background: var(--c-gray); border-radius: 2px; margin: 4px 0; overflow: hidden; }
 .sp-rec__score-bar-fill { height: 100%; border-radius: 2px; }
-.sp-rec__score-bar-val { font-size: 13px; font-weight: 700; color: var(--c-ink); }
-.sp-rec__trace { padding: 8px 16px 12px; font-size: 11px; color: var(--c-text-tertiary); display: flex; align-items: center; gap: 4px; }
+.sp-rec__score-bar-val { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-ink); }
+.sp-rec__trace { padding: 8px 16px 12px; font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); display: flex; align-items: center; gap: 4px; }
 
 /* ===== 子页面 - 成本测算 ===== */
 .sp-calc__hero { padding: 20px 16px; background: linear-gradient(135deg, var(--c-red) 0%, #E74C3C 100%); color: #fff; }
-.sp-calc__hero-title { font-size: 20px; font-weight: 700; }
-.sp-calc__hero-desc { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+.sp-calc__hero-title { font-size:calc(26px*var(--fs,1)); font-weight: 700; }
+.sp-calc__hero-desc { font-size:calc(28px*var(--fs,1)); opacity: 0.85; margin-top: 4px; }
 .sp-calc__card { margin: 12px 16px; background: #fff; border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-sm); }
-.sp-calc__card-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.sp-calc__card-title { font-size:calc(19px*var(--fs,1)); font-weight: 700; color: var(--c-ink); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 .sp-calc__card-title::before { content: ''; width: 4px; height: 16px; border-radius: 2px; background: var(--c-deep-blue); }
-.sp-calc__item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--c-gray-border); font-size: 13px; }
+.sp-calc__item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--c-gray-border); font-size:calc(28px*var(--fs,1)); }
 .sp-calc__item:last-child { border-bottom: none; }
 .sp-calc__item-label { color: var(--c-text-secondary); flex: 1; }
-.sp-calc__item-freq { font-size: 11px; color: var(--c-text-tertiary); margin-left: 8px; }
+.sp-calc__item-freq { font-size:calc(23px*var(--fs,1)); color: var(--c-text-tertiary); margin-left: 8px; }
 .sp-calc__item-value { font-weight: 600; color: var(--c-ink); }
 .sp-calc__total { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--c-ink); }
-.sp-calc__total-label { font-size: 14px; font-weight: 700; color: var(--c-ink); }
-.sp-calc__total-value { font-size: 22px; font-weight: 700; color: var(--c-orange); }
+.sp-calc__total-label { font-size:calc(23px*var(--fs,1)); font-weight: 700; color: var(--c-ink); }
+.sp-calc__total-value { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-orange); }
 .sp-calc__compare { margin: 12px 16px; background: var(--c-orange-light); border-radius: var(--radius-md); padding: 14px; border: 1px solid rgba(217,119,6,0.15); }
-.sp-calc__compare-title { font-size: 14px; font-weight: 600; color: var(--c-orange); margin-bottom: 8px; }
-.sp-calc__compare-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+.sp-calc__compare-title { font-size:calc(23px*var(--fs,1)); font-weight: 600; color: var(--c-orange); margin-bottom: 8px; }
+.sp-calc__compare-row { display: flex; justify-content: space-between; font-size:calc(28px*var(--fs,1)); padding: 4px 0; }
 .sp-calc__compare-gap { color: var(--c-red); font-weight: 700; }
 
 /* ===== 子页面 - 内容详情 ===== */
 .sp-detail { padding: 16px; }
-.sp-detail__title { font-size: 20px; font-weight: 700; color: var(--c-ink); line-height: 1.4; }
-.sp-detail__meta { display: flex; gap: 12px; font-size: 12px; color: var(--c-text-tertiary); margin: 8px 0 16px; }
-.sp-detail__content { font-size: 15px; line-height: 1.7; color: var(--c-ink); }
+.sp-detail__title { font-size:calc(26px*var(--fs,1)); font-weight: 700; color: var(--c-ink); line-height: 1.9; }
+.sp-detail__meta { display: flex; gap: 12px; font-size:calc(26px*var(--fs,1)); color: var(--c-text-tertiary); margin: 8px 0 16px; }
+.sp-detail__content { font-size:calc(19px*var(--fs,1)); line-height: 1.9; color: var(--c-ink); }
 .sp-detail__content p { margin-bottom: 12px; }
-.sp-detail__content h4 { font-size: 16px; font-weight: 700; margin: 16px 0 8px; color: var(--c-deep-blue); }
+.sp-detail__content h4 { font-size:calc(26px*var(--fs,1)); font-weight: 700; margin: 16px 0 8px; color: var(--c-deep-blue); }
 .sp-detail__highlight { background: var(--c-orange-light); border-left: 3px solid var(--c-orange); padding: 12px 14px; border-radius: 0 8px 8px 0; margin: 12px 0; }
-.sp-detail__source { margin-top: 16px; padding: 12px; background: var(--c-gray); border-radius: 8px; font-size: 12px; color: var(--c-text-secondary); }
+.sp-detail__source { margin-top: 16px; padding: 12px; background: var(--c-gray); border-radius: 8px; font-size:calc(26px*var(--fs,1)); color: var(--c-text-secondary); }
 
 /* ===== Toast ===== */
 .toast {
   position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
   background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px;
-  border-radius: 10px; font-size: 14px; z-index: 9999;
+  border-radius: 10px; font-size:calc(23px*var(--fs,1)); z-index: 9999;
   animation: toastIn 0.3s; pointer-events: none; white-space: nowrap;
 }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%,-40%) scale(0.9); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
 
 /* ===== 护阿婆头像 SVG ===== */
-.huapo-svg { width: 100%; height: 100%; }
+.ayi-svg { width: 100%; height: 100%; }
 
 /* ===== 响应式 ===== */
 @media (max-height: 900px) {
@@ -560,6 +560,60 @@ svg { display: block; }
 }
 
     </style>
+<style>
+/* 商业功能可见性：普惠账户时隐藏所有 .biz-only 元素 */
+body[data-account="inclusive"] .biz-only { display: none !important; }
+/* 账户徽章样式 */
+.acct-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-weight: 600; font-size: calc(23px*var(--fs,1)); }
+.acct-badge--inc  { background: #DCFCE7; color: #166534; border: 1px solid #86EFAC; }
+.acct-badge--auth { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+.acct-toggle { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 12px; background: #fff; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
+.switch { position: relative; width: 48px; height: 28px; border-radius: 14px; background: #D1D5DB; transition: background .2s; flex-shrink: 0; }
+.switch--on { background: #F59E0B; }
+.switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .2s; }
+.switch--on::after { left: 23px; }
+/* 授权说明弹窗 */
+.auth-mask { position: fixed; inset: 0; background: rgba(15,35,60,.55); z-index: 20000; display: none; align-items: center; justify-content: center; }
+.auth-modal { width: 360px; max-width: 88vw; background: #fff; border-radius: 16px; padding: 22px 20px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+.auth-modal h3 { margin: 0 0 6px; font-size: calc(28px*var(--fs,1)); color: var(--c-ink); }
+.auth-modal p  { margin: 0 0 10px; font-size: calc(23px*var(--fs,1)); color: var(--c-text-secondary); line-height: 1.7; }
+.auth-list  { margin: 8px 0 10px; padding: 10px 12px; background: var(--c-gray); border-radius: 8px; }
+.auth-list li { font-size: calc(23px*var(--fs,1)); color: var(--c-ink); margin: 4px 0 4px 16px; line-height: 1.7; }
+.auth-note { margin-top: 10px; padding: 8px 10px; background: #FDE68A; color: #92400E; border-radius: 6px; font-size: calc(19px*var(--fs,1)); line-height: 1.6; }
+.auth-btns { display: flex; gap: 10px; margin-top: 16px; }
+.auth-btn { flex: 1; min-height: 44px; border-radius: 22px; border: none; font-size: calc(26px*var(--fs,1)); font-weight: 600; cursor: pointer; }
+.auth-btn--main { background: linear-gradient(135deg, var(--c-deep-blue), var(--c-cyan)); color: #fff; }
+.auth-btn--sub  { background: var(--c-gray); color: var(--c-text-secondary); }
+/* 账户顶栏模式指示 */
+.hero-acct-tag { position: absolute; right: 18px; top: 18px; z-index: 2; }
+/* ===== 全局账户状态栏（永久常显）+ 字体模式切换 ===== */
+.acct-topbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 12px; background: #fff; border-bottom: 1px solid #E5E7EB; }
+.acct-topbar__mode { flex: 1; min-width: 200px; font-weight: 700; font-size: calc(19px*var(--fs,1)); line-height: 1.5; padding: 6px 10px; border-radius: 10px; background: #DBEAFE; color: #1D4ED8; }
+.acct-topbar__mode--auth { background: #DCFCE7; color: #166534; }
+.fs-toggle { display: flex; flex-shrink: 0; border-radius: 999px; background: var(--c-gray); padding: 3px; gap: 2px; }
+.fs-tbtn { border: none; background: transparent; padding: 5px 12px; border-radius: 999px; font-size: calc(19px*var(--fs,1)); font-weight: 600; color: var(--c-text-secondary); cursor: pointer; }
+.fs-tbtn--on { background: var(--c-deep-blue); color: #fff; }
+/* 拒绝授权后：保障测评入口置灰变浅 */
+.biz-grey { opacity: .45; filter: grayscale(.5); }
+/* ===== 大字模式（适老化）：间距拉大 + 隐藏装饰性小字 ===== */
+html[data-fs="large"] .section { margin-top: 24px; }
+html[data-fs="large"] .home-features { gap: 14px; }
+html[data-fs="large"] .home-features__item { padding: 16px 6px; }
+html[data-fs="large"] .sp-calc__card { padding: 20px 18px; }
+html[data-fs="large"] .edu-card { padding: 14px; }
+html[data-fs="large"] .sp-task, html[data-fs="large"] .sp-reward { padding: 16px 14px; }
+html[data-fs="large"] .home-stats { padding: 14px 0; }
+html[data-fs="large"] .section__tag, html[data-fs="large"] .home-news__meta, html[data-fs="large"] .deco-xs { display: none !important; }
+/* ===== 常驻演示声明角标（浅灰小字，跟随字号模式） ===== */
+.demo-corner { position: absolute; left: 10px; bottom: 72px; max-width: 72%; font-size: calc(11px*var(--fs,1)); color: #9CA3AF; line-height: 1.5; pointer-events: none; z-index: 6; }
+/* 护理值赠予长辈页 */
+.gift-opt { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: calc(26px*var(--fs,1)); color: var(--c-ink); cursor: pointer; margin: 4px 10px 4px 0; }
+.gift-opt--on { border-color: var(--c-deep-blue); background: var(--c-blue-light); color: var(--c-deep-blue); font-weight: 700; }
+</style>
+<script>/* 字体双模式：standard(=1) | large(=1.25)，兼容旧zbchFs档位 */
+try{var fsm=localStorage.getItem('zbchFsMode');if(!fsm){var os=parseFloat(localStorage.getItem('zbchFs'))||1;fsm=os>1.05?'large':'standard';}
+if(fsm==='large'){document.documentElement.setAttribute('data-fs','large');document.documentElement.style.setProperty('--fs','1.25');}}catch(e){}
+try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authorized':'inclusive';if(document.body){document.body.dataset.account=am;}else{document.addEventListener('DOMContentLoaded',function(){document.body.dataset.account=am;});}}catch(e){}</script>
 </head>
 <body>
 <div class="phone-frame">
@@ -573,6 +627,15 @@ svg { display: block; }
         <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3 1 4.5L0 3.5C1.8 1.8 4.7.5 8 .5s6.2 1.3 8 3l-1 1C13.5 3 11 2 8 2zm0 3C6 5 4.2 5.8 3 7L2 6c1.5-1.5 3.6-2.5 6-2.5s4.5 1 6 2.5l-1 1c-1.2-1.2-3-2-5-2zm0 3c-1 0-1.8.4-2.5 1L4.5 8c1-1 2.2-1.5 3.5-1.5s2.5.5 3.5 1.5l-1 1C9.8 8.4 9 8 8 8z" fill="currentColor"></path></svg>
         <span class="status-bar__battery">96%</span>
         <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="2" width="20" height="8" rx="2" stroke="currentColor" stroke-width="1" fill="none"></rect><rect x="3" y="4" width="16" height="4" rx="1" fill="currentColor"></rect><rect x="22" y="5" width="1.5" height="2" rx="0.5" fill="currentColor"></rect></svg>
+      </div>
+    </div>
+
+    <!-- ========== 全局账户状态栏（永久常显）+ 字体双模式切换 ========== -->
+    <div class="acct-topbar" id="acctTopBar">
+      <div class="acct-topbar__mode" id="acctModeText">🔵 当前账户：普惠账户｜仅公益科普，无商业保险推荐</div>
+      <div class="fs-toggle" id="fsToggle">
+        <button class="fs-tbtn fs-tbtn--on" data-mode="standard" onclick="app.setFontMode('standard')">标准模式</button>
+        <button class="fs-tbtn" data-mode="large" onclick="app.setFontMode('large')">大字模式</button>
       </div>
     </div>
 
@@ -593,8 +656,9 @@ svg { display: block; }
         <!-- 护阿婆问候横幅 -->
         <div class="home-hero">
           <div class="home-hero__bg"></div>
+          <div class="hero-acct-tag" id="heroAcctTag"></div>
           <div class="home-hero__content">
-            <div class="home-hero__avatar" id="huapoAvatarHome"><svg class="huapo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="hc64"><circle cx="50" cy="50" r="48"></circle></clipPath></defs><circle cx="50" cy="50" r="48" fill="#FEF3E7"></circle><g clip-path="url(#hc64)"><rect x="0" y="70" width="100" height="30" fill="#E8F1F8"></rect><rect x="10" y="55" width="8" height="15" fill="#B0D4E8"></rect><rect x="20" y="48" width="10" height="22" fill="#B0D4E8"></rect><rect x="32" y="52" width="6" height="18" fill="#B0D4E8"></rect><rect x="62" y="50" width="8" height="20" fill="#B0D4E8"></rect><rect x="72" y="45" width="10" height="25" fill="#B0D4E8"></rect><rect x="84" y="55" width="6" height="15" fill="#B0D4E8"></rect><polygon points="40,70 50,60 60,70" fill="#065A82" opacity="0.3"></polygon><path d="M25,42 Q22,28 35,22 Q50,15 65,22 Q78,28 75,42 Q75,35 72,32 Q70,28 65,26 Q55,22 50,22 Q45,22 35,26 Q30,28 28,32 Q25,35 25,42Z" fill="#E8E8E8"></path><circle cx="30" cy="32" r="3" fill="#E8E8E8"></circle><ellipse cx="50" cy="48" rx="20" ry="19" fill="#FDE8D0"></ellipse><circle cx="36" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><circle cx="64" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><path d="M36,47 Q40,44 44,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M56,47 Q60,44 64,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M50,50 Q48,53 50,55 Q52,53 50,50" stroke="#D4A576" stroke-width="1" fill="none"></path><path d="M42,58 Q50,64 58,58" stroke="#C0392B" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="40" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><circle cx="60" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><line x1="47" y1="47" x2="53" y2="47" stroke="#E8A838" stroke-width="1.5"></line><line x1="33" y1="47" x2="28" y2="52" stroke="#E8A838" stroke-width="1"></line><line x1="67" y1="47" x2="72" y2="52" stroke="#E8A838" stroke-width="1"></line><path d="M28,67 Q26,75 24,100 L76,100 Q74,75 72,67 Q65,70 50,70 Q35,70 28,67Z" fill="#065A82"></path><path d="M40,67 Q50,74 60,67 L58,62 L50,65 L42,62Z" fill="#7BB3D4"></path><circle cx="68" cy="80" r="6" fill="#D97706"></circle><circle cx="68" cy="80" r="3.5" fill="#FFF"></circle></g><circle cx="50" cy="50" r="48" stroke="#065A82" stroke-width="1.5" fill="none"></circle></svg></div>
+            <div class="home-hero__avatar" id="ayiAvatarHome"><svg class="ayi-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="ayic64"><circle cx="50" cy="50" r="48"></circle></clipPath></defs><circle cx="50" cy="50" r="48" fill="#FEF3E7"></circle><g clip-path="url(#ayic64)"><rect x="0" y="70" width="100" height="30" fill="#E8F1F8"></rect><rect x="10" y="55" width="8" height="15" fill="#B0D4E8"></rect><rect x="20" y="48" width="10" height="22" fill="#B0D4E8"></rect><rect x="32" y="52" width="6" height="18" fill="#B0D4E8"></rect><rect x="62" y="50" width="8" height="20" fill="#B0D4E8"></rect><rect x="72" y="45" width="10" height="25" fill="#B0D4E8"></rect><rect x="84" y="55" width="6" height="15" fill="#B0D4E8"></rect><polygon points="40,70 50,60 60,70" fill="#065A82" opacity="0.3"></polygon><path d="M25,42 Q22,28 35,22 Q50,15 65,22 Q78,28 75,42 Q75,35 72,32 Q70,28 65,26 Q55,22 50,22 Q45,22 35,26 Q30,28 28,32 Q25,35 25,42Z" fill="#E8E8E8"></path><circle cx="30" cy="32" r="3" fill="#E8E8E8"></circle><ellipse cx="50" cy="48" rx="20" ry="19" fill="#FDE8D0"></ellipse><circle cx="36" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><circle cx="64" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><path d="M36,47 Q40,44 44,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M56,47 Q60,44 64,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M50,50 Q48,53 50,55 Q52,53 50,50" stroke="#D4A576" stroke-width="1" fill="none"></path><path d="M42,58 Q50,64 58,58" stroke="#C0392B" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="40" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><circle cx="60" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><line x1="47" y1="47" x2="53" y2="47" stroke="#E8A838" stroke-width="1.5"></line><line x1="33" y1="47" x2="28" y2="52" stroke="#E8A838" stroke-width="1"></line><line x1="67" y1="47" x2="72" y2="52" stroke="#E8A838" stroke-width="1"></line><path d="M28,67 Q26,75 24,100 L76,100 Q74,75 72,67 Q65,70 50,70 Q35,70 28,67Z" fill="#065A82"></path><path d="M40,67 Q50,74 60,67 L58,62 L50,65 L42,62Z" fill="#7BB3D4"></path><circle cx="68" cy="80" r="6" fill="#D97706"></circle><circle cx="68" cy="80" r="3.5" fill="#FFF"></circle></g><circle cx="50" cy="50" r="48" stroke="#065A82" stroke-width="1.5" fill="none"></circle></svg></div>
             <div class="home-hero__text">
               <p class="home-hero__greeting" id="homeGreeting">中午好！吃饱了来看看政策，阿婆陪你</p>
               <p class="home-hero__sub" id="homeSubGreeting">你的护理值又涨了，当前1280分，离兑换"居家护理服务"还差-80分</p>
@@ -681,7 +745,7 @@ svg { display: block; }
       <!-- ===================== AI问答页 ===================== -->
       <div class="page page--qa" id="page-qa" style="display:none">
         <div class="qa-header">
-          <div class="qa-header__avatar" id="huapoAvatarQA"></div>
+          <div class="qa-header__avatar" id="ayiAvatarQA"></div>
           <div class="qa-header__info">
             <div class="qa-header__name">护阿婆</div>
             <div class="qa-header__status">
@@ -713,6 +777,27 @@ svg { display: block; }
 
         <!-- 护理值概览 -->
         <div class="profile-points" id="profilePoints"></div>
+
+        <!-- 字体双模式设置（标准/大字，与顶部导航栏同步） -->
+        <div class="section">
+          <div class="section__header">
+            <h3>字体模式</h3>
+            <span class="section__tag">适老设置</span>
+          </div>
+          <div class="fs-picker" id="fsPicker">
+            <button class="fs-opt" data-mode="standard" onclick="app.setFontMode('standard')">标准模式</button>
+            <button class="fs-opt" data-mode="large" onclick="app.setFontMode('large')">大字模式</button>
+          </div>
+          <div style="padding:8px 4px 2px;color:var(--c-text-secondary);line-height:1.7">大字模式：正文18px起、间距拉大、隐藏装饰性小字，风险提示同步放大。</div>
+        </div>
+
+        <!-- 商业保障推荐服务可视化开关（双层账户切换） -->
+        <div class="section">
+          <div class="section__header">
+            <h3>商业保障推荐服务</h3>
+          </div>
+          <div id="profileBizToggle"></div>
+        </div>
 
         <!-- 用户画像标签 -->
         <div class="section">
@@ -752,6 +837,7 @@ svg { display: block; }
 
       <!-- ===================== 数据看板页 ===================== -->
       <div class="page" id="page-dashboard" style="display:none">
+        <div class="dash-authchip" id="dashAuthChip" style="display:none"></div>
         <div class="dash-tabs" id="dashTabs"></div>
         <div class="dash-content" id="dashContent"></div>
         <div style="height:20px"></div>
@@ -763,6 +849,9 @@ svg { display: block; }
     <div class="subpage" id="subPage" style="display:none">
       <div class="subpage__inner" id="subPageInner"></div>
     </div>
+
+    <!-- ========== 常驻演示声明（浅灰小字） ========== -->
+    <div class="demo-corner" id="demoCorner">本为交互演示原型，非正式上线产品，跳转、数据回传均为模拟效果</div>
 
     <!-- ========== TabBar ========== -->
     <div class="tabbar" id="tabbar">
@@ -787,6 +876,7 @@ svg { display: block; }
       <div class="tabbar__item" data-page="dashboard">
         <svg class="tabbar__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         <span class="tabbar__text">看板</span>
+        <span class="tablock"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"></rect><path d="M8 10V7a4 4 0 118 0v3" stroke="currentColor" stroke-width="2"></path></svg></span>
       </div>
     </div>
 
@@ -813,9 +903,9 @@ var MockData = {
     age: 35,
     gender: '男',
     phone: '138****8888',
-    accountType: 'authorized', // 'inclusive' 普惠账户 | 'authorized' 中青年授权账户
-    authorized: true,
-    authorizedDate: '2026-06-15',
+    accountType: 'inclusive', // 'inclusive' 普惠账户(默认) | 'authorized' 中青年授权账户
+    authorized: false,
+    authorizedDate: '',
     carePoints: 1280,
     totalEarned: 3560,
     totalSpent: 2280,
@@ -1054,6 +1144,46 @@ var MockData = {
       source: '智伴长护—长护价值银行保障测评模块',
       category: '待遇解读',
     },
+    {
+      id: 'qa023',
+      keywords: ['适老化改造', '居家改造', '防滑', '扶手', '安全改造'],
+      question: '家里有老人，适老化改造要做哪些？',
+      answer: '阿婆跟你讲哦，适老化改造就是把家里改造成适合老人居住的样子，花不了多少钱但能大大降低意外风险。重点有几处：第一，卫生间最关键，马桶旁边装扶手、洗澡的地方装防滑垫和淋浴椅、地面做防滑处理，这一项几百块到一千多块；第二，卧室床边装夜灯和扶手，起夜不摸黑；第三，厨房台面降低到适合老人坐轮椅操作的高度，装感应水龙头；第四，全屋去掉门槛，过道留够轮椅通行宽度（至少80公分）；第五，装紧急呼叫装置，老人摔倒了一按就有人知道。长护险里虽然不直接报销改造费，但可以用护理值兑换适老化改造评估服务，专业人员上门帮你出方案。这个钱啊，该花的花，该省的省，防摔的钱一定要花。',
+      source: '南宁市民政局居家适老化改造指南',
+      category: '办事指引',
+    },
+    {
+      id: 'qa024',
+      keywords: ['家庭照护者', '家属护理', '照顾老人', '照护技巧', '心理疏导'],
+      question: '家属照护失能老人有什么注意事项？',
+      answer: '阿婆跟你讲哦，照护失能老人是个长期活儿，身体累心更累，南宁85%的失能老人是家属照护的。有几点要特别注意：第一，护理技巧要学，比如怎么给卧床老人翻身不闪腰、怎么预防褥疮（每2小时翻一次身，用气垫床）、怎么喂饭不呛咳（坐起来45度，小口慢喂）；第二，照护者自己的身体也要注意，别把自己累垮了，建议找兄弟姐妹轮班或者请钟点工分担；第三，心理疏导很重要，久病床前无孝子不是说说的，压力大了要找人倾诉，可以加入我们小程序的照护者互助社群；第四，别忘了该申请的补贴一定要申请，长护险每月1850元、低保失能老人每月200元补贴，这些钱能大大减轻负担。政策是好政策，就怕你不知道，该拿的一定要拿到手。',
+      source: '广西护理学会居家照护指南',
+      category: '办事指引',
+    },
+    {
+      id: 'qa025',
+      keywords: ['国富人寿', '本地保险公司', '广西本土', '长护险合作'],
+      question: '广西本地保险公司在长护险方面有什么特色产品？',
+      answer: '阿婆跟你讲哦，广西本土有一家叫国富人寿的保险公司，是咱们自治区自己的寿险公司，总部就在南宁五象新区。他们专门针对广西人的需求设计了一款"岁岁无忧"商业长护险，有几个特色：第一，保费不贵，30岁的人一年不到两千块；第二，理赔跟社保长护险挂钩，社保认定了失能等级，他们直接认，不用再评估一次；第三，支持居家护理服务直接结算，不用自己先垫钱再报销；第四，还附加了广西常见的地贫、尘肺病等地方病种的护理责任。另外人保财险、泰康、太平、中国人寿这四家中标了南宁市长护险经办业务的保险公司，也都有各自的补充商业保险产品，你在小程序的保障测评里可以直接比较。这个钱啊，该花的花，该省的省，选本地公司理赔更方便。',
+      source: '国富人寿产品资料及南宁市长护险经办机构公告',
+      category: '待遇解读',
+    },
+    {
+      id: 'qa026',
+      keywords: ['中青年', '为什么要关心', '现在还年轻', '跟我有关系吗'],
+      question: '我才30多岁，长护险跟我有什么关系？',
+      answer: '阿婆跟你讲哦，你这个问题问得特别好！十个人里头有八个年轻人会说"我还年轻，长护险跟我没关系"。但是你想想：第一，你现在交的医保里头已经在扣长护险的钱了，你自己的钱你得知道花在哪了；第二，你的父母已经五六十岁了，未来5到10年就是他们最可能需要长护险的时候，你得先了解清楚政策，到时候才能从容应对；第三，老龄化越来越严重，等你60岁的时候，每三个广西人里头就有一个60岁以上的老人，到时候长护险的压力肯定比现在大，你现在了解政策、参与科普，其实也是在为自己的将来争取更好的保障；第四，你在我们小程序学知识赚护理值，这些护理值将来可以兑换护理服务或者抵扣商业保险保费，年轻人早规划早受益。政策是好政策，就怕你不知道，早知道早受益。',
+      source: '智伴长护—长护价值银行产品定位说明',
+      category: '基础认知',
+    },
+    {
+      id: 'qa027',
+      keywords: ['投诉电话', '服务质量', '不满意怎么办', '举报', '维权'],
+      question: '对护理服务不满意怎么投诉？维权渠道有哪些？',
+      answer: '阿婆跟你讲哦，如果你对定点护理机构的服务不满意，有好几个渠道可以维权。第一，直接找经办保险公司投诉，青秀区找太平人寿，他们的客服电话是95589，投诉后一般3个工作日内要给答复；第二，打南宁市长护险监督投诉电话12393，这是医保系统的官方热线；第三，打12345政务服务热线，什么问题都能受理，他们会转交给对应部门；第四，在我们智伴长护小程序里也有"服务评价与投诉"入口，你可以给每次护理服务打分打分，低分的我们会自动转办到经办机构跟进。南宁市规定，护理机构服务投诉率超过5%的，要扣减经办服务费，严重的还会取消定点资格。所以你放心大胆地维权，这个钱啊，该花的花，该省的省，服务质量的关一定要把好。',
+      source: '《南宁市长护险服务质量监督管理办法》',
+      category: '办事指引',
+    },
   ],
 
   // ============================================================
@@ -1085,6 +1215,22 @@ var MockData = {
         content: '与商业保险不同，长护险不需要参保人额外缴费。只要你是职工医保参保人，长护险费就会从你每月的医保缴费中自动划转。你可以在医保缴费记录中查看长护险划转明细。城乡居民医保参保人员目前暂未纳入覆盖范围，待扩面计划推进后另行安排。',
         readingTime: 3,
         points: 15,
+      },
+      {
+        id: 'b004',
+        title: '老龄化时代：我们为什么需要长护险？',
+        desc: '广西756万老年人背后的家庭照护危机',
+        content: '广西60岁以上老年人口已达756万，占总人口15.18%，老龄化速度居全国前列。一个典型的"421"家庭（4个老人+2个中青年+1个孩子）中，中青年夫妻要承担双方父母的养老照护责任。南宁市调研显示，85%的失能老人由家属居家照护，照护者平均年龄58岁，普遍面临"老人失能+照护者过劳"的双重困境。长护险的核心价值，就是通过社会化筹资机制，将个人和家庭的照护风险在全社会范围内分摊，让每个家庭都能"老有所护"。',
+        readingTime: 7,
+        points: 30,
+      },
+      {
+        id: 'b005',
+        title: '长护险 vs 医保 vs 养老险：一张表看懂区别',
+        desc: '三大保险各管各的，不冲突不重复',
+        content: '简单来说：医保管"看病治病"，报销医药费、手术费、住院费；养老险管"退休吃饭"，每月发退休金保障基本生活；长护险管"失能照护"，报销请护工、住护理院的费用。举个例子：张爷爷得了中风，医保报销住院手术费8万元，养老险每月发3000元退休金，出院后半身不遂需要请护工，这时候长护险每月补贴1850元护理费。三个保险各司其职，共同构建老年保障体系。',
+        readingTime: 5,
+        points: 25,
       },
     ],
     // ---------- 待遇解读 ----------
@@ -1297,6 +1443,64 @@ var MockData = {
       traceId: 'TRC-2026-CI-003',
       commissionRate: 0,
     },
+    {
+      id: 'ins004',
+      name: '岁岁无忧·专属商业长护险',
+      type: '商业长护险',
+      company: '国富人寿',
+      premium: 1980,
+      premiumUnit: '元/年',
+      coverage: 720000,
+      coverageUnit: '元',
+      scores: {
+        coverage: 85,
+        rate: 90,
+        claims: 82,
+      },
+      features: [
+        '广西本土保险公司定制，适配本地长护政策',
+        '重度失能每月给付4000元，保证给付15年',
+        '含居家护理服务直接结算，无需垫付',
+        '支持保单贷款，紧急情况可灵活取现',
+        '与社保长护险待遇叠加，不冲突',
+      ],
+      exclusions: [
+        '投保前已失能或患有约定疾病',
+        '故意自伤、犯罪行为导致失能',
+        '未遵医嘱私自用药导致失能',
+      ],
+      traceId: 'TRC-2026-LTC-004',
+      commissionRate: 0,
+    },
+    {
+      id: 'ins005',
+      name: '全家福·家庭综合保障计划',
+      type: '综合保障',
+      company: '人保财险广西分公司',
+      premium: 2980,
+      premiumUnit: '元/年（全家）',
+      coverage: 2000000,
+      coverageUnit: '元',
+      scores: {
+        coverage: 88,
+        rate: 85,
+        claims: 86,
+      },
+      features: [
+        '一张保单覆盖夫妻双方+子女+父母（最多6人）',
+        '含家庭每位成员百万医疗保障',
+        '含父母双方长期护理保障（每人每月2000元）',
+        '含家庭财产保险（房屋+室内财产）',
+        '含意外险责任（交通+普通意外）',
+      ],
+      exclusions: [
+        '投保前已患重大疾病或已失能',
+        '高风险运动、职业运动导致伤害',
+        '战争、核辐射等不可抗力',
+      ],
+      traceId: 'TRC-2026-FAM-005',
+      commissionRate: 0,
+    },
   ],
 
   // ============================================================
@@ -1413,6 +1617,34 @@ var MockData = {
       cost: 300,
       category: 'merchandise',
       desc: '护阿婆IP周边礼盒（含保温杯、帆布袋、政策手册）',
+    },
+    {
+      id: 'rw007',
+      name: '免费失能评估服务',
+      cost: 900,
+      category: 'service',
+      desc: '第三方专业机构上门为家庭成员做失能等级初评（含详细报告）',
+    },
+    {
+      id: 'rw008',
+      name: '养老机构参观体验券',
+      cost: 200,
+      category: 'service',
+      desc: '南宁市3家优质养老机构免费参观+1天试住体验',
+    },
+    {
+      id: 'rw009',
+      name: '营养膳食咨询套餐',
+      cost: 550,
+      category: 'health',
+      desc: '注册营养师1对1咨询+针对老年人群的7天定制食谱',
+    },
+    {
+      id: 'rw010',
+      name: '适老化改造评估',
+      cost: 700,
+      category: 'service',
+      desc: '专业机构上门居家适老化改造评估+改造方案建议报告',
     },
   ],
 
@@ -1545,6 +1777,11 @@ var MockData = {
     { title: '南宁市长护险委托经办服务管理办法正式施行', date: '2024-05-01', source: '南宁市医保局' },
     { title: '2026-2028年度长护险服务项目中标公告发布', date: '2026-01-06', source: '广西科文招标' },
     { title: '居家护理月最高支付限额提升至1850元', date: '2025-12-15', source: '南宁市医保局' },
+    { title: '广西长护险扩面工作推进会在南宁召开', date: '2026-03-20', source: '广西壮族自治区医保局' },
+    { title: '南宁市持证护理人员突破1.52万人，100%持证上岗', date: '2026-02-28', source: '南宁市人力资源和社会保障局' },
+    { title: '70周岁以上低保重度失能老人每月补贴200元政策落地', date: '2026-01-15', source: '南宁市民政局' },
+    { title: '惠邕保2026版升级，长护保障责任再加强', date: '2026-04-01', source: '南宁市医保局指导' },
+    { title: '定点护理服务机构增至94家，覆盖全市12个区县', date: '2026-03-10', source: '南宁市医保局' },
   ],
 };
 
@@ -2433,11 +2670,11 @@ function renderProgressBar(value, max, options) {
   if (showLabel) {
     html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-family:' + FONT_FAMILY + ';">';
     if (label) {
-      html += '<span style="font-size:12px;color:' + COLORS.textLight + ';">' + escapeXml(label) + '</span>';
+      html += '<span style="font-size:calc(12px*var(--fs,1));color:' + COLORS.textLight + ';">' + escapeXml(label) + '</span>';
     } else {
       html += '<span></span>';
     }
-    html += '<span style="font-size:13px;color:' + color + ';font-weight:600;">' + pct.toFixed(1) + '%</span>';
+    html += '<span style="font-size:calc(13px*var(--fs,1));color:' + color + ';font-weight:600;">' + pct.toFixed(1) + '%</span>';
     html += '</div>';
   }
   // 轨道 + 填充
@@ -2459,7 +2696,7 @@ function renderProgressBar(value, max, options) {
  */
 function renderFunnel(data) {
   if (!data || !data.length) {
-    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:12px;padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
+    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:calc(12px*var(--fs,1));padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
   }
 
   // 颜色从深到浅渐变（基于深蓝色系）
@@ -2479,15 +2716,15 @@ function renderFunnel(data) {
 
     html += '<div style="display:flex;align-items:center;margin-bottom:10px;font-family:' + FONT_FAMILY + ';">';
     // 阶段名称
-    html += '<div style="width:72px;font-size:12px;color:' + COLORS.text + ';flex-shrink:0;">' + escapeXml(d.stage) + '</div>';
+    html += '<div style="width:72px;font-size:calc(12px*var(--fs,1));color:' + COLORS.text + ';flex-shrink:0;">' + escapeXml(d.stage) + '</div>';
     // 进度条（轨道 + 填充）
     html += '<div style="flex:1;height:24px;background:' + COLORS.grid + ';border-radius:4px;overflow:hidden;">';
     html += '<div style="width:' + widthPct.toFixed(2) + '%;height:100%;background:' + color + ';border-radius:4px;transition:width 0.6s ease;"></div>';
     html += '</div>';
     // 右侧数量与转化率
     html += '<div style="margin-left:8px;text-align:right;flex-shrink:0;min-width:72px;">';
-    html += '<div style="font-size:12px;color:' + COLORS.text + ';font-weight:600;">' + formatNum(d.count) + '</div>';
-    html += '<div style="font-size:10px;color:' + COLORS.textLight + ';">转化率 ' + d.rate + '%</div>';
+    html += '<div style="font-size:calc(12px*var(--fs,1));color:' + COLORS.text + ';font-weight:600;">' + formatNum(d.count) + '</div>';
+    html += '<div style="font-size:calc(10px*var(--fs,1));color:' + COLORS.textLight + ';">转化率 ' + d.rate + '%</div>';
     html += '</div>';
     html += '</div>';
   }
@@ -2587,10 +2824,10 @@ function renderDonut(data, options) {
  */
 function renderRegionTable(data) {
   if (!data || !data.length) {
-    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:12px;padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
+    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:calc(12px*var(--fs,1));padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
   }
 
-  var html = '<table style="width:100%;border-collapse:collapse;font-family:' + FONT_FAMILY + ';font-size:12px;">';
+  var html = '<table style="width:100%;border-collapse:collapse;font-family:' + FONT_FAMILY + ';font-size:calc(12px*var(--fs,1));">';
   // 表头
   html += '<thead><tr>' +
     '<th style="text-align:left;padding:8px 6px;color:' + COLORS.textLight + ';font-weight:500;border-bottom:1px solid ' + COLORS.grid + ';">区域</th>' +
@@ -2611,7 +2848,7 @@ function renderRegionTable(data) {
     html += '<div style="flex:1;height:6px;background:' + COLORS.grid + ';border-radius:3px;overflow:hidden;margin-right:6px;">';
     html += '<div style="width:' + aware.toFixed(1) + '%;height:100%;background:' + COLORS.primary + ';border-radius:3px;transition:width 0.5s;"></div>';
     html += '</div>';
-    html += '<span style="font-size:11px;color:' + COLORS.text + ';min-width:32px;text-align:right;">' + aware + '%</span>';
+    html += '<span style="font-size:calc(11px*var(--fs,1));color:' + COLORS.text + ';min-width:32px;text-align:right;">' + aware + '%</span>';
     html += '</div>';
     html += '</td>';
     html += '</tr>';
@@ -2655,6 +2892,14 @@ if (typeof module !== 'undefined') module.exports = Charts;
     subPageData: null,
     qaMessages: [],
     dashTab: 'gov', // gov | insurance
+    // ===== 双层账户隔离 =====
+    accountMode: 'inclusive',     // 'inclusive' 普惠账户(默认,无商业) | 'authorized' 授权账户(开放商业功能)
+    bizGrey: false,               // 用户拒绝授权后：保障测评入口置灰，点击仅提示不弹窗
+    bizOff: false,                // 用户从个人中心主动关闭商业授权：商业模块全部隐藏（含保障测评入口）
+    gapForm: null,                // 授权后填的问卷：{age, insured, incomeMonthly, careStatus, elderlyCount, elderLevel, hasSupport, spendCap, hasCommercial}
+    gapResult: null,              // 系统算出的缺口：{gapValue, gapLevel, coveragePct, ...}（关闭授权后保留，仅隐藏入口）
+    readGiven: null,              // 阅读资讯奖励去重：{section_id: true}
+    linkedElders: null,           // 绑定家庭长辈去重：{name: true}
     recForm: { age: 35, hasSocial: true, hasCommercial: false, familyRisk: 'medium', budget: '5000-10000' },
     recResultShown: false,
   };
@@ -2683,7 +2928,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
   // ===== 护阿婆SVG头像生成器 =====
   function huapoSVG(size) {
     var s = size || 48;
-    return '<svg class="huapo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+    return '<svg class="ayi-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
       '<defs><clipPath id="hc' + s + '"><circle cx="50" cy="50" r="48"/></clipPath></defs>' +
       '<circle cx="50" cy="50" r="48" fill="#FEF3E7"/>' +
       '<g clip-path="url(#hc' + s + ')">' +
@@ -2765,6 +3010,11 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
   // ===== 页面路由 =====
   function navigateTo(pageId) {
+    // 权限闸门：数据看板仅限保险公司/政府监管授权查看
+    if (pageId === 'dashboard') {
+      if (!dashAuthed()) { showDashAuth(); return; }
+      renderDashChip();
+    }
     // 隐藏所有页面
     var pages = document.querySelectorAll('.page');
     for (var i = 0; i < pages.length; i++) {
@@ -2814,7 +3064,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     }
 
     // 护阿婆头像
-    $('huapoAvatarHome').innerHTML = huapoSVG(64);
+    $('ayiAvatarHome').innerHTML = huapoSVG(64);
 
     // 问候语
     var hour = new Date().getHours();
@@ -2831,10 +3081,19 @@ if (typeof module !== 'undefined') module.exports = Charts;
     $('homeStage').textContent = stageObj ? stageObj.name : '理解期';
     $('homeAccount').textContent = ui.accountType === 'authorized' ? '授权' : '普惠';
 
-    // 功能入口
+    // ===== 账户模式：徽章渲染 + 商业入口加标记 =====
+    renderAccountUI();
+    // 功能入口：普惠账户下「保障测评」保留可见（点击强制授权弹窗，拒绝后置灰）；
+    // 「成本测算」等纯商业入口直接隐藏；「积分商城/护理值」属公益功能永不隐藏。
     var featuresHtml = '';
     MockData.homeFeatures.forEach(function (f) {
-      featuresHtml += '<div class="home-features__item" onclick="app.openSubPage(\'' + f.id + '\')">' +
+      var isBizEntry = (f.id === 'recommendation');
+      var isBizHide = (f.id === 'calculator');
+      var inclusive = state.accountMode !== 'authorized';
+      var hide = (isBizHide && inclusive) || (isBizEntry && inclusive && state.bizOff);
+      var grey = (isBizEntry && inclusive && state.bizGrey && !state.bizOff);
+      var onclick = (isBizEntry && inclusive) ? 'app.openBizOrAuth(\'recommendation\')' : 'app.openSubPage(\'' + f.id + '\')';
+      featuresHtml += '<div class="home-features__item' + (hide ? ' biz-only' : '') + (grey ? ' biz-grey' : '') + '" data-feat="' + f.id + '" onclick="' + onclick + '">' +
         '<div class="home-features__icon" style="background:' + f.color + '">' + getIcon(f.icon, 24) + '</div>' +
         '<div class="home-features__name">' + f.name + '</div>' +
         '<div class="home-features__desc">' + f.desc + '</div>' +
@@ -2903,8 +3162,16 @@ if (typeof module !== 'undefined') module.exports = Charts;
     stagesHtml += '</div>';
     $('eduStages').innerHTML = stagesHtml;
 
-    // 内容列表
-    var contentHtml = '';
+    // 内容列表（顶部插入科普打卡卡，护理值获取路径之一）
+    var todayStr = new Date().toISOString().slice(0, 10);
+    var checkedIn = false;
+    try { checkedIn = localStorage.getItem('zbchCheckin') === todayStr; } catch (e) {}
+    var contentHtml = '<div style="margin:0 0 14px;padding:14px;border-radius:14px;background:linear-gradient(135deg,#FFF7ED,#fff);border:1px solid #FED7AA;display:flex;align-items:center;gap:12px">' +
+      '<div style="font-size:calc(32px*var(--fs,1))">📅</div>' +
+      '<div style="flex:1"><div style="font-weight:700;color:var(--c-ink)">科普打卡</div>' +
+      '<div style="color:var(--c-text-secondary);margin-top:2px">每日打卡学习长护险知识，+10 护理值</div></div>' +
+      '<button class="sp-task__btn' + (checkedIn ? ' sp-task__btn--done' : '') + '" id="checkinBtn" onclick="app.doCheckin()" ' + (checkedIn ? 'disabled' : '') + '>' + (checkedIn ? '今日已打卡' : '打卡 +10') + '</button>' +
+      '</div>';
     var sections = [
       { key: 'basic', title: '基础认知', color: '#D97706', data: MockData.educationContent.basic },
       { key: 'benefit', title: '待遇解读', color: '#065A82', data: MockData.educationContent.benefit },
@@ -2921,7 +3188,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
           '<div class="edu-card__desc">' + escapeHtml(item.desc) + '</div>' +
           '<div class="edu-card__meta">' +
           '<span class="edu-card__tag" style="background:' + sec.color + '22;color:' + sec.color + '">' + sec.title + '</span>' +
-          '<span style="font-size:11px;color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + ' ' + item.readingTime + '分钟</span>' +
+          '<span style="font-size:calc(11px*var(--fs,1));color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + ' ' + item.readingTime + '分钟</span>' +
           '<span class="edu-card__points">+' + item.points + '分</span>' +
           '</div></div></div>';
       });
@@ -2948,7 +3215,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
   // ===== AI问答页渲染 =====
   function renderQA() {
     // 头像
-    $('huapoAvatarQA').innerHTML = huapoSVG(40);
+    $('ayiAvatarQA').innerHTML = huapoSVG(40);
 
     // 方言标签
     var dialectNames = { mandarin: '普通话', guiliu: '桂柳话', baihua: '白话', zhuang: '壮语' };
@@ -3119,6 +3386,24 @@ if (typeof module !== 'undefined') module.exports = Charts;
         '</div>';
     });
     $('profileMenu').innerHTML = menuHtml;
+
+    // 商业保障推荐服务可视化开关（双层账户切换）
+    var bizOn = state.accountMode === 'authorized';
+    var bt = $('profileBizToggle');
+    if (bt) {
+      bt.innerHTML = '<div class="acct-toggle"><div><div style="font-weight:700;color:var(--c-ink)">' + (bizOn ? '已开启 · 授权账户' : '已关闭 · 普惠账户') + '</div><div style="margin-top:4px;color:var(--c-text-secondary);line-height:1.6">' + (bizOn ? '开放保障测评、缺口报告、产品对比与投保跳转服务。' : '仅保留科普、AI问答、护理值、积分商城等公益功能。') + '</div></div><div class="switch ' + (bizOn ? 'switch--on' : '') + '" id="profileBizSw" style="cursor:pointer"></div></div>' +
+        '<div style="padding:8px 10px;border-radius:8px;background:' + (bizOn ? '#FEF3C7;color:#92400E' : '#DCFCE7;color:#166534') + ';line-height:1.7">关闭后商业模块立即隐藏（非置灰）；已填写的测算问卷与缺口报告数据保留，重新开启无需重填。</div>';
+      setTimeout(function () {
+        var psw = document.getElementById('profileBizSw');
+        if (psw) psw.addEventListener('click', function () {
+          if (state.accountMode === 'authorized') {
+            confirmModal('关闭商业保障推荐服务？', '关闭后将立即退回普惠账户，保障测评、产品对比等商业模块全部隐藏；已填写的问卷与报告数据保留，可随时重新开启。', function () { app.closeBusinessAuth(); });
+          } else {
+            showAuthModal();
+          }
+        });
+      }, 50);
+    }
   }
 
   // ===== 数据看板渲染 =====
@@ -3186,10 +3471,10 @@ if (typeof module !== 'undefined') module.exports = Charts;
       var pct = Math.round(d.count / total * 100);
       html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
         '<div style="width:12px;height:12px;border-radius:3px;background:' + d.color + '"></div>' +
-        '<span style="font-size:13px;color:var(--c-ink);font-weight:500">' + d.name + '</span>' +
+        '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-ink);font-weight:500">' + d.name + '</span>' +
         '<span style="flex:1"></span>' +
-        '<span style="font-size:13px;color:var(--c-text-secondary)">' + d.count + '单</span>' +
-        '<span style="font-size:13px;font-weight:700;color:var(--c-deep-blue)">' + pct + '%</span>' +
+        '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-text-secondary)">' + d.count + '单</span>' +
+        '<span style="font-size:calc(13px*var(--fs,1));font-weight:700;color:var(--c-deep-blue)">' + pct + '%</span>' +
         '</div>';
     });
     return html;
@@ -3197,6 +3482,20 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
   // ===== 子页面系统 =====
   function openSubPage(type, data) {
+    // 兜底：商业子页必须授权，否则先授权；拒绝过授权的入口点击只提示
+    var bizPages = { recommendation: 1, calculator: 1, gapQuestionnaire: 1, gapResult: 1, productCompare: 1, productDetail: 1 };
+    if (bizPages[type] && state.accountMode !== 'authorized') {
+      if (state.bizGrey) { toast('需要开启商业保障推荐授权才可使用该功能'); return; }
+      state._pendingBizPage = type;
+      showAuthModal();
+      return;
+    }
+    // 流程闸门：不允许绕过缺口报告直接访问产品对比页
+    if ((type === 'productCompare' || type === 'productDetail') && !state.gapResult) {
+      toast('请先完成保障缺口测算报告');
+      openSubPage('gapQuestionnaire');
+      return;
+    }
     state.subPageOpen = true;
     state.subPageData = data || null;
     var inner = $('subPageInner');
@@ -3218,6 +3517,11 @@ if (typeof module !== 'undefined') module.exports = Charts;
       case 'settings': navTitle = '账户与授权'; break;
       case 'contentDetail': navTitle = '内容详情'; break;
       case 'videoDetail': navTitle = '视频播放'; break;
+      case 'gapQuestionnaire': navTitle = '授权信息问卷'; break;
+      case 'gapResult': navTitle = '个人长期照护保障缺口报告'; break;
+      case 'productCompare': navTitle = '产品三维评分对比'; break;
+      case 'productDetail': navTitle = '产品详情'; break;
+      case 'giftPoints': navTitle = '护理值赠予长辈'; break;
       default: navTitle = '详情'; break;
     }
 
@@ -3231,7 +3535,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     // 子页面内容
     switch (type) {
       case 'points': html += renderPointsCenter(); break;
-      case 'recommendation': html += renderRecommendation(); break;
+      case 'recommendation': html += state.gapResult ? renderGapResult() : renderGapQuestionnaire(); break;
       case 'calculator': html += renderCalculator(); break;
       case 'todayRecommend': html += renderTodayRecommend(); break;
       case 'family': html += renderFamily(); break;
@@ -3242,6 +3546,11 @@ if (typeof module !== 'undefined') module.exports = Charts;
       case 'education': html += '<div style="padding:20px;text-align:center;color:var(--c-text-tertiary)">请在底部Tab栏"科普"页查看</div>'; break;
       case 'qa': navigateTo('qa'); closeSubPage(); return; break;
       case 'dashboard': navigateTo('dashboard'); closeSubPage(); return; break;
+      case 'gapQuestionnaire': html += renderGapQuestionnaire(); break;
+      case 'gapResult': html += renderGapResult(); break;
+      case 'productCompare': html += renderProductCompare(); break;
+      case 'productDetail': html += renderProductDetail(data); break;
+      case 'giftPoints': html += renderGiftPoints(); break;
       default: html += '<div style="padding:40px 20px;text-align:center;color:var(--c-text-tertiary)">功能开发中...</div>'; break;
     }
 
@@ -3269,7 +3578,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-points__balance">' + ui.carePoints + '</div>' +
       '<div class="sp-points__label">当前护理值</div>' +
       '<div class="sp-points__actions">' +
-      '<div class="sp-points__action" onclick="app.toast(\'转赠功能演示中\')"><div class="sp-points__action-icon">' + getIcon('transfer', 20) + '</div><span class="sp-points__action-text">转赠长辈</span></div>' +
+      '<div class="sp-points__action" onclick="app.openSubPage(\'giftPoints\')"><div class="sp-points__action-icon">' + getIcon('transfer', 20) + '</div><span class="sp-points__action-text">转赠长辈</span></div>' +
       '<div class="sp-points__action" onclick="app.openSubPage(\'records\')"><div class="sp-points__action-icon">' + getIcon('doc', 20) + '</div><span class="sp-points__action-text">积分记录</span></div>' +
       '<div class="sp-points__action" onclick="app.toast(\'规则说明演示中\')"><div class="sp-points__action-icon">' + getIcon('shield', 20) + '</div><span class="sp-points__action-text">规则说明</span></div>' +
       '</div></div>';
@@ -3285,7 +3594,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       html += '<div class="sp-task">' +
         '<div class="sp-task__icon" style="background:' + iconBg + ';color:' + iconColor2 + '">' + getIcon(t.category === 'policy' ? 'book' : 'heart', 20) + '</div>' +
         '<div class="sp-task__info"><div class="sp-task__name">' + t.name + '</div><div class="sp-task__desc">' + escapeHtml(t.desc) + ' · 每日上限' + t.dailyLimit + '次</div></div>' +
-        '<span style="font-size:13px;font-weight:700;color:var(--c-orange)">+' + t.points + '</span>' +
+        '<span style="font-size:calc(13px*var(--fs,1));font-weight:700;color:var(--c-orange)">+' + t.points + '</span>' +
         '<button class="sp-task__btn ' + btnClass + '" onclick="app.doTask(\'' + t.id + '\')" ' + (t.completed ? 'disabled' : '') + '>' + btnText + '</button>' +
         '</div>';
     });
@@ -3381,13 +3690,13 @@ if (typeof module !== 'undefined') module.exports = Charts;
         '<div class="sp-rec__product-row"><span class="sp-rec__product-row-label">佣金率</span><span class="sp-rec__product-row-value" style="color:#16A34A">0%（不纳入推荐排序）</span></div>' +
         '</div>' +
         '<div class="sp-rec__product-body" style="padding-top:0">' +
-        '<div style="font-size:12px;font-weight:600;color:var(--c-text-secondary);margin-bottom:6px">保障责任</div>';
+        '<div style="font-size:calc(12px*var(--fs,1));font-weight:600;color:var(--c-text-secondary);margin-bottom:6px">保障责任</div>';
       p.features.forEach(function (f) {
-        html += '<div style="font-size:12px;color:var(--c-ink);padding:2px 0;display:flex;gap:6px"><span style="color:#16A34A">' + getIcon('check', 14) + '</span>' + escapeHtml(f) + '</div>';
+        html += '<div style="font-size:calc(12px*var(--fs,1));color:var(--c-ink);padding:2px 0;display:flex;gap:6px"><span style="color:#16A34A">' + getIcon('check', 14) + '</span>' + escapeHtml(f) + '</div>';
       });
-      html += '<div style="font-size:12px;font-weight:600;color:var(--c-text-secondary);margin:8px 0 6px">免责条款</div>';
+      html += '<div style="font-size:calc(12px*var(--fs,1));font-weight:600;color:var(--c-text-secondary);margin:8px 0 6px">免责条款</div>';
       p.exclusions.forEach(function (e) {
-        html += '<div style="font-size:12px;color:var(--c-text-secondary);padding:2px 0;display:flex;gap:6px"><span style="color:var(--c-red)">·</span>' + escapeHtml(e) + '</div>';
+        html += '<div style="font-size:calc(12px*var(--fs,1));color:var(--c-text-secondary);padding:2px 0;display:flex;gap:6px"><span style="color:var(--c-red)">·</span>' + escapeHtml(e) + '</div>';
       });
       html += '</div>' +
         '<div class="sp-rec__product-scores" style="padding:8px 16px">' +
@@ -3399,7 +3708,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
         '</div>';
     });
 
-    html += '<div style="padding:12px 16px;font-size:12px;color:var(--c-text-tertiary);line-height:1.5" id="recDisclaimer">温馨提示：以上推荐基于AI保障缺口评估模型，以保障覆盖度、费率水平、理赔服务三维评分排序，产品入库和推荐排序均不纳入佣金率。推荐结果仅供参考，具体投保请咨询持证保险顾问。复杂条款问题可一键转接人工顾问。</div>';
+    html += '<div style="padding:12px 16px;font-size:calc(12px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5" id="recDisclaimer">温馨提示：以上推荐基于AI保障缺口评估模型，以保障覆盖度、费率水平、理赔服务三维评分排序，产品入库和推荐排序均不纳入佣金率。推荐结果仅供参考，具体投保请咨询持证保险顾问。复杂条款问题可一键转接人工顾问。</div>';
 
     return html;
   }
@@ -3453,7 +3762,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-calc__compare-row"><span>保障缺口（需自付）</span><span class="sp-calc__compare-gap">' + (m.institutionBed - 1980) + '元/月</span></div>' +
       '</div>';
 
-    html += '<div style="padding:12px 16px;font-size:12px;color:var(--c-text-tertiary);line-height:1.5">以上数据基于南宁市医保局2026年度政策标准及本地护理行业市场调研均价。实际费用因机构等级、护理等级、服务频次不同而有差异。建议结合保障缺口测评，补充商业保险保障。</div>';
+    html += '<div style="padding:12px 16px;font-size:calc(12px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5">以上数据基于南宁市医保局2026年度政策标准及本地护理行业市场调研均价。实际费用因机构等级、护理等级、服务频次不同而有差异。建议结合保障缺口测评，补充商业保险保障。</div>';
 
     return html;
   }
@@ -3477,7 +3786,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<p>政策是好政策，就怕你不知道。知道了就来赚护理值吧！</p>' +
       '</div>' +
       '<div class="sp-detail__source">来源：南宁市医疗保障局公开数据 · 护阿婆科普内容团队整理</div>' +
-      '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.toast(\'已阅读，+20护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>' +
+      '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.claimRead(this,' + rec.points + ');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>' +
       '</div>';
     return html;
   }
@@ -3485,26 +3794,28 @@ if (typeof module !== 'undefined') module.exports = Charts;
   // ===== 子页面：家庭成员关联 =====
   function renderFamily() {
     var html = '<div style="padding:16px">' +
-      '<div style="font-size:14px;color:var(--c-text-secondary);margin-bottom:16px;line-height:1.5">通过家庭关联，你可以将护理值转赠给直系长辈，帮助他们兑换养老服务。已关联的家庭成员可共享政策科普内容。</div>';
+      '<div style="font-size:calc(14px*var(--fs,1));color:var(--c-text-secondary);margin-bottom:16px;line-height:1.5">通过家庭关联，你可以将护理值转赠给直系长辈，帮助他们兑换养老服务。已关联的家庭成员可共享政策科普内容。<b style="color:var(--c-orange)">每成功绑定1位长辈 +50 护理值。</b></div>';
 
+    state.linkedElders = state.linkedElders || {};
     var members = [
       { name: '韦父', age: 68, relation: '父亲', risk: '高危（脑梗后遗症）', linked: true },
       { name: '韦母', age: 65, relation: '母亲', risk: '中危', linked: true },
       { name: '李父', age: 70, relation: '岳父', risk: '中危', linked: true },
+      { name: '李外婆', age: 72, relation: '外婆', risk: '低危', linked: !!state.linkedElders['李外婆'] },
     ];
 
     members.forEach(function (m) {
       html += '<div class="sp-task" style="margin:0 0 8px">' +
         '<div class="sp-task__icon" style="background:' + (m.linked ? '#065A82' : '#E8EAED') + ';color:' + (m.linked ? '#fff' : '#9CA3AF') + '">' + getIcon('user', 20) + '</div>' +
         '<div class="sp-task__info"><div class="sp-task__name">' + m.name + '（' + m.age + '岁·' + m.relation + '）</div><div class="sp-task__desc">失能风险：' + m.risk + '</div></div>' +
-        (m.linked ? '<span style="font-size:11px;color:#16A34A;background:#DCFCE7;padding:2px 8px;border-radius:10px">已关联</span>' : '<button class="sp-task__btn" onclick="app.toast(\'关联请求已发送\')">关联</button>') +
+        (m.linked ? '<span style="font-size:calc(11px*var(--fs,1));color:#16A34A;background:#DCFCE7;padding:2px 8px;border-radius:10px">已关联</span>' : '<button class="sp-task__btn" onclick="app.linkElder(\'' + m.name + '\')">关联 +50</button>') +
         '</div>';
     });
 
     html += '<div style="margin-top:16px">' +
       '<button class="sp-rec__submit" onclick="app.toast(\'添加家庭成员功能演示中\')">+ 添加家庭成员</button>' +
       '</div>' +
-      '<div style="margin-top:12px;padding:12px;background:var(--c-blue-light);border-radius:8px;font-size:12px;color:var(--c-deep-blue);line-height:1.5">' +
+      '<div style="margin-top:12px;padding:12px;background:var(--c-blue-light);border-radius:8px;font-size:calc(12px*var(--fs,1));color:var(--c-deep-blue);line-height:1.5">' +
       '<strong>护理值转赠规则：</strong>每人每日转赠上限200分，转赠后进入冷静期24小时。非中青年家庭成员停留普惠账户，不接触商业保险产品。' +
       '</div></div>';
     return html;
@@ -3561,7 +3872,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     html += '<div style="padding:12px 0"><button class="sp-rec__submit" style="background:var(--c-red)" onclick="app.toast(\'撤回授权后将无法使用积分与推荐功能\')">撤回商业推荐授权</button></div>';
     html += '<div style="padding:8px 0"><button class="sp-rec__submit" style="background:var(--c-gray);color:var(--c-text-secondary)" onclick="app.toast(\'退出登录功能演示中\')">退出登录</button></div>';
 
-    html += '<div style="padding:12px;background:var(--c-gray);border-radius:8px;font-size:11px;color:var(--c-text-tertiary);line-height:1.5;margin-top:8px">' +
+    html += '<div style="padding:12px;background:var(--c-gray);border-radius:8px;font-size:calc(11px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5;margin-top:8px">' +
       '智伴长护—长护价值银行 v1.0.0 · 广西财经学院金融学院 智伴长护团队 · 指导教师：刘家养教授 李瑾专业教师<br>数据来源：南宁市医疗保障局 · 政策截至2026年7月' +
       '</div></div>';
     return html;
@@ -3587,20 +3898,173 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-detail__source">来源：南宁市医疗保障局公开政策文件 · 护阿婆科普内容团队整理</div>';
 
     // 方言版本
-    html += '<div style="padding:12px 0"><div style="font-size:13px;font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆方言版讲解</div>';
+    html += '<div style="padding:12px 0"><div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆方言版讲解</div>';
     var dialectNames = { mandarin: '普通话', guiliu: '桂柳话', baihua: '白话', zhuang: '壮语' };
     for (var d in MockData.dialectSamples) {
       html += '<div style="padding:8px 12px;background:var(--c-gray);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="app.toast(\'' + dialectNames[d] + '语音播放演示\')">' +
-        '<div style="font-size:12px;color:var(--c-text-secondary);margin-bottom:4px">' + dialectNames[d] + '版</div>' +
-        '<div style="font-size:13px;color:var(--c-ink);line-height:1.4">' + escapeHtml(MockData.dialectSamples[d].substring(0, 80)) + '...</div>' +
-        '<div style="display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--c-cyan)">' + getIcon('play', 14) + '<span style="font-size:11px">播放语音</span></div>' +
+        '<div style="font-size:calc(12px*var(--fs,1));color:var(--c-text-secondary);margin-bottom:4px">' + dialectNames[d] + '版</div>' +
+        '<div style="font-size:calc(13px*var(--fs,1));color:var(--c-ink);line-height:1.4">' + escapeHtml(MockData.dialectSamples[d].substring(0, 80)) + '...</div>' +
+        '<div style="display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--c-cyan)">' + getIcon('play', 14) + '<span style="font-size:calc(11px*var(--fs,1))">播放语音</span></div>' +
         '</div>';
     }
     html += '</div>';
 
-    html += '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.toast(\'已阅读，+' + item.points + '护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>';
+    html += '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.claimRead(this,' + item.points + ');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>';
     html += '</div>';
     return html;
+  }
+
+  // ===== 缺口结果页：个人长期照护保障缺口报告 =====
+  function renderGapResult() {
+    var r = state.gapResult;
+    if (!r) return openSubPage('gapQuestionnaire');
+    var gl = { sufficient: ['充足', '#16A34A', '#DCFCE7'], low: ['低', '#D97706', '#FEF3C7'], medium: ['中等', '#C2410C', '#FFEDD5'], high: ['高', '#B91C1C', '#FEE2E2'] }[r.gapLevel];
+    var stageName = { ignorant: '无知期', aware: '感知期', understanding: '理解期', concerned: '关注意愿期', action: '行动期' }[MockData.userInfo.cognitiveStage] || '理解期';
+    var html = '<div style="padding:16px 18px 20px">';
+    // 标题 + 醒目风险提示（页面直接展示）
+    html += '<div style="font-weight:700;color:var(--c-ink);font-size:calc(28px*var(--fs,1));margin-bottom:8px">个人长期照护保障缺口报告</div>';
+    html += '<div style="margin-bottom:12px;padding:10px 12px;border-radius:8px;background:#FEE2E2;border:2px solid #DC2626;color:#B91C1C;font-weight:700;font-size:calc(26px*var(--fs,1));line-height:1.6">⚠️ 本报告仅作为参考，不构成投保建议</div>';
+    // 三项核心数据
+    html += '<div style="padding:14px;border-radius:12px;background:var(--c-gray)">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed #D1D5DB"><span style="color:var(--c-text-secondary)">① 社保长护险预计每月可报销额度</span><b style="color:#166534">¥' + r.employeeCover.toLocaleString() + '</b></div>';
+    html += '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed #D1D5DB"><span style="color:var(--c-text-secondary)">② 家庭预估每月照护总开销</span><b style="color:var(--c-ink)">¥' + r.careCostMonthly.toLocaleString() + '</b></div>';
+    html += '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:8px 0"><span style="color:var(--c-text-secondary)">③ 个人每月照护费用缺口</span><b style="color:' + gl[1] + ';font-size:calc(34px*var(--fs,1))">¥' + r.gapMonthly.toLocaleString() + '</b></div>';
+    html += '<div style="margin-top:4px;text-align:right">缺口等级：<span style="padding:2px 10px;border-radius:999px;background:' + gl[2] + ';color:' + gl[1] + ';font-weight:700">' + gl[0] + '</span> ｜ 保障覆盖度 ' + r.coveragePct + '%</div>';
+    html += '</div>';
+    // 文字解读
+    html += '<div style="margin-top:12px;padding:10px 12px;border-radius:8px;background:#EFF6FF;color:#1E40AF;line-height:1.8">当发生重度失能时，社保仅可覆盖部分护理费，剩余部分需要家庭自行承担。按当前状态测算，预计 ' + r.years + ' 年累计缺口约 <b>¥' + r.gapValue.toLocaleString() + '</b>。</div>';
+    // 36维画像：仅展示认知阶段标签 + 小字标注（标注为说明信息，大字模式保留）
+    html += '<div style="margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--c-blue-light);display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-weight:700;color:var(--c-deep-blue)">认知阶段：' + stageName + '</span><span style="flex:1"></span><span style="font-size:calc(15px*var(--fs,1));color:var(--c-text-tertiary)">基于36维用户画像自动分析得出</span></div>';
+    // 下一步
+    html += '<div style="margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--c-gray);color:var(--c-text-secondary);line-height:1.7">下一步：系统以你的照护缺口为匹配依据（佣金不参与产品排序），筛选适配的商业长护产品做客观三维对比。</div>';
+    html += '<div style="padding:12px 0 0"><button class="sp-rec__submit" onclick="app.openSubPage(\'productCompare\')">查看适配产品对比 →</button></div>';
+    html += '</div>';
+    return html;
+  }
+  function getProducts() {
+    return [
+      { id:'renshou_2026', name:'南宁长护保·2026版', company:'人保寿险（青秀+良庆中标经办）', premium:1680, color:'#1F2937', logo:'人', scores:{ coverage:92, value:85, service:88 }, period:'终身', max:6000, features:['重度失能6000元/月','失能豁免保费','上门护理服务包'], disclaimers:['既往症导致失能不赔','未满180天等待期不赔','故意行为不赔'], health:['二级以上高血压需告知','近2年内住院史需告知','肿瘤/糖尿病/心脑血管疾病严格告知'], cpsId:'ZBCH-RS-2026-0001' },
+      { id:'taikang_zhuanzhu', name:'泰康·专注长护', company:'泰康养老（江南/西乡塘中标经办）', premium:2180, color:'#0F766E', logo:'泰', scores:{ coverage:95, value:78, service:93 }, period:'终身', max:8000, features:['社区居家/机构双渠道','泰康之家养老社区优先入住','年度健康检查'], disclaimers:['未如实告知可拒赔','酗酒吸毒致失能不赔','战争核辐射不赔'], health:['慢性病需逐项告知','家族遗传病史需告知','BMI≥30需人工核保'], cpsId:'ZBCH-TK-2026-0002' },
+      { id:'taiping_anning', name:'太平·安宁护理计划', company:'太平人寿（兴宁/武鸣中标经办）', premium:1880, color:'#1D4ED8', logo:'太', scores:{ coverage:87, value:89, service:80 }, period:'保至85岁', max:5500, features:['累计赔付不超20年','满期返还保费120%','南宁定点机构94家全覆盖'], disclaimers:['美容整形致失能不赔','无证机构护理服务不赔','感染艾滋不赔'], health:['60岁以上须做简易认知筛查','长期服药需告知','两年体检异常需告知'], cpsId:'ZBCH-TP-2026-0003' },
+      { id:'guoshou_fugui', name:'国寿·富贵长护', company:'中国人寿（邕宁/宾阳中标经办）', premium:1780, color:'#166534', logo:'国', scores:{ coverage:90, value:82, service:90 }, period:'终身', max:6500, features:['年金转换权','国寿1.2万家网点理赔','专业护理团队全国'], disclaimers:['酒驾无证驾驶不赔','冒险运动致失能不赔','自杀两年内不赔'], health:['职业类别4类以下告知','吸烟史≥20年/天需告知','脂肪肝需告知'], cpsId:'ZBCH-GS-2026-0004' }
+    ];
+  }
+  function renderProductCompare() {
+    var list = getProducts();
+    list.sort(function(a,b){ return (b.scores.coverage*0.45+b.scores.value*0.3+b.scores.service*0.25) - (a.scores.coverage*0.45+a.scores.value*0.3+a.scores.service*0.25); });
+    var r = state.gapResult;
+    var html = '<div style="padding:16px 18px 20px">';
+    // 页面标题
+    html += '<div style="font-weight:700;color:var(--c-ink);font-size:calc(28px*var(--fs,1));line-height:1.5">适配你的照护缺口｜商业长护产品客观对比</div>';
+    if (r) {
+      html += '<div style="margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--c-blue-light);color:var(--c-deep-blue);line-height:1.6">已按你的每月照护缺口 <b>¥' + r.gapMonthly.toLocaleString() + '</b>（缺口等级：' + {sufficient:'充足',low:'低',medium:'中等',high:'高'}[r.gapLevel] + '）匹配以下产品</div>';
+    }
+    // ===== 方案A：每款产品单独一块卡片，纵向堆叠（大字模式无需横向滚动） =====
+    var dims = [['coverage','保障覆盖度',0.45],['value','费率性价比',0.3],['service','理赔与服务能力',0.25]];
+    list.forEach(function (p, idx) {
+      var total10 = (p.scores.coverage*0.45+p.scores.value*0.3+p.scores.service*0.25)/10;
+      html += '<div style="margin-top:14px;padding:14px;border-radius:12px;background:#fff;border:1px solid #E5E7EB;box-shadow:var(--shadow-sm)">';
+      html += '<div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:10px;background:'+p.color+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0">'+p.logo+'</div><div style="flex:1"><div style="font-weight:700;color:var(--c-ink)">推荐'+(idx+1)+' · '+p.name+'</div><div style="color:var(--c-text-secondary);margin-top:2px">'+p.company+' ｜ ¥'+p.premium+'/年</div></div><div style="text-align:center"><div style="font-weight:700;color:'+p.color+';font-size:calc(30px*var(--fs,1))">'+total10.toFixed(1)+'</div><div style="font-size:calc(15px*var(--fs,1));color:var(--c-text-tertiary)">综合评分</div></div></div>';
+      // 三维评分（0-10分）
+      html += '<div style="margin-top:10px;padding:10px;background:var(--c-gray);border-radius:10px">';
+      dims.forEach(function (d) {
+        var s10 = p.scores[d[0]] / 10;
+        html += '<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="color:var(--c-text-secondary)">' + d[1] + '（权重' + Math.round(d[2]*100) + '%）</span><b style="color:'+p.color+'">' + s10.toFixed(1) + '分</b></div><div style="height:12px;background:#fff;border-radius:6px;overflow:hidden"><div style="height:100%;width:' + p.scores[d[0]] + '%;background:' + p.color + '"></div></div></div>';
+      });
+      html += '</div>';
+      // 产品简要优势
+      html += '<div style="margin-top:10px"><div style="font-weight:600;color:var(--c-deep-blue);margin-bottom:4px">产品简要优势</div><div style="color:var(--c-text-secondary);line-height:1.8">' + p.features.map(function(f){ return '· ' + f; }).join('<br>') + '</div></div>';
+      // 卡片内置健康告知提示
+      html += '<div style="margin-top:10px;padding:8px 10px;border-radius:8px;background:#FEF3C7;color:#92400E;font-size:calc(19px*var(--fs,1));line-height:1.6">请留意健康告知，产品权责以保险公司官方条款为准</div>';
+      html += '<div style="margin-top:10px"><button class="sp-rec__submit" style="background:linear-gradient(135deg,var(--c-deep-blue),var(--c-cyan))" onclick="app.openSubPage(\'productDetail\',\'' + p.id + '\')">查看产品详情 →</button></div>';
+      html += '</div>';
+    });
+    // 页面底部常驻提示（永久可见）
+    html += '<div style="margin-top:16px;padding:10px 12px;border-radius:8px;background:#FEF3C7;color:#92400E;font-weight:600;line-height:1.8">本平台以照护缺口作为匹配唯一依据，佣金不参与产品排序；评分仅客观测评，不构成投保建议。</div>';
+    html += '<div style="padding:8px 12px;margin-top:6px;border-radius:8px;background:var(--c-gray);color:var(--c-text-tertiary);line-height:1.7">以上保费以35岁男性、非吸烟、职工医保身份测算，实际以保险公司正式核保为准。</div>';
+    html += '</div>';
+    return html;
+  }
+  function renderProductDetail(productId) {
+    var p = getProducts().find(function(x){return x.id===productId;}) || getProducts()[0];
+    var html = '<div style="padding:16px 18px 20px">';
+    html += '<div style="padding:14px;border-radius:14px;background:linear-gradient(135deg,'+p.color+'14,#fff);border:1px solid '+p.color+'22">';
+    html += '<div style="display:flex;gap:12px;align-items:center"><div style="width:48px;height:48px;border-radius:10px;background:'+p.color+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700">'+p.logo+'</div><div style="flex:1"><div style="font-weight:700;color:var(--c-ink)">'+p.name+'</div><div style="color:var(--c-text-secondary)">承保公司：'+p.company+'</div></div></div>';
+    html += '<div style="margin-top:10px;display:flex;justify-content:space-between;align-items:baseline"><span style="color:var(--c-text-secondary)">参考年交保费（35岁男·非吸烟·标准体）</span><span style="font-weight:700;color:var(--c-orange);font-size:calc(44px*var(--fs,1))">¥'+p.premium+'</span></div>';
+    html += '<div style="margin-top:6px;color:var(--c-text-secondary)">保障期限：'+p.period+' ｜ 月度最高给付：¥'+p.max.toLocaleString()+'</div></div>';
+    html += '<h4 style="margin:18px 0 10px;color:var(--c-deep-blue)">核心保障责任摘要</h4><div style="padding:12px 14px;border-radius:10px;background:var(--c-gray)">';
+    p.features.forEach(function(f){ html += '<div style="padding:4px 0;color:var(--c-ink);line-height:1.7"><span style="color:#16A34A">✓</span> '+f+'</div>'; });
+    html += '</div>';
+    html += '<h4 style="margin:18px 0 10px;color:var(--c-deep-blue)">重点免责摘要（页面直接展示）</h4><div style="padding:12px 14px;border-radius:10px;background:#FEE2E2">';
+    p.disclaimers.forEach(function(f){ html += '<div style="padding:4px 0;color:#991B1B;line-height:1.7"><span style="color:#B91C1C">·</span> '+f+'</div>'; });
+    html += '</div>';
+    html += '<h4 style="margin:18px 0 10px;color:var(--c-deep-blue)">健康告知重点提醒</h4><div style="padding:12px 14px;border-radius:10px;background:#FEF3C7;border:2px dashed #F59E0B">';
+    html += '<div style="color:#92400E;font-weight:700;margin-bottom:6px">高亮提示：请如实告知，否则影响理赔效力</div>';
+    p.health.forEach(function(f){ html += '<div style="padding:4px 0;color:#78350F;line-height:1.7">▪ '+f+'</div>'; });
+    html += '</div>';
+    html += '<div style="margin-top:12px;text-align:center"><span style="display:inline-block;padding:8px 16px;border-radius:20px;background:#fff;border:1px solid var(--c-cyan);color:var(--c-cyan);font-weight:600;font-size:calc(23px*var(--fs,1));cursor:pointer" onclick="app.toast(\'演示原型：正式环境将跳转保险公司官方条款页（补充阅读，非必经步骤）\')">查看保险公司完整官方条款 →</span></div>';
+    html += '<div style="margin-top:6px;text-align:center;color:var(--c-text-tertiary);font-size:calc(15px*var(--fs,1))">（补充阅读，非必经步骤）</div>';
+    // 常驻风险声明
+    html += '<div style="margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--c-blue-light);color:var(--c-deep-blue);line-height:1.8;font-weight:600">本小程序仅展示产品资料，不开展保险销售业务，不承接投保、核保、理赔，一切保险权利义务以保险公司正式保险合同为准。</div>';
+    html += '<div style="padding:14px 0 0"><button class="sp-rec__submit" id="jumpInsBtn_'+p.id+'" style="background:linear-gradient(135deg,var(--c-orange),#DC2626)">前往官方投保入口 →</button></div>';
+    html += '<div style="text-align:center;margin-top:8px;color:var(--c-text-tertiary);line-height:1.6">离开本小程序后，信息填写、核保、缴费、出单全程由保险公司官方系统完成</div>';
+    html += '</div>';
+    setTimeout(function(){ var b=document.getElementById('jumpInsBtn_'+p.id); if(b) b.addEventListener('click', function(){ app.openInsurerJump(p); }); }, 50);
+    return html;
+  }
+  /* ===== 后台模拟溯源/转介绍逻辑（原型备注，用户不可见，仅写进原型说明） =====
+     1) 用户点击「前往官方投保入口」→ 生成唯一溯源标记（cpsId + 时间戳 + 随机数）随跳转携带；
+     2) 仅在保险公司端完成有效承保后，才按溯源标记触发 CPS 效果付费结算；
+     3) 转化行为数据回流 → 迭代36维画像、优化缺口-产品匹配模型；
+     4) 仅点击跳转未投保的行为样本同样留存用于算法优化，但不计费。
+     原型阶段全部为模拟动画，正式落地后对接保险公司真实接口。 */
+  /* ===== 通用样式化确认弹窗（替代原生confirm，文字跟随字体模式） ===== */
+  function confirmModal(title, desc, onOk) {
+    var mask = document.createElement('div');
+    mask.style.cssText = 'position:fixed;inset:0;background:rgba(15,35,60,.7);z-index:32000;display:flex;align-items:center;justify-content:center;padding:18px';
+    var box = document.createElement('div');
+    box.style.cssText = 'width:320px;max-width:90vw;background:#fff;border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)';
+    box.innerHTML = '<h3 style="margin:0 0 8px;font-size:calc(17px*var(--fs,1))">' + title + '</h3>' +
+      '<p style="color:var(--c-text-secondary);line-height:1.7;margin:0 0 14px;font-size:calc(14px*var(--fs,1))">' + desc + '</p>' +
+      '<div style="display:flex;gap:10px"><button class="auth-btn auth-btn--sub" id="cmC">取消</button><button class="auth-btn auth-btn--main" id="cmO">确认关闭</button></div>';
+    mask.appendChild(box); document.body.appendChild(mask);
+    box.querySelector('#cmC').onclick = function(){ document.body.removeChild(mask); };
+    box.querySelector('#cmO').onclick = function(){ document.body.removeChild(mask); if (onOk) onOk(); };
+  }
+  function openInsurerJump(product) {
+    var cpsId = product.cpsId + '-' + Date.now().toString().slice(-6) + '-' + Math.floor(Math.random()*900+100);
+    var mask = document.createElement('div');
+    mask.style.cssText = 'position:fixed;inset:0;background:rgba(15,35,60,.7);z-index:30000;display:flex;align-items:center;justify-content:center;padding:18px';
+    var box = document.createElement('div');
+    box.style.cssText = 'width:340px;max-width:90vw;background:#fff;border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)';
+    box.innerHTML = '<h3 id="jT" style="margin:0 0 8px">即将离开本小程序</h3>' +
+      '<p id="jD" style="color:var(--c-text-secondary);line-height:1.7;margin:0 0 10px">即将离开本小程序，跳转至 '+product.company+' 官方小程序完成投保，本平台不再参与后续投保流程。信息填写、核保、缴费、出单全部由保险公司完成。</p>' +
+      '<div style="padding:8px 10px;background:var(--c-gray);border-radius:8px;color:var(--c-text-secondary);margin-bottom:12px;line-height:1.6">CPS溯源标记已携带：<b style="color:var(--c-deep-blue)">'+cpsId+'</b><br/>保险公司承保回传时将以此标记结算效果费（仅演示逻辑）</div>' +
+      '<div id="jSteps" style="padding:0 0 6px"></div>' +
+      '<div id="jBtns" style="display:flex;gap:10px;margin-top:8px"><button class="auth-btn auth-btn--sub" id="jC">取消</button><button class="auth-btn auth-btn--main" id="jO">确认跳转</button></div>';
+    mask.appendChild(box); document.body.appendChild(mask);
+    box.querySelector('#jC').onclick = function(){ document.body.removeChild(mask); toast('已取消跳转'); };
+    var stepsEl = box.querySelector('#jSteps');
+    function s1(text, delay, color) {
+      setTimeout(function() {
+        var d = document.createElement('div');
+        d.style.cssText = 'padding:6px 10px;border-radius:6px;background:'+(color||'#DCFCE7')+';color:'+(color==='#FEF3C7'?'#92400E':'#166534')+';margin-bottom:6px';
+        d.textContent = text; stepsEl.appendChild(d);
+      }, delay);
+    }
+    box.querySelector('#jO').onclick = function () {
+      box.querySelector('#jBtns').innerHTML = '<button class="auth-btn auth-btn--sub" id="jClose" style="flex:1">关闭</button>';
+      box.querySelector('#jClose').onclick = function () { document.body.removeChild(mask); };
+      box.querySelector('#jT').textContent = '跳转流程模拟（演示）';
+      box.querySelector('#jD').textContent = '下面是完整的CPS效果结算链路模拟动画，原型仅为示意，真实环境对接保险公司接口。';
+      s1('① 已携带溯源标记 '+cpsId+' 跳转到 '+product.company+' 官方小程序', 0);
+      s1('② 用户进入保险公司系统 → 信息填写与健康告知……', 900);
+      s1('③ 进入智能核保流程 → 核保通过 → 标准费率', 1900);
+      s1('④ 用户完成保费支付 ¥'+product.premium+' → 保险出单成功', 2800, '#FEF3C7');
+      s1('⑤ 保险公司回传承保数据【CPS='+cpsId+'】→ 智伴长护接收', 3800, '#FEF3C7');
+      s1('⑥ 效果费结算 128 元（佣金不参与推荐排序，CPS结算独立）', 4800);
+      s1('⑦ 回流数据入算法 → 优化后续画像与推荐准确率（未承保点击行为样本同样留存）', 5800);
+    };
   }
 
   // ===== 子页面：视频详情 =====
@@ -3617,18 +4081,18 @@ if (typeof module !== 'undefined') module.exports = Charts;
       // 视频播放区（模拟）
       '<div style="height:200px;background:linear-gradient(135deg,#065A82,#1C7293);display:flex;align-items:center;justify-content:center;color:#fff;position:relative">' +
       '<div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center">' + getIcon('play', 28) + '</div>' +
-      '<div style="position:absolute;bottom:10px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:12px;opacity:0.8"><span>护阿婆说长护险</span><span>00:00 / ' + Math.floor(video.duration / 60) + ':' + String(video.duration % 60).padStart(2, '0') + '</span></div>' +
+      '<div style="position:absolute;bottom:10px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:calc(12px*var(--fs,1));opacity:0.8"><span>护阿婆说长护险</span><span>00:00 / ' + Math.floor(video.duration / 60) + ':' + String(video.duration % 60).padStart(2, '0') + '</span></div>' +
       '</div>' +
       '<div style="padding:16px">' +
-      '<div style="font-size:18px;font-weight:700;color:var(--c-ink);line-height:1.4">' + escapeHtml(video.title) + '</div>' +
+      '<div style="font-size:calc(18px*var(--fs,1));font-weight:700;color:var(--c-ink);line-height:1.4">' + escapeHtml(video.title) + '</div>' +
       '<div style="display:flex;gap:8px;margin-top:8px">' +
       '<span class="edu-card__tag" style="background:#D9770622;color:#D97706">' + stageNames[video.stageFrom] + ' → ' + stageNames[video.stageTo] + '</span>' +
-      '<span style="font-size:11px;color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + Math.floor(video.duration / 60) + '分' + (video.duration % 60) + '秒</span>' +
-      '<span style="font-size:11px;color:var(--c-orange);font-weight:600">+' + video.points + '护理值</span>' +
+      '<span style="font-size:calc(11px*var(--fs,1));color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + Math.floor(video.duration / 60) + '分' + (video.duration % 60) + '秒</span>' +
+      '<span style="font-size:calc(11px*var(--fs,1));color:var(--c-orange);font-weight:600">+' + video.points + '护理值</span>' +
       '</div>' +
       '<div style="margin-top:16px;padding:14px;background:var(--c-gray);border-radius:8px">' +
-      '<div style="font-size:13px;font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆台词稿</div>' +
-      '<div style="font-size:14px;color:var(--c-ink);line-height:1.7">' + escapeHtml(video.script) + '</div>' +
+      '<div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆台词稿</div>' +
+      '<div style="font-size:calc(14px*var(--fs,1));color:var(--c-ink);line-height:1.7">' + escapeHtml(video.script) + '</div>' +
       '</div>' +
       '<div style="margin-top:16px"><button class="sp-rec__submit" onclick="app.toast(\'观看完成，+' + video.points + '护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已观看，领取护理值</button></div>' +
       '</div></div>';
@@ -3698,7 +4162,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     var resultEl = $('recResult');
     if (!resultEl) return;
     resultEl.style.display = 'block';
-    resultEl.innerHTML = '<div style="text-align:center;padding:20px"><div class="qa-typing" style="justify-content:center"><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div></div><div style="font-size:13px;color:var(--c-text-secondary);margin-top:8px">AI正在分析保障缺口...</div></div>';
+    resultEl.innerHTML = '<div style="text-align:center;padding:20px"><div class="qa-typing" style="justify-content:center"><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div><div class="qa-typing__dot"></div></div><div style="font-size:calc(13px*var(--fs,1));color:var(--c-text-secondary);margin-top:8px">AI正在分析保障缺口...</div></div>';
     setTimeout(function () {
       resultEl.innerHTML = renderRecResult();
       resultEl.scrollIntoView({ behavior: 'smooth' });
@@ -3706,7 +4170,22 @@ if (typeof module !== 'undefined') module.exports = Charts;
   }
 
   function openContentDetail(section, id) {
+    // 护理值获取路径①：阅读资讯 +5（每篇仅一次）
+    state.readGiven = state.readGiven || {};
+    var rKey = section + '_' + id;
+    if (!state.readGiven[rKey]) {
+      state.readGiven[rKey] = true;
+      addCarePoints(5, '阅读资讯');
+    }
     openSubPage('contentDetail', { section: section, id: id });
+  }
+
+  // 阅读完成领取护理值（文章/推荐详情页按钮）
+  function claimRead(btn, points) {
+    if (!btn || btn.disabled) return;
+    btn.disabled = true;
+    btn.textContent = '已领取 ✓';
+    addCarePoints(points, '阅读完成');
   }
 
   function openVideoDetail(videoId) {
@@ -3724,6 +4203,24 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
   // ===== 初始化 =====
   function init() {
+    // 恢复账户模式（双层账户隔离）
+    var savedAccount = 'inclusive';
+    try { savedAccount = localStorage.getItem('zbchAccount') || 'inclusive'; } catch(e) {}
+    setAccountMode(savedAccount, false);
+    // 恢复「拒绝授权置灰」与「主动关闭商业授权」标记
+    try {
+      state.bizGrey = localStorage.getItem('zbchBizGrey') === '1' && savedAccount !== 'authorized';
+      state.bizOff = localStorage.getItem('zbchBizOff') === '1' && savedAccount !== 'authorized';
+    } catch (e) {}
+    renderAccountUI();
+    // 恢复字体双模式（standard | large，兼容旧zbchFs档位）
+    var fsMode = 'standard';
+    try {
+      fsMode = localStorage.getItem('zbchFsMode');
+      if (!fsMode) fsMode = (parseFloat(localStorage.getItem('zbchFs')) || 1) > 1.05 ? 'large' : 'standard';
+    } catch (e) {}
+    applyFontMode(fsMode, false);
+
     // TabBar点击
     var tabs = document.querySelectorAll('.tabbar__item');
     for (var i = 0; i < tabs.length; i++) {
@@ -3776,6 +4273,327 @@ if (typeof module !== 'undefined') module.exports = Charts;
     renderHome();
   }
 
+  // ===== 看板权限闸门（仅限保险公司/政府监管） =====
+  function dashAuthed() {
+    try { return !!sessionStorage.getItem('zbchDashRole'); } catch (e) { return false; }
+  }
+  function showDashAuth() {
+    var m = $('dashAuthModal');
+    if (m) m.style.display = 'flex';
+  }
+  function closeDashAuth() {
+    var m = $('dashAuthModal');
+    if (m) m.style.display = 'none';
+  }
+  function dashLogin() {
+    var roleEl = document.querySelector('input[name="dashRole"]:checked');
+    var no = $('dashAuthNo') ? $('dashAuthNo').value.trim() : '';
+    var code = $('dashAuthCode') ? $('dashAuthCode').value.trim() : '';
+    if (!roleEl) { toast('请选择机构类型'); return; }
+    if (!no) { toast('请输入工号'); return; }
+    if (!code) { toast('请输入授权码'); return; }
+    var expect = roleEl.value === 'gov' ? 'ZF2026' : 'BX2026';
+    if (code.toUpperCase() !== expect) { toast('授权码错误，请核对机构类型与授权码'); return; }
+    try { sessionStorage.setItem('zbchDashRole', roleEl.value); } catch (e) {}
+    closeDashAuth();
+    renderDashChip();
+    toast('授权成功，欢迎进入数据看板');
+    navigateTo('dashboard');
+  }
+  function renderDashChip() {
+    var chip = $('dashAuthChip');
+    if (!chip) return;
+    var role = null;
+    try { role = sessionStorage.getItem('zbchDashRole'); } catch (e) {}
+    if (!role) { chip.style.display = 'none'; return; }
+    chip.style.display = 'flex';
+    chip.innerHTML = '<span>' + (role === 'gov' ? '当前身份：政府监管部门（演示授权）' : '当前身份：保险公司工作人员（演示授权）') + '</span>' +
+      '<span class="dash-chip__exit" onclick="app.exitDash()">退出看板</span>';
+  }
+  function exitDash() {
+    try { sessionStorage.removeItem('zbchDashRole'); } catch (e) {}
+    toast('已退出看板监管视图');
+    navigateTo('home');
+  }
+
+  // ===== 双层账户隔离：核心 =====
+  function setAccountMode(mode, persist) {
+    state.accountMode = mode;
+    MockData.userInfo.accountType = mode === 'authorized' ? 'authorized' : 'inclusive';
+    MockData.userInfo.authorized = (mode === 'authorized');
+    document.body.dataset.account = mode;
+    if (mode === 'authorized') {
+      // 授权开启：清除拒绝置灰与主动关闭标记
+      state.bizGrey = false; state.bizOff = false;
+      try { localStorage.removeItem('zbchBizGrey'); localStorage.removeItem('zbchBizOff'); } catch (e) {}
+    }
+    if (persist) { try { localStorage.setItem('zbchAccount', mode); } catch (e) {} }
+    renderAccountUI();
+    // 个人页开关状态同步刷新
+    try { if ($('profileMenu')) renderProfile(); } catch (e) {}
+  }
+  function renderAccountUI() {
+    var mode = state.accountMode;
+    // 全局账户状态栏（永久常显，文字跟随字体模式）
+    var bar = $('acctModeText');
+    if (bar) {
+      if (mode === 'authorized') {
+        bar.textContent = '🟢 当前账户：授权账户｜已开启保障测评与产品对比';
+        bar.classList.add('acct-topbar__mode--auth');
+      } else {
+        bar.textContent = '🔵 当前账户：普惠账户｜仅公益科普，无商业保险推荐';
+        bar.classList.remove('acct-topbar__mode--auth');
+      }
+    }
+    // 问候卡右上角徽章
+    var hero = $('heroAcctTag');
+    if (hero) {
+      if (mode === 'authorized') {
+        hero.innerHTML = '<span class="acct-badge acct-badge--auth">授权账户</span>';
+      } else {
+        hero.innerHTML = '<span class="acct-badge acct-badge--inc">普惠账户</span>';
+      }
+    }
+    // 快捷统计栏的 账户/授权 标签强化
+    var el = $('homeAccount');
+    if (el) el.textContent = (mode === 'authorized' ? '授权账户' : '普惠账户');
+    // 保障测评入口：置灰/恢复（普惠账户下可见但受拦截；主动关闭后隐藏由renderHome处理）
+    var rec = document.querySelector('[data-feat="recommendation"]');
+    if (rec) {
+      var inclusive = mode !== 'authorized';
+      rec.classList.toggle('biz-grey', inclusive && !!state.bizGrey && !state.bizOff);
+      rec.classList.toggle('biz-only', inclusive && !!state.bizOff);
+    }
+  }
+  function showAuthModal() {
+    var m = $('authModal');
+    if (m) m.style.display = 'flex';
+  }
+  function hideAuthModal() {
+    var m = $('authModal');
+    if (m) m.style.display = 'none';
+  }
+  function openBizOrAuth(subId) {
+    if (state.accountMode === 'authorized') {
+      openSubPage(subId);
+    } else if (state.bizGrey) {
+      // 拒绝过授权：入口置灰，点击仅提示不弹窗
+      toast('需要开启商业保障推荐授权才可使用该功能');
+    } else {
+      state._pendingBizPage = subId;
+      showAuthModal();
+    }
+  }
+  function refuseAuth() {
+    hideAuthModal();
+    state.bizGrey = true;
+    state._pendingBizPage = null;
+    try { localStorage.setItem('zbchBizGrey', '1'); } catch (e) {}
+    renderAccountUI();
+    toast('已停留在普惠账户。需要开启商业保障推荐授权才可使用该功能');
+  }
+  function acceptAuth() {
+    setAccountMode('authorized', true);
+    hideAuthModal();
+    toast('授权成功！已切换到授权账户');
+    // 授权后直接跳转：已有缺口报告则回到报告（问卷数据保留，无需重填）；否则进入问卷页
+    setTimeout(function () {
+      openSubPage(state.gapResult ? 'gapResult' : 'gapQuestionnaire');
+    }, 500);
+  }
+  function closeBusinessAuth() {
+    setAccountMode('inclusive', true);
+    state.bizOff = true;
+    try { localStorage.setItem('zbchBizOff', '1'); } catch (e) {}
+    // 选项1：保留本地问卷与缺口报告数据，仅隐藏商业页面（重新开启后无需重填）
+    toast('已关闭商业授权，退回普惠账户（问卷数据已保留）');
+    if (state.currentPage !== 'home') navigateTo('home');
+  }
+  // ===== 问卷页 + 缺口测算 + 36维画像 =====
+  function renderGapQuestionnaire() {
+    var f = state.gapForm || { age: 35, insured: 'employee', incomeMonthly: 10000, careStatus: 'none', elderlyCount: 1, elderLevel: 'independent', hasSupport: 'yes', spendCap: 2000, hasCommercial: 'none' };
+    var html = '<div class="sp-header" onclick="app.closeSubPage()">' + getIcon('back', 20) + '<span>授权信息 & 保障画像问卷</span></div>';
+    html += '<div style="padding:16px 18px;color:var(--c-text-secondary);font-size:calc(23px*var(--fs,1));line-height:1.6">为了生成你的36维用户画像并计算长期照护保障缺口，请如实填写以下基础信息（演示环境：仅本地留存，不会外发）。</div>';
+    html += '<div style="padding:0 18px 20px">';
+    function field(label, body) { return '<div class="dash-field" style="margin-bottom:14px"><label style="display:block;font-size:calc(23px*var(--fs,1));color:var(--c-text-secondary);margin-bottom:4px;font-weight:600">' + label + '</label>' + body + '</div>'; }
+    function radio(name, val, label, checked) { return '<label style="display:inline-flex;align-items:center;gap:6px;margin:4px 14px 4px 0;font-size:calc(26px*var(--fs,1));color:var(--c-ink)"><input type="radio" name="'+name+'" value="'+val+'" ' + (checked?'checked':'') + '>'+label+'</label>'; }
+    function input(name, val, type, placeholder) { return '<input name="'+name+'" type="'+(type||'text')+'" value="'+val+'" placeholder="'+(placeholder||'')+'" style="width:100%;min-height:38px;border:1px solid #D1D5DB;border-radius:8px;padding:6px 10px;font-size:calc(26px*var(--fs,1));box-sizing:border-box" />'; }
+    html += field('当前年龄', input('age', f.age, 'number', '请输入年龄'));
+    html += field('参保类型', radio('insured','employee','职工医保(已缴长护险)', f.insured==='employee') + radio('insured','resident','居民医保(待扩面)', f.insured==='resident') + radio('insured','none','无基本医保', f.insured==='none'));
+    html += field('家庭月收入（元）', input('incomeMonthly', f.incomeMonthly, 'number', '请输入家庭月收入'));
+    html += field('当前照护需求情况', radio('careStatus','none','暂无失能家人',f.careStatus==='none')+radio('careStatus','mild','轻度照护需求',f.careStatus==='mild')+radio('careStatus','moderate','中度照护需求',f.careStatus==='moderate')+radio('careStatus','severe','重度失能需全程照护',f.careStatus==='severe'));
+    html += field('家中需赡养/照护的长辈人数', radio('elderlyCount','0','0人',f.elderlyCount==='0'||f.elderlyCount===0)+radio('elderlyCount','1','1人',String(f.elderlyCount)==='1')+radio('elderlyCount','2','2人',String(f.elderlyCount)==='2')+radio('elderlyCount','3+','3人及以上',String(f.elderlyCount)==='3+'));
+    html += field('长辈健康/失能等级', radio('elderLevel','independent','健康自理',f.elderLevel==='independent')+radio('elderLevel','mild','轻度依赖',f.elderLevel==='mild')+radio('elderLevel','moderate','中度依赖',f.elderLevel==='moderate')+radio('elderLevel','severe','重度失能',f.elderLevel==='severe'));
+    html += field('家庭是否有可承担非专业照护的人', radio('hasSupport','yes','有（配偶/子女/亲戚）',f.hasSupport==='yes')+radio('hasSupport','partial','有但需上班分身乏术',f.hasSupport==='partial')+radio('hasSupport','no','无，只能请专业护工',f.hasSupport==='no'));
+    html += field('个人可接受每月照护支出上限（元）', input('spendCap', f.spendCap||2000, 'number', '如 2000'));
+    html += field('已有商业保险情况', radio('hasCommercial','none','暂无商业保险',f.hasCommercial==='none')+radio('hasCommercial','medical','有百万医疗险',f.hasCommercial==='medical')+radio('hasCommercial','critical','有重疾险',f.hasCommercial==='critical')+radio('hasCommercial','ltc','有长护险',f.hasCommercial==='ltc')+radio('hasCommercial','multi','有多份保单',f.hasCommercial==='multi'));
+    html += '</div>';
+    html += '<div style="padding:12px 18px 20px"><button class="sp-rec__submit" id="gapCalcBtn">提交问卷，生成画像，计算保障缺口</button></div>';
+    html += '<div style="padding:8px 18px 20px;color:var(--c-text-tertiary);font-size:calc(19px*var(--fs,1));line-height:1.6">36维用户画像生成逻辑：年龄/参保/收入/风险/家庭成员等→ 生成护理需求场景→ 估算未来30年累计照护支出→ 减去社保长护险可覆盖金额→ 得出个人保障缺口。</div>';
+    // openSubPage 会把返回的 html 写进 subPageInner，所以这里需要先注册 btn 绑定延迟
+    setTimeout(function () {
+      var btn = $('gapCalcBtn');
+      if (btn) btn.addEventListener('click', function () {
+        // 读取表单
+        var f2 = {
+          age: parseInt(document.querySelector('input[name="age"]').value) || 35,
+          insured: (document.querySelector('input[name="insured"]:checked') || {}).value || 'employee',
+          incomeMonthly: parseInt(document.querySelector('input[name="incomeMonthly"]').value) || 10000,
+          careStatus: (document.querySelector('input[name="careStatus"]:checked') || {}).value || 'none',
+          elderlyCount: (document.querySelector('input[name="elderlyCount"]:checked') || {}).value || '1',
+          elderLevel: (document.querySelector('input[name="elderLevel"]:checked') || {}).value || 'independent',
+          hasSupport: (document.querySelector('input[name="hasSupport"]:checked') || {}).value || 'yes',
+          spendCap: parseInt(document.querySelector('input[name="spendCap"]').value) || 2000,
+          hasCommercial: (document.querySelector('input[name="hasCommercial"]:checked') || {}).value || 'none'
+        };
+        state.gapForm = f2;
+        // 简易缺口计算
+        state.gapResult = calcGap(f2);
+        toast('画像生成完毕，缺口计算完成');
+        openSubPage('gapResult');
+      });
+    }, 60);
+    return html;
+  }
+  function calcGap(f) {
+    // 简易缺口模型：未来30年累计照护需求支出 - 社保可覆盖
+    var years = Math.max(5, (90 - f.age - 15)); // 15年后到90岁期间
+    var needMult = { none: 0.15, mild: 0.5, moderate: 1.2, severe: 2.2 }[f.careStatus] || 0.3;
+    if (f.elderLevel === 'severe') needMult += 1.2;
+    else if (f.elderLevel === 'moderate') needMult += 0.6;
+    else if (f.elderLevel === 'mild') needMult += 0.3;
+    var elderBoost = { '0': 0, '1': 1, '2': 1.6, '3+': 2 }[String(f.elderlyCount)] || 1;
+    needMult *= (0.4 + elderBoost);
+    var supportCut = { yes: 0.7, partial: 0.9, no: 1.05 }[f.hasSupport] || 1;
+    var careCostMonthly = needMult * 3500 * supportCut; // 元/月
+    careCostMonthly = Math.max(500, Math.round(careCostMonthly));
+    var employeeCover = (f.insured === 'employee') ? 1850 : (f.insured === 'resident' ? 800 : 0);
+    var gapMonthly = Math.max(0, Math.round(careCostMonthly - employeeCover));
+    var coveragePct = employeeCover >= careCostMonthly ? 100 : Math.round(employeeCover / careCostMonthly * 100);
+    var yearsGapYears = Math.min(years, 30);
+    var gapValue = gapMonthly * 12 * yearsGapYears;
+    var gapLevel = gapMonthly === 0 ? 'sufficient' : (gapMonthly < 1500 ? 'low' : (gapMonthly < 3500 ? 'medium' : 'high'));
+    // 画像标签（20+个维度组合，简易代表36维）
+    var tags = {
+      '人口属性': '年龄段:' + (f.age<30?'<30岁':f.age<40?'30-39岁':f.age<50?'40-49岁':'50岁+') + ' / 参保类型:' + {employee:'职工医保',resident:'居民医保',none:'无医保'}[f.insured],
+      '收入': '家庭月收入:' + (f.incomeMonthly<5000?'<5000':f.incomeMonthly<10000?'5000-10000':f.incomeMonthly<20000?'10000-20000':'20000+') + ' 元 / 可接受月支出上限:' + (f.spendCap||2000) + '元',
+      '家庭结构': '需照护长辈:' + f.elderlyCount + '人 / 长辈失能:' + {independent:'自理',mild:'轻度',moderate:'中度',severe:'重度'}[f.elderLevel],
+      '风险场景': '当前照护:' + {none:'暂无',mild:'轻度',moderate:'中度',severe:'重度'}[f.careStatus] + ' / 家人可协助:' + {yes:'有',partial:'有限',no:'无'}[f.hasSupport],
+      '已有保障': '商业保险:' + {none:'暂无',medical:'百万医疗险',critical:'重疾险',ltc:'长护险',multi:'多份保单'}[f.hasCommercial || 'none']
+    };
+    return { careCostMonthly, employeeCover, gapMonthly, coveragePct, gapValue, years: yearsGapYears, gapLevel, tags };
+  }
+
+  // ===== 护理值通用加分（同步首页/我的页显示） =====
+  function addCarePoints(n, reason) {
+    var ui = MockData.userInfo;
+    ui.carePoints += n;
+    if (n > 0) ui.totalEarned += n;
+    var hp = $('homePoints');
+    if (hp) hp.textContent = ui.carePoints.toLocaleString();
+    try { if ($('profileMenu')) renderProfile(); } catch (e) {}
+    toast(reason + ' +' + n + ' 护理值');
+  }
+
+  // 护理值路径②：科普打卡（每日一次 +10）
+  function doCheckin() {
+    var todayStr = new Date().toISOString().slice(0, 10);
+    try {
+      if (localStorage.getItem('zbchCheckin') === todayStr) { toast('今天已打过卡啦，明天再来'); return; }
+      localStorage.setItem('zbchCheckin', todayStr);
+    } catch (e) {}
+    addCarePoints(10, '科普打卡');
+    renderEducation();
+  }
+
+  // 护理值路径③：绑定家庭长辈（每位 +50，仅一次）
+  function linkElder(name) {
+    state.linkedElders = state.linkedElders || {};
+    if (state.linkedElders[name]) { toast('已关联过该长辈'); return; }
+    state.linkedElders[name] = true;
+    addCarePoints(50, '绑定长辈「' + name + '」');
+    openSubPage('family');
+  }
+
+  // ===== 子页面：护理值赠予长辈 =====
+  function renderGiftPoints() {
+    var ui = MockData.userInfo;
+    state.linkedElders = state.linkedElders || {};
+    var members = [
+      { name: '韦父', relation: '父亲' },
+      { name: '韦母', relation: '母亲' },
+      { name: '李父', relation: '岳父' },
+      { name: '李外婆', relation: '外婆', needsLink: true },
+    ];
+    state._giftTo = state._giftTo || members[0].name;
+    state._giftAmt = state._giftAmt || 100;
+    var html = '<div style="padding:16px 18px 20px">';
+    html += '<div style="padding:14px;border-radius:12px;background:linear-gradient(135deg,#FFF7ED,#fff);border:1px solid #FED7AA;text-align:center"><div style="color:var(--c-text-secondary)">我的护理值余额</div><div style="font-size:calc(40px*var(--fs,1));font-weight:700;color:var(--c-orange)">' + ui.carePoints.toLocaleString() + '</div></div>';
+    html += '<div style="margin-top:14px;font-weight:600;color:var(--c-ink)">① 选择要赠予的长辈</div><div style="margin-top:8px">';
+    members.forEach(function (m) {
+      var linked = !m.needsLink || !!state.linkedElders[m.name];
+      var on = state._giftTo === m.name;
+      html += '<span class="gift-opt' + (on ? ' gift-opt--on' : '') + '" onclick="app.pickGiftTo(\'' + m.name + '\')">' + (linked ? '' : '🔒') + m.name + '（' + m.relation + '）</span>';
+    });
+    html += '</div>';
+    html += '<div style="margin-top:14px;font-weight:600;color:var(--c-ink)">② 选择赠予数量（每人每日上限200分）</div><div style="margin-top:8px">';
+    [50, 100, 200].forEach(function (a) {
+      var on = state._giftAmt === a;
+      html += '<span class="gift-opt' + (on ? ' gift-opt--on' : '') + '" onclick="app.pickGiftAmt(' + a + ')">' + a + ' 分</span>';
+    });
+    html += '</div>';
+    html += '<div style="margin-top:16px"><button class="sp-rec__submit" onclick="app.giftPointsConfirm()">确认赠予（' + state._giftAmt + ' 分 → ' + state._giftTo + '）</button></div>';
+    html += '<div style="margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--c-blue-light);color:var(--c-deep-blue);font-size:calc(19px*var(--fs,1));line-height:1.7">赠予后进入冷静期24小时，可随时在积分记录中查看。长辈收到护理值可用于兑换居家护理等服务。</div>';
+    html += '</div>';
+    return html;
+  }
+  function pickGiftTo(name) { state._giftTo = name; openSubPage('giftPoints'); }
+  function pickGiftAmt(a) { state._giftAmt = a; openSubPage('giftPoints'); }
+  function giftPointsConfirm() {
+    var ui = MockData.userInfo;
+    var amt = state._giftAmt || 100;
+    var to = state._giftTo || '长辈';
+    if (state.linkedElders && !state.linkedElders[to] && to === '李外婆') { toast('请先在「家庭成员关联」中绑定该长辈'); return; }
+    if (ui.carePoints < amt) { toast('护理值不足，还差 ' + (amt - ui.carePoints) + ' 分'); return; }
+    ui.carePoints -= amt;
+    var d = new Date();
+    var dateStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    MockData.pointsHistory.unshift({ type: 'transfer', desc: '赠予' + to + '（长辈护理值）', amount: -amt, date: dateStr });
+    var hp = $('homePoints');
+    if (hp) hp.textContent = ui.carePoints.toLocaleString();
+    try { if ($('profileMenu')) renderProfile(); } catch (e) {}
+    toast('已赠予 ' + to + ' ' + amt + ' 护理值');
+    openSubPage('points');
+  }
+
+  // ===== 字体双模式（标准/大字，全局记忆，与顶部导航栏同步） =====
+  function applyFontMode(mode, save) {
+    if (mode !== 'large' && mode !== 'standard') mode = 'standard';
+    var scale = (mode === 'large') ? 1.25 : 1;
+    document.documentElement.setAttribute('data-fs', mode);
+    document.documentElement.style.setProperty('--fs', String(scale));
+    try {
+      if (save) { localStorage.setItem('zbchFsMode', mode); localStorage.setItem('zbchFs', String(scale)); }
+      var ts = document.querySelectorAll('.fs-tbtn');
+      for (var i = 0; i < ts.length; i++) {
+        ts[i].classList.toggle('fs-tbtn--on', ts[i].getAttribute('data-mode') === mode);
+      }
+      var opts = document.querySelectorAll('.fs-opt');
+      for (var j = 0; j < opts.length; j++) {
+        opts[j].classList.toggle('fs-opt--on', opts[j].getAttribute('data-mode') === mode);
+      }
+    } catch (e) {}
+  }
+  function setFontMode(mode) {
+    applyFontMode(mode, true);
+    toast(mode === 'large' ? '已切换大字模式（适老化）' : '已切换标准模式');
+  }
+  // 兼容旧调用：数值>1 视为大字模式
+  function setFontScale(scale) {
+    applyFontMode(scale > 1.05 ? 'large' : 'standard', true);
+    toast('字体模式已调整');
+  }
+
   // ===== 暴露API =====
   var app = {
     navigateTo: navigateTo,
@@ -3791,13 +4609,115 @@ if (typeof module !== 'undefined') module.exports = Charts;
     openContentDetail: openContentDetail,
     openVideoDetail: openVideoDetail,
     toast: toast,
+    setFontScale: setFontScale,
+    setFontMode: setFontMode,
+    dashLogin: dashLogin,
+    closeDashAuth: closeDashAuth,
+    exitDash: exitDash,
+    // 护理值路径 + 赠予
+    doCheckin: doCheckin,
+    linkElder: linkElder,
+    claimRead: claimRead,
+    pickGiftTo: pickGiftTo,
+    pickGiftAmt: pickGiftAmt,
+    giftPointsConfirm: giftPointsConfirm,
+    // 双层账户
+    openBizOrAuth: openBizOrAuth,
+    acceptAuth: acceptAuth,
+    refuseAuth: refuseAuth,
+    closeBusinessAuth: closeBusinessAuth,
+    openInsurerJump: openInsurerJump,
   };
 
-  // DOM Ready
+  // ========= renderSettings 完整重写（双账户卡片+开关+字体）=========
+  var _orig_renderSettings = renderSettings;
+  renderSettings = function () {
+    var ui = MockData.userInfo;
+    var authOn = state.accountMode === 'authorized';
+    var html = '<div style="padding:16px">';
+    html += '<div class="sp-calc__card"><div class="sp-calc__card-title">账户模式 · 双层隔离 · 一眼清晰</div>';
+    html += '<div style="display:flex;gap:10px;margin:10px 0 10px">';
+    html += '<div style="flex:1;padding:10px 12px;border-radius:10px;border:2px solid ' + (authOn?'#D1D5DB':'#166534') + ';background:' + (authOn?'#fff':'#DCFCE7') + '"><div style="font-weight:700;color:' + (authOn?'var(--c-text-secondary)':'#166534') + '">🌱 普惠账户</div><div style="margin-top:4px;line-height:1.6;color:' + (authOn?'var(--c-text-tertiary)':'#14532d') + '">公益科普+AI问答+短视频学习+护理值获取。保险/测算/投保完全隐藏。</div></div>';
+    html += '<div style="flex:1;padding:10px 12px;border-radius:10px;border:2px solid ' + (authOn?'#92400E':'#D1D5DB') + ';background:' + (authOn?'#FEF3C7':'#fff') + '"><div style="font-weight:700;color:' + (authOn?'#92400E':'var(--c-text-secondary)') + '">⭐ 授权账户</div><div style="margin-top:4px;line-height:1.6;color:' + (authOn?'#78350F':'var(--c-text-tertiary)') + '">画像问卷+保障缺口测算+产品三维对比+CPS跳转投保。不售卖保险，可随时关。</div></div>';
+    html += '</div>';
+    html += '<div class="acct-toggle"><div><div style="font-weight:700;color:var(--c-ink)">商业保障推荐服务（可一键切换）</div><div style="margin-top:4px;color:var(--c-text-secondary);line-height:1.6">开：开放保障测评、产品对比等商业功能。关：立即隐藏所有商业入口与结果，回到普惠模式。已填写的问卷与缺口报告数据保留在本机，重新开启后无需重填。</div></div><div class="switch ' + (authOn?'switch--on':'') + '" id="bizSw" style="cursor:pointer"></div></div>';
+    html += '<div style="padding:8px 10px;border-radius:6px;background:' + (authOn?'#FEF3C7;color:#92400E':'#DCFCE7;color:#166534') + ';line-height:1.7;margin-top:6px">当前模式：<b>' + (authOn?'授权账户 — 商业测算与对比已开放':'普惠账户 — 仅公益科普功能可用') + '</b></div></div>';
+    var curMode = 'standard';
+    try { curMode = localStorage.getItem('zbchFsMode') || ((parseFloat(localStorage.getItem('zbchFs'))||1)>1.05?'large':'standard'); } catch(e){}
+    html += '<div class="sp-calc__card" style="margin-top:12px"><div class="sp-calc__card-title">字体模式 · 标准 / 大字（适老化）</div>';
+    html += '<div class="fs-picker" style="padding:4px 0 2px">';
+    [['standard','标准模式'],['large','大字模式']].forEach(function(p){
+      html += '<button class="fs-opt ' + (curMode===p[0]?'fs-opt--on':'') + '" data-mode="'+p[0]+'" onclick="app.setFontMode(\''+p[0]+'\')">'+p[1]+'</button>';
+    });
+    html += '</div><div style="padding:8px 4px;color:var(--c-text-secondary);line-height:1.7;margin-top:4px">与顶部导航栏切换按钮同步；大字模式正文18px起、间距拉大、隐藏装饰性小字、风险提示同步放大。偏好保存在本机。</div></div>';
+    html += '<div class="sp-calc__card" style="margin-top:12px"><div class="sp-calc__card-title">账户信息</div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">姓名</span><span class="sp-calc__item-value">' + escapeHtml(ui.name) + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">年龄</span><span class="sp-calc__item-value">' + ui.age + '岁</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">手机号</span><span class="sp-calc__item-value">' + ui.phone + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">所在城区</span><span class="sp-calc__item-value">' + escapeHtml(ui.district) + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户类型</span><span class="sp-calc__item-value" style="color:var(--c-orange)">' + (ui.accountType === 'authorized' ? '中青年授权账户' : '普惠账户') + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">授权日期</span><span class="sp-calc__item-value">' + (ui.authorizedDate?ui.authorizedDate:'—（尚未授权）') + '</span></div>' +
+      '</div>';
+    html += '<div class="sp-calc__card" style="margin-top:12px"><div class="sp-calc__card-title">合规保障</div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户权限隔离</span><span class="sp-calc__item-value" style="color:#16A34A">已启用</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">数据加密方式</span><span class="sp-calc__item-value">国密算法</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">敏感信息脱敏</span><span class="sp-calc__item-value" style="color:#16A34A">已启用</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">审计日志</span><span class="sp-calc__item-value" style="color:#16A34A">全程记录</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">推荐抽检比例</span><span class="sp-calc__item-value">≥10%</span></div>' +
+      '</div>';
+    html += '<div style="padding:12px 0"><button class="sp-rec__submit" style="background:var(--c-red)" onclick="app.closeBusinessAuth();app.openSubPage(\'settings\')">立即关闭商业授权 · 退回普惠</button></div>';
+    html += '<div style="padding:8px 0"><button class="sp-rec__submit" style="background:var(--c-gray);color:var(--c-text-secondary)" onclick="app.toast(\'退出登录功能演示中\')">退出登录</button></div>';
+    html += '<div style="padding:12px;background:var(--c-gray);border-radius:8px;color:var(--c-text-tertiary);line-height:1.6;margin-top:8px">智伴长护—长护价值银行 v1.0.0 · 广西财经学院金融学院 智伴长护团队 · 指导教师：刘家养教授 李瑾专业教师<br/>数据来源：南宁市医疗保障局 · 政策截至2026年7月</div></div>';
+    setTimeout(function () {
+      var sw = document.getElementById('bizSw');
+      if (sw) sw.addEventListener('click', function () {
+        var on = state.accountMode === 'authorized';
+        if (on) {
+          confirmModal('关闭商业授权？', '关闭后所有商业入口与结果会立即隐藏，退回普惠账户；问卷与缺口报告数据保留。', function () { app.closeBusinessAuth(); openSubPage('settings'); });
+        } else {
+          closeSubPage(); showAuthModal();
+        }
+      });
+      var cur = 'standard';
+      try { cur = localStorage.getItem('zbchFsMode') || cur; } catch(e){}
+      document.querySelectorAll('.fs-opt').forEach(function(b){
+        b.classList.toggle('fs-opt--on', b.getAttribute('data-mode') === cur);
+      });
+    }, 60);
+    return html;
+  };
+  // 兜底：首次页面加载后，把纯商业入口（calculator等）加 .biz-only 类（保障测评由renderHome单独控制可见性）
+  function _markupBizOnly_fallback(){
+    try {
+      var ids = { calculator:1, insurance:1 };
+      var items = document.querySelectorAll('.home-features__item');
+      for (var i=0;i<items.length;i++) {
+        var s = items[i].getAttribute('onclick') || '';
+        for (var k in ids) {
+          var s1 = k + String.fromCharCode(39);
+          var s2 = String.fromCharCode(34) + k + String.fromCharCode(34);
+          if (s.indexOf(s1) !== -1 || s.indexOf(s2) !== -1) {
+            items[i].classList.add('biz-only'); break;
+          }
+        }
+      }
+    } catch(e) {}
+  }
+  // DOM Ready（markupBizOnly 用定时器兜底，因为 renderHome 是异步的）
+  function _scheduleMarkupBizOnlyLoop(){
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      _markupBizOnly_fallback();
+      if (tries > 10) clearInterval(timer);
+    }, 120);
+  }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', _scheduleMarkupBizOnlyLoop);
   } else {
     init();
+    _scheduleMarkupBizOnlyLoop();
   }
 
   if (typeof window !== 'undefined') window.app = app;
@@ -3810,61 +4730,61 @@ if (typeof module !== 'undefined') module.exports = Charts;
 <!-- ========== 二维码分享浮窗 ========== -->
 <div id="qrFloatBtn" style="position:fixed;top:12px;right:12px;z-index:9999;width:36px;height:36px;border-radius:50%;background:rgba(217,119,6,0.9);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.2);" onclick="toggleQRCode()">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm9-2h7v7h-7V3zm2 2v3h3V5h-3zM3 14h7v7H3v-7zm2 2v3h3v-3H5zm9-2h3v3h-3v-3zm5 0h2v2h-2v-2zm-5 5h3v2h-3v-2zm5 0h2v2h-2v-2zm0-3h2v2h-2v-2z" fill="white"></path>
+    <path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm9-2h7v7h-7V3zm2 2v3h3V5h-3zM3 14h7v7H3v-7zm2 2v3h3v-3H5zm9-2h3v3h-3v-3zm5 0h2v2h-2v-2zm-5 5h3v2h-3v-2zm5 0h2v2h-2v-2zm0-3h2v2h-2v-2z" fill="white"/>
   </svg>
 </div>
 
 <div id="qrOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10000;align-items:center;justify-content:center;" onclick="toggleQRCode()">
   <div style="background:#fff;border-radius:16px;padding:28px 24px 20px;text-align:center;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
-    <div style="font-size:16px;font-weight:700;color:#1A2744;margin-bottom:4px;">微信扫码访问</div>
-    <div style="font-size:12px;color:#6B7280;margin-bottom:16px;">扫一扫，在手机上体验小程序</div>
+    <div style="font-size:calc(16px*var(--fs,1));font-weight:700;color:#1A2744;margin-bottom:4px;">微信扫码访问</div>
+    <div style="font-size:calc(12px*var(--fs,1));color:#6B7280;margin-bottom:16px;">扫一扫，在手机上体验小程序</div>
     <div id="qrCodeContainer" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
     <div id="qrLocalWarn" style="display:none;background:#FEF3E7;border-radius:8px;padding:12px;margin-bottom:12px;text-align:left;">
-      <div style="font-size:12px;font-weight:600;color:#D97706;margin-bottom:4px;">当前是本地地址，手机无法直接访问</div>
-      <div style="font-size:11px;color:#6B7280;line-height:1.6;">请将此文件上传到任意公网服务器（如 GitHub Pages、Vercel 等），通过公网链接打开后，二维码即可扫码访问。</div>
-      <div style="margin-top:8px;font-size:11px;color:#065A82;cursor:pointer;text-decoration:underline;" onclick="showDeployGuide()">查看部署方法</div>
+      <div style="font-size:calc(12px*var(--fs,1));font-weight:600;color:#D97706;margin-bottom:4px;">当前是本地地址，手机无法直接访问</div>
+      <div style="font-size:calc(11px*var(--fs,1));color:#6B7280;line-height:1.6;">请将此文件上传到任意公网服务器（如 GitHub Pages、Vercel 等），通过公网链接打开后，二维码即可扫码访问。</div>
+      <div style="margin-top:8px;font-size:calc(11px*var(--fs,1));color:#065A82;cursor:pointer;text-decoration:underline;" onclick="showDeployGuide()">查看部署方法</div>
     </div>
-    <div style="font-size:11px;color:#9CA3AF;line-height:1.5;">当前链接：<span id="qrUrlDisplay" style="word-break:break-all"></span></div>
-    <button id="copyLinkBtn" onclick="copyCurrentLink()" style="margin-top:10px;padding:8px 18px;border-radius:20px;background:#E8F1F8;color:#065A82;font-size:12px;font-weight:600;border:1px solid #065A82;cursor:pointer;">复制链接</button>
-    <button onclick="toggleQRCode()" style="margin-top:10px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;">关闭</button>
+    <div style="font-size:calc(11px*var(--fs,1));color:#9CA3AF;line-height:1.5;">当前链接：<span id="qrUrlDisplay" style="word-break:break-all"></span></div>
+    <button id="copyLinkBtn" onclick="copyCurrentLink()" style="margin-top:10px;padding:8px 18px;border-radius:20px;background:#E8F1F8;color:#065A82;font-size:calc(12px*var(--fs,1));font-weight:600;border:1px solid #065A82;cursor:pointer;">复制链接</button>
+    <button onclick="toggleQRCode()" style="margin-top:10px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:calc(13px*var(--fs,1));font-weight:600;border:none;cursor:pointer;">关闭</button>
   </div>
 </div>
 
 <div id="deployGuide" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;" onclick="document.getElementById('deployGuide').style.display='none'">
   <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
-    <div style="font-size:16px;font-weight:700;color:#1A2744;margin-bottom:12px;">如何部署到公网</div>
-    <div style="font-size:12px;color:#374151;line-height:1.8;text-align:left;">
+    <div style="font-size:calc(16px*var(--fs,1));font-weight:700;color:#1A2744;margin-bottom:12px;">如何部署到公网</div>
+    <div style="font-size:calc(12px*var(--fs,1));color:#374151;line-height:1.8;text-align:left;">
       <div style="margin-bottom:12px;">
-        <b>方法一：Vercel（推荐，免费）</b><br>
-        1. 注册 vercel.com 账号<br>
-        2. 安装 CLI：npm i -g vercel<br>
-        3. 在文件目录运行：vercel deploy<br>
-        4. 获得公网链接后，用该链接打开本页面<br>
+        <b>方法一：Vercel（推荐，免费）</b><br/>
+        1. 注册 vercel.com 账号<br/>
+        2. 安装 CLI：npm i -g vercel<br/>
+        3. 在文件目录运行：vercel deploy<br/>
+        4. 获得公网链接后，用该链接打开本页面<br/>
         5. 点击二维码按钮即可扫码访问
       </div>
       <div style="margin-bottom:12px;">
-        <b>方法二：GitHub Pages</b><br>
-        1. 在 GitHub 创建新仓库<br>
-        2. 上传 zhbch-app.html 文件<br>
-        3. 开启 Settings &gt; Pages<br>
+        <b>方法二：GitHub Pages</b><br/>
+        1. 在 GitHub 创建新仓库<br/>
+        2. 上传 zhbch-app.html 文件<br/>
+        3. 开启 Settings > Pages<br/>
         4. 通过公网链接打开后扫码
       </div>
       <div style="margin-bottom:12px;">
-        <b>方法三：手机直接打开</b><br>
-        1. 将 zhbch-app.html 发送到微信/邮箱<br>
-        2. 在手机上用浏览器打开文件<br>
+        <b>方法三：手机直接打开</b><br/>
+        1. 将 zhbch-app.html 发送到微信/邮箱<br/>
+        2. 在手机上用浏览器打开文件<br/>
         3. 无需扫码，直接体验
       </div>
       <div>
-        <b>方法四：电脑开热点分享</b><br>
-        1. 电脑和手机连同一 WiFi<br>
-        2. 用 python -m http.server 8080 启动<br>
-        3. 查看电脑局域网 IP（如 192.168.1.x）<br>
-        4. 将代码中链接改为 http://你的IP:8080/zhbch-app.html<br>
+        <b>方法四：电脑开热点分享</b><br/>
+        1. 电脑和手机连同一 WiFi<br/>
+        2. 用 python -m http.server 8080 启动<br/>
+        3. 查看电脑局域网 IP（如 192.168.1.x）<br/>
+        4. 将代码中链接改为 http://你的IP:8080/zhbch-app.html<br/>
         5. 手机微信扫码即可打开
       </div>
     </div>
-    <button onclick="document.getElementById('deployGuide').style.display='none'" style="margin-top:14px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;">知道了</button>
+    <button onclick="document.getElementById('deployGuide').style.display='none'" style="margin-top:14px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:calc(13px*var(--fs,1));font-weight:600;border:none;cursor:pointer;">知道了</button>
   </div>
 </div>
 
@@ -3952,7 +4872,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     img.style.borderRadius = '8px';
     img.alt = 'QR Code';
     img.onerror = function() {
-      container.innerHTML = '<div style="color:#C0392B;font-size:13px;padding:20px;">二维码生成失败，请手动复制链接：<br/>' + url + '</div>';
+      container.innerHTML = '<div style="color:#C0392B;font-size:calc(13px*var(--fs,1));padding:20px;">二维码生成失败，请手动复制链接：<br/>' + url + '</div>';
     };
     container.innerHTML = '';
     container.appendChild(img);
@@ -3976,21 +4896,21 @@ if (typeof module !== 'undefined') module.exports = Charts;
       if (isLocal) {
         // Show local warning, still generate QR code (useful for reference)
         localWarn.style.display = 'block';
-        container.innerHTML = '<div style="color:#D97706;font-size:13px;padding:20px;text-align:center;line-height:1.6;">二维码已生成<br/>但本地地址手机无法访问<br/>请先部署到公网</div>';
+        container.innerHTML = '<div style="color:#D97706;font-size:calc(13px*var(--fs,1));padding:20px;text-align:center;line-height:1.6;">二维码已生成<br/>但本地地址手机无法访问<br/>请先部署到公网</div>';
         // Still try to generate QR code
         loadQrcodeLib(function() {
           if (typeof qrcode !== 'undefined') {
             try {
               generateQRWithLib(url, container);
             } catch(e) {
-              container.innerHTML = '<div style="color:#D97706;font-size:13px;padding:20px;text-align:center;line-height:1.6;">二维码已生成<br/>但本地地址手机无法访问<br/>请先部署到公网</div>';
+              container.innerHTML = '<div style="color:#D97706;font-size:calc(13px*var(--fs,1));padding:20px;text-align:center;line-height:1.6;">二维码已生成<br/>但本地地址手机无法访问<br/>请先部署到公网</div>';
             }
           }
         });
       } else {
         // Public URL - hide warning and generate QR code
         localWarn.style.display = 'none';
-        container.innerHTML = '<div style="color:#9CA3AF;font-size:13px;padding:30px;">正在生成二维码...</div>';
+        container.innerHTML = '<div style="color:#9CA3AF;font-size:calc(13px*var(--fs,1));padding:30px;">正在生成二维码...</div>';
         loadQrcodeLib(function() {
           if (typeof qrcode !== 'undefined') {
             generateQRWithLib(url, container);
@@ -4045,4 +4965,117 @@ if (typeof module !== 'undefined') module.exports = Charts;
 })();
 </script>
 
-</body></html>
+
+<!-- ========== 数据看板授权弹窗（仅限保险公司/政府监管） ========== -->
+<style>
+.fs-picker { display: flex; gap: 8px; padding: 4px 0 2px; }
+.fs-opt { flex: 1; min-height: 40px; padding: 10px 0; border-radius: 12px; border: 2px solid #E5E7EB; background: #fff; font-size: calc(23px*var(--fs,1)); color: var(--c-text-secondary); cursor: pointer; font-weight: 600; }
+.fs-opt--on { border-color: var(--c-orange); background: var(--c-orange-light); color: var(--c-orange); }
+.tabbar__item { position: relative; }
+.tablock { position: absolute; top: 5px; right: calc(50% - 30px); width: 14px; height: 14px; color: var(--c-text-tertiary); pointer-events: none; }
+.dash-authchip { margin: 12px 16px 0; padding: 8px 12px; border-radius: 10px; background: var(--c-blue-light); color: var(--c-deep-blue); font-size: calc(23px*var(--fs,1)); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dash-chip__exit { color: var(--c-red); cursor: pointer; font-weight: 600; white-space: nowrap; }
+.dash-modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,35,60,.55); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+.dash-modal { width: 340px; max-width: 86vw; background: #fff; border-radius: 16px; padding: 22px 20px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+.dash-modal h3 { margin: 0 0 6px; font-size: calc(28px*var(--fs,1)); color: var(--c-ink); }
+.dash-modal p { margin: 0 0 14px; font-size: calc(23px*var(--fs,1)); color: var(--c-text-secondary); line-height: 1.7; }
+.dash-role { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 2px solid #E5E7EB; border-radius: 12px; margin-bottom: 8px; cursor: pointer; font-size: calc(26px*var(--fs,1)); color: var(--c-ink); }
+.dash-field { margin-top: 10px; }
+.dash-field label { display: block; font-size: calc(23px*var(--fs,1)); color: var(--c-text-secondary); margin-bottom: 4px; }
+.dash-field input { width: 100%; min-height: 38px; border: 1px solid #D1D5DB; border-radius: 8px; padding: 6px 10px; font-size: calc(26px*var(--fs,1)); box-sizing: border-box; }
+.dash-hint { margin-top: 10px; font-size: calc(19px*var(--fs,1)); color: var(--c-text-tertiary); line-height: 1.6; }
+.dash-btns { display: flex; gap: 10px; margin-top: 16px; }
+.dash-btn { flex: 1; min-height: 44px; border-radius: 22px; border: none; font-size: calc(26px*var(--fs,1)); font-weight: 600; cursor: pointer; }
+.dash-btn--main { background: linear-gradient(135deg, var(--c-deep-blue), var(--c-cyan)); color: #fff; }
+.dash-btn--sub { background: var(--c-gray); color: var(--c-text-secondary); }
+.dash-modal input[type=radio] { width: 16px; height: 16px; }
+</style>
+<div class="dash-modal-mask" id="dashAuthModal" style="display:none">
+  <div class="dash-modal">
+    <h3>数据看板 · 权限验证</h3>
+    <p>看板运营数据仅对合作保险公司与政府监管部门开放，个人用户无法查看。请完成机构授权（演示环境）。</p>
+    <label class="dash-role"><input type="radio" name="dashRole" value="ins" checked><span>保险公司工作人员</span></label>
+    <label class="dash-role"><input type="radio" name="dashRole" value="gov"><span>政府监管部门</span></label>
+    <div class="dash-field"><label>工号</label><input id="dashAuthNo" placeholder="请输入机构工号"></div>
+    <div class="dash-field"><label>授权码</label><input id="dashAuthCode" placeholder="请输入授权码"></div>
+    <div class="dash-hint">演示授权码：保险公司 BX2026 · 政府 ZF2026（正式环境由机构统一发放并动态校验）</div>
+    <div class="dash-btns">
+      <button class="dash-btn dash-btn--sub" onclick="app.closeDashAuth()">取消</button>
+      <button class="dash-btn dash-btn--main" onclick="app.dashLogin()">授权进入</button>
+    </div>
+  </div>
+</div>
+<div class="auth-mask" id="authModal">
+  <div class="auth-modal">
+    <h3>开启保障测算与产品对比权限</h3>
+    <p>你现在使用的是普惠账户，可正常使用政策科普、短视频学习、护理值获取等全部公益功能。点击后切换到授权账户可额外获得：</p>
+    <ul class="auth-list">
+      <li>照护成本测算工具</li>
+      <li>36维画像 + 保障缺口计算</li>
+      <li>商业长护产品三维客观对比</li>
+    </ul>
+    <p>本小程序不售卖保险，投保需跳转至保险公司官方渠道，授权可在个人中心随时关闭。</p>
+    <div class="auth-note">演示原型：不收集真实信息，跳转投保/承保回传为模拟逻辑，正式落地对接保险公司接口。</div>
+    <div class="auth-btns">
+      <button class="auth-btn auth-btn--sub" onclick="app.refuseAuth()">暂不授权</button>
+      <button class="auth-btn auth-btn--main" onclick="app.acceptAuth()">确认并授权</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==== 双层账户隔离：启动补丁（hook IIFE内部函数，但如果无法访问，则下面fallback用DOM监听） ====
+// 直接把入口方式改成：监听DOM变化（contentArea innerHTML），并在 body.dataset.account 没设置时立即设置。
+;(function finalBoot(){
+  // 强制body.dataset.account
+  try {
+    var m = localStorage.getItem('zbchAccount') || 'inclusive';
+    document.body.setAttribute('data-account', m);
+    document.body.dataset.account = m;
+  } catch(e) { document.body.setAttribute('data-account','inclusive'); }
+  // 商业入口：如果没有 .biz-only 自动加（因biz-onlyCount 0）。这个补丁用于首页homeFeatures。
+  function markupBizOnly(){
+    try {
+      var ids = { calculator:1, insurance:1 };
+      document.querySelectorAll('.home-features__item').forEach(function(el){
+        var s = el.getAttribute('onclick') || '';
+        for (var k in ids) { if (s.indexOf(k + "'") !== -1 || s.indexOf('"' + k + '"') !== -1) { el.classList.add('biz-only'); break; } }
+      });
+    } catch(e){}
+  }
+  function refreshFonts(){
+    try {
+      var cur = localStorage.getItem('zbchFsMode') || 'standard';
+      document.querySelectorAll('.fs-tbtn').forEach(function(b){
+        b.classList.toggle('fs-tbtn--on', b.getAttribute('data-mode') === cur);
+      });
+      document.querySelectorAll('.fs-opt').forEach(function(b){
+        b.classList.toggle('fs-opt--on', b.getAttribute('data-mode') === cur);
+      });
+    } catch(e){}
+  }
+  function setHeroBadge(){
+    try {
+      var tag = document.getElementById('heroAcctTag');
+      if (!tag) return;
+      var mode = document.body.dataset.account || 'inclusive';
+      tag.innerHTML = mode === 'authorized' ? '<span class="acct-badge acct-badge--auth">授权账户</span>' : '<span class="acct-badge acct-badge--inc">普惠账户</span>';
+    } catch(e){}
+  }
+  function applyBizOnlyVis(){ try { document.body.setAttribute('data-account', document.body.dataset.account || 'inclusive'); } catch(e){} }
+  setHeroBadge();
+  applyBizOnlyVis();
+  // 每500ms做一次兜底修复，持续3秒（应对首次内容渲染时机）
+  var ticks = 0;
+  var timer = setInterval(function(){
+    ticks++;
+    markupBizOnly();
+    refreshFonts();
+    setHeroBadge();
+    applyBizOnlyVis();
+    if (ticks > 8) clearInterval(ticks);
+  }, 500);
+})();
+</script>
+</body>
+</html>
