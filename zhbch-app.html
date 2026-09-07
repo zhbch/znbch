@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -6,7 +6,7 @@
   <style>
 /* ============================================
    智伴长护—长护价值银行 小程序样式
-   配色方案来自护阿婆IP设计规范
+   配色方案来自护阿姨IP设计规范
    ============================================ */
 
 /* ===== CSS 变量 ===== */
@@ -332,7 +332,7 @@ svg { display: block; }
 .profile-hero__info { flex: 1; }
 .profile-hero__name { font-size:calc(23px*var(--fs,1)); font-weight: 700; }
 .profile-hero__meta { font-size:calc(26px*var(--fs,1)); opacity: 0.85; margin-top: 2px; display: flex; gap: 8px; align-items: center; }
-.profile-hero__badge { font-size:calc(23px*var(--fs,1)); background: rgba(232,168,56,0.2); color: var(--c-gold); padding: 2px 8px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(232,168,56,0.3); }
+.profile-hero__badge { font-size:calc(23px*var(--fs,1)); background: transparent; color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600; border: 1px solid rgba(255,255,255,0.85); }
 
 .profile-points { margin: 12px 16px 0; background: #fff; border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
 .profile-points__row { display: flex; justify-content: space-between; align-items: center; }
@@ -541,7 +541,7 @@ svg { display: block; }
 }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%,-40%) scale(0.9); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
 
-/* ===== 护阿婆头像 SVG ===== */
+/* ===== 护阿姨头像 SVG ===== */
 .ayi-svg { width: 100%; height: 100%; }
 
 /* ===== 响应式 ===== */
@@ -605,10 +605,36 @@ html[data-fs="large"] .sp-task, html[data-fs="large"] .sp-reward { padding: 16px
 html[data-fs="large"] .home-stats { padding: 14px 0; }
 html[data-fs="large"] .section__tag, html[data-fs="large"] .home-news__meta, html[data-fs="large"] .deco-xs { display: none !important; }
 /* ===== 常驻演示声明角标（浅灰小字，跟随字号模式） ===== */
-.demo-corner { position: absolute; left: 10px; bottom: 72px; max-width: 72%; font-size: calc(11px*var(--fs,1)); color: #9CA3AF; line-height: 1.5; pointer-events: none; z-index: 6; }
+.demo-corner { position: absolute; left: 10px; bottom: 72px; max-width: 72%; font-size: calc(13px*var(--fs,1)); color: #9CA3AF; line-height: 1.5; pointer-events: none; z-index: 6; }
 /* 护理值赠予长辈页 */
 .gift-opt { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: calc(26px*var(--fs,1)); color: var(--c-ink); cursor: pointer; margin: 4px 10px 4px 0; }
 .gift-opt--on { border-color: var(--c-deep-blue); background: var(--c-blue-light); color: var(--c-deep-blue); font-weight: 700; }
+
+/* ===== 适老化字体与阅读体验优化 ===== */
+/* 字体:优先无衬线(苹方/微软雅黑/思源黑体),避免衬线字体 */
+body, button, input, .phone-screen { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans CN", "Alibaba PuHuiTi", "Heiti SC", sans-serif !important; }
+/* 全局行高优化:正文/列表/说明文字 1.6 倍行高,减少视觉拥挤 */
+.content-area, .edu-content, .qa-messages, .sp-section, .page { line-height: 1.6; }
+p, li, dd, dt { line-height: 1.6; }
+/* 标题层级强化(标准模式):h1=32px h2=26px h3=22px */
+h1 { font-size: calc(32px*var(--fs,1)); font-weight: 800; line-height: 1.4; }
+h2 { font-size: calc(26px*var(--fs,1)); font-weight: 700; line-height: 1.45; }
+h3 { font-size: calc(23px*var(--fs,1)); font-weight: 700; line-height: 1.5; }
+/* 主要按钮高度不低于 48px,内边距充足,方便中老年点击 */
+.sp-rec__submit, .sp-calc__submit, .sp-task__btn:not(.sp-task__btn--done), .sp-reward__btn:not(.sp-reward__btn--disabled),
+.fs-opt, .qa-send, .dash-authchip__btn, .sp-detail__play-btn, .sp-detail__insurer-jump {
+  min-height: 48px; padding: 12px 20px; font-weight: 600;
+}
+/* 重要按钮文字不低于 16px */
+.sp-rec__submit, .sp-calc__submit, .sp-detail__play-btn, .sp-detail__insurer-jump { font-size: calc(23px*var(--fs,1)); }
+/* 正文/深色文字对比度强化:正文用深墨蓝/深灰,避免过浅 */
+.edu-content__section-title, .home-news__title, .profile-hero__name, .sp-task__name, .sp-reward__name { color: var(--c-ink); }
+/* 卡片标题/导航文字不低于 16px(已满足,此处仅对比度强化) */
+.tabbar__text, .nav-bar__title, .section__header h3 { color: var(--c-ink); }
+/* 适老化:大字模式下进一步强化行高与间距 */
+html[data-fs="large"] .content-area, html[data-fs="large"] .edu-content, html[data-fs="large"] .qa-messages { line-height: 1.8; }
+html[data-fs="large"] .section__header h3 { font-size: calc(28px*var(--fs,1)); }
+html[data-fs="large"] .sp-rec__submit, html[data-fs="large"] .sp-calc__submit { min-height: 56px; }
 </style>
 <script>/* 字体双模式：standard(=1) | large(=1.25)，兼容旧zbchFs档位 */
 try{var fsm=localStorage.getItem('zbchFsMode');if(!fsm){var os=parseFloat(localStorage.getItem('zbchFs'))||1;fsm=os>1.05?'large':'standard';}
@@ -653,14 +679,14 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
 
       <!-- ===================== 首页 ===================== -->
       <div class="page page--active" id="page-home">
-        <!-- 护阿婆问候横幅 -->
+        <!-- 护阿姨问候横幅 -->
         <div class="home-hero">
           <div class="home-hero__bg"></div>
           <div class="hero-acct-tag" id="heroAcctTag"></div>
           <div class="home-hero__content">
             <div class="home-hero__avatar" id="ayiAvatarHome"><svg class="ayi-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="ayic64"><circle cx="50" cy="50" r="48"></circle></clipPath></defs><circle cx="50" cy="50" r="48" fill="#FEF3E7"></circle><g clip-path="url(#ayic64)"><rect x="0" y="70" width="100" height="30" fill="#E8F1F8"></rect><rect x="10" y="55" width="8" height="15" fill="#B0D4E8"></rect><rect x="20" y="48" width="10" height="22" fill="#B0D4E8"></rect><rect x="32" y="52" width="6" height="18" fill="#B0D4E8"></rect><rect x="62" y="50" width="8" height="20" fill="#B0D4E8"></rect><rect x="72" y="45" width="10" height="25" fill="#B0D4E8"></rect><rect x="84" y="55" width="6" height="15" fill="#B0D4E8"></rect><polygon points="40,70 50,60 60,70" fill="#065A82" opacity="0.3"></polygon><path d="M25,42 Q22,28 35,22 Q50,15 65,22 Q78,28 75,42 Q75,35 72,32 Q70,28 65,26 Q55,22 50,22 Q45,22 35,26 Q30,28 28,32 Q25,35 25,42Z" fill="#E8E8E8"></path><circle cx="30" cy="32" r="3" fill="#E8E8E8"></circle><ellipse cx="50" cy="48" rx="20" ry="19" fill="#FDE8D0"></ellipse><circle cx="36" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><circle cx="64" cy="54" r="5" fill="#FBC8A0" opacity="0.5"></circle><path d="M36,47 Q40,44 44,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M56,47 Q60,44 64,47" stroke="#1A2744" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M50,50 Q48,53 50,55 Q52,53 50,50" stroke="#D4A576" stroke-width="1" fill="none"></path><path d="M42,58 Q50,64 58,58" stroke="#C0392B" stroke-width="2.5" fill="none" stroke-linecap="round"></path><circle cx="40" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><circle cx="60" cy="47" r="7" stroke="#E8A838" stroke-width="1.5" fill="none"></circle><line x1="47" y1="47" x2="53" y2="47" stroke="#E8A838" stroke-width="1.5"></line><line x1="33" y1="47" x2="28" y2="52" stroke="#E8A838" stroke-width="1"></line><line x1="67" y1="47" x2="72" y2="52" stroke="#E8A838" stroke-width="1"></line><path d="M28,67 Q26,75 24,100 L76,100 Q74,75 72,67 Q65,70 50,70 Q35,70 28,67Z" fill="#065A82"></path><path d="M40,67 Q50,74 60,67 L58,62 L50,65 L42,62Z" fill="#7BB3D4"></path><circle cx="68" cy="80" r="6" fill="#D97706"></circle><circle cx="68" cy="80" r="3.5" fill="#FFF"></circle></g><circle cx="50" cy="50" r="48" stroke="#065A82" stroke-width="1.5" fill="none"></circle></svg></div>
             <div class="home-hero__text">
-              <p class="home-hero__greeting" id="homeGreeting">中午好！吃饱了来看看政策，阿婆陪你</p>
+              <p class="home-hero__greeting" id="homeGreeting">中午好！吃饱了来看看政策，阿姨陪你</p>
               <p class="home-hero__sub" id="homeSubGreeting">你的护理值又涨了，当前1280分，离兑换"居家护理服务"还差-80分</p>
             </div>
           </div>
@@ -689,7 +715,7 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
           <div class="section__header">
             <h3>服务入口</h3>
           </div>
-          <div class="home-features" id="homeFeatures"><div class="home-features__item" onclick="app.openSubPage('education')"><div class="home-features__icon" style="background:#D97706"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 5a1 1 0 011-1h7v16H5a1 1 0 01-1-1V5zM13 4h6a1 1 0 011 1v14a1 1 0 01-1 1h-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M7 8h2M7 11h2M16 8h2M16 11h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">政策科普</div><div class="home-features__desc">多方言政策解读</div></div><div class="home-features__item" onclick="app.openSubPage('qa')"><div class="home-features__icon" style="background:#1C7293"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-3.5-.5L3 21l1.5-5.5A8.38 8.38 0 0112 3a8.38 8.38 0 019 8.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg></div><div class="home-features__name">AI问答</div><div class="home-features__desc">护阿婆在线解答</div></div><div class="home-features__item" onclick="app.openSubPage('points')"><div class="home-features__icon" style="background:#E8A838"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="13" rx="1" stroke="currentColor" stroke-width="1.8"></rect><path d="M3 12h18M12 8v13M12 8S8 8 8 5a2.5 2.5 0 015 0M12 8s4 0 4-3a2.5 2.5 0 00-4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">积分商城</div><div class="home-features__desc">护理值兑换</div></div><div class="home-features__item" onclick="app.openSubPage('recommendation')"><div class="home-features__icon" style="background:#065A82"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">保障测评</div><div class="home-features__desc">缺口评估推荐</div></div><div class="home-features__item" onclick="app.openSubPage('calculator')"><div class="home-features__icon" style="background:#C0392B"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.8"></rect><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M16 11h0M16 15h0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">成本测算</div><div class="home-features__desc">护理费用估算</div></div><div class="home-features__item" onclick="app.openSubPage('dashboard')"><div class="home-features__icon" style="background:#1A2744"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">数据看板</div><div class="home-features__desc">运营数据追踪</div></div></div>
+          <div class="home-features" id="homeFeatures"><div class="home-features__item" onclick="app.openSubPage('education')"><div class="home-features__icon" style="background:#D97706"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 5a1 1 0 011-1h7v16H5a1 1 0 01-1-1V5zM13 4h6a1 1 0 011 1v14a1 1 0 01-1 1h-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M7 8h2M7 11h2M16 8h2M16 11h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">政策科普</div><div class="home-features__desc">多方言政策解读</div></div><div class="home-features__item" onclick="app.openSubPage('qa')"><div class="home-features__icon" style="background:#1C7293"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-3.5-.5L3 21l1.5-5.5A8.38 8.38 0 0112 3a8.38 8.38 0 019 8.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg></div><div class="home-features__name">AI问答</div><div class="home-features__desc">护阿姨在线解答</div></div><div class="home-features__item" onclick="app.openSubPage('points')"><div class="home-features__icon" style="background:#E8A838"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="13" rx="1" stroke="currentColor" stroke-width="1.8"></rect><path d="M3 12h18M12 8v13M12 8S8 8 8 5a2.5 2.5 0 015 0M12 8s4 0 4-3a2.5 2.5 0 00-4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">积分商城</div><div class="home-features__desc">护理值兑换</div></div><div class="home-features__item" onclick="app.openSubPage('recommendation')"><div class="home-features__icon" style="background:#065A82"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">保障测评</div><div class="home-features__desc">缺口评估推荐</div></div><div class="home-features__item" onclick="app.openSubPage('calculator')"><div class="home-features__icon" style="background:#C0392B"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.8"></rect><path d="M8 7h8M8 11h2M12 11h2M8 15h2M12 15h2M16 11h0M16 15h0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">成本测算</div><div class="home-features__desc">护理费用估算</div></div><div class="home-features__item" onclick="app.openSubPage('dashboard')"><div class="home-features__icon" style="background:#1A2744"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="home-features__name">数据看板</div><div class="home-features__desc">运营数据追踪</div></div><div class="home-features__item" onclick="app.openSubPage('productLibrary')"><div class="home-features__icon" style="background:#1C7293"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"></rect><path d="M3 9h18M8 14h2M8 17h2M14 14h2M14 17h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div class="home-features__name">产品库</div><div class="home-features__desc">商业保障信息</div></div><div class="home-features__item" onclick="app.openSubPage('benefitsMall')"><div class="home-features__icon" style="background:#E8A838"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 9l1.5-5h15L21 9M3 9h18v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9zM9 13a3 3 0 006 0" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"></path></svg></div><div class="home-features__name">权益商城</div><div class="home-features__desc">护理值兑权益</div></div></div>
         </div>
 
         <!-- 今日推荐 -->
@@ -698,13 +724,14 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
             <h3>今日推荐</h3>
             <span class="section__more" onclick="app.openSubPage('todayRecommend')">更多</span>
           </div>
-          <div class="home-recommend" id="homeRecommend"><div class="home-recommend" onclick="app.openSubPage('todayRecommend')"><div class="home-recommend__badge">荐</div><div class="home-recommend__content"><div class="home-recommend__title">你的工资条上，有一笔叫长护险</div><div class="home-recommend__desc">阿婆帮你算算，每月交了多少，又能用回来多少</div><span class="home-recommend__points">+20 护理值</span></div></div></div>
+          <div class="home-recommend" id="homeRecommend"><div class="home-recommend" onclick="app.openSubPage('todayRecommend')"><div class="home-recommend__badge">荐</div><div class="home-recommend__content"><div class="home-recommend__title">你的工资条上，有一笔叫长护险</div><div class="home-recommend__desc">阿姨帮你算算，每月交了多少，又能用回来多少</div><span class="home-recommend__points">+20 护理值</span></div></div></div>
         </div>
 
         <!-- 政策速递 -->
         <div class="section">
           <div class="section__header">
             <h3>政策速递</h3>
+            <span class="section__more" onclick="app.openSubPage('policyNews')">更多</span>
           </div>
           <div class="home-news" id="homeNews"><div class="home-news__item"><div class="home-news__dot"></div><div class="home-news__content"><div class="home-news__title">南宁市长护险委托经办服务管理办法正式施行</div><div class="home-news__meta"><span>2024-05-01</span><span>南宁市医保局</span></div></div></div><div class="home-news__item"><div class="home-news__dot"></div><div class="home-news__content"><div class="home-news__title">2026-2028年度长护险服务项目中标公告发布</div><div class="home-news__meta"><span>2026-01-06</span><span>广西科文招标</span></div></div></div><div class="home-news__item"><div class="home-news__dot"></div><div class="home-news__content"><div class="home-news__title">居家护理月最高支付限额提升至1850元</div><div class="home-news__meta"><span>2025-12-15</span><span>南宁市医保局</span></div></div></div></div>
         </div>
@@ -730,10 +757,25 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
         <!-- 内容列表 -->
         <div class="edu-content" id="eduContent"></div>
 
+        <!-- 科普文章入口 -->
+        <div class="section">
+          <div class="section__header">
+            <h3>科普文章</h3>
+            <span class="section__more" onclick="app.openSubPage('scienceArticles')">更多</span>
+          </div>
+          <div class="home-recommend" onclick="app.openSubPage('scienceArticles')">
+            <div class="home-recommend__badge" style="background:var(--c-cyan)">文</div>
+            <div class="home-recommend__content">
+              <div class="home-recommend__title">长护险 vs 医保 vs 养老险，一张表看懂区别</div>
+              <div class="home-recommend__desc">三分钟读懂三类保障的边界与互补关系</div>
+            </div>
+          </div>
+        </div>
+
         <!-- 短视频系列 -->
         <div class="section">
           <div class="section__header">
-            <h3>护阿婆说长护险</h3>
+            <h3>护阿姨说长护险</h3>
             <span class="section__tag">4期系列</span>
           </div>
           <div class="edu-videos" id="eduVideos"></div>
@@ -747,7 +789,7 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
         <div class="qa-header">
           <div class="qa-header__avatar" id="ayiAvatarQA"></div>
           <div class="qa-header__info">
-            <div class="qa-header__name">护阿婆</div>
+            <div class="qa-header__name">护阿姨</div>
             <div class="qa-header__status">
               <span class="qa-header__dot"></span>
               <span id="qaDialectLabel">普通话在线</span>
@@ -762,8 +804,10 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
 
         <div class="qa-quick" id="qaQuick"></div>
 
+        <div style="padding:4px 16px 6px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6;text-align:center">本小程序为竞赛演示原型，内容仅作方案验证，不作为业务办理依据。</div>
+
         <div class="qa-input-bar">
-          <input type="text" class="qa-input" id="qaInput" placeholder="向护阿婆提问..." maxlength="200">
+          <input type="text" class="qa-input" id="qaInput" placeholder="向护阿姨提问..." maxlength="200">
           <button class="qa-send" id="qaSendBtn">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12l20-8-8 20-2-9-10-3z" fill="currentColor"></path></svg>
           </button>
@@ -889,7 +933,7 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
  * ============================================================
  * 项目背景：AI赋能的广西中青年长护险前置培育与商业保障转化方案
  * 数据来源：南宁市长护险政策文件及经办管理办法（附件二）
- * 角色原型：护阿婆（韦秀兰），62岁，退休社保工作者，30年工龄
+ * 角色原型：护阿姨（韦秀兰），62岁，退休社保工作者，30年工龄
  * ============================================================
  */
 
@@ -972,7 +1016,7 @@ var MockData = {
       id: 'qa001',
       keywords: ['什么是长护险', '长护险是什么', '第六险', '社保第六险'],
       question: '什么是长期护理保险？为什么叫"第六险"？',
-      answer: '阿婆跟你讲哦，长期护理保险就是专门给那些生活不能自理的人提供护理保障的社会保险。它跟养老、医疗、失业、工伤、生育保险一起，被称为社保的"第六险"。简单讲，就是你年轻健康的时候缴点钱，等将来老了、病了、不能动了，就有专门的钱请人照顾你。南宁市从2020年就开始试点了，目前覆盖了175万职工医保参保人员。这个钱啊，该花的花，该省的省，长护险就是该花的那笔钱。',
+      answer: '阿姨跟你讲哦，长期护理保险就是专门给那些生活不能自理的人提供护理保障的社会保险。它跟养老、医疗、失业、工伤、生育保险一起，被称为社保的"第六险"。简单讲，就是你年轻健康的时候缴点钱，等将来老了、病了、不能动了，就有专门的钱请人照顾你。南宁市从2020年就开始试点了，目前覆盖了175万职工医保参保人员。这个钱啊，该花的花，该省的省，长护险就是该花的那笔钱。',
       source: '《国家医保局 财政部关于扩大长期护理保险制度试点的指导意见》（医保发〔2020〕37号）',
       category: '基础认知',
     },
@@ -980,7 +1024,7 @@ var MockData = {
       id: 'qa002',
       keywords: ['覆盖范围', '覆盖多少人', '参保人数', '175万', '582万'],
       question: '南宁市长护险目前覆盖了多少人？',
-      answer: '阿婆跟你讲哦，南宁市目前长护险覆盖了175万职工医保参保人员，占全市医保总参保人口的大约23%。但是呢，还有582万城乡居民医保参保人员暂时还没有纳入长护险覆盖范围。放眼整个广西，60岁以上老年人口有756万，占比15.18%，老龄化压力不小啊。所以政府正在想办法把覆盖面扩大，让更多人享受到这个好政策。政策是好政策，就怕你不知道。',
+      answer: '阿姨跟你讲哦，南宁市目前长护险覆盖了175万职工医保参保人员，占全市医保总参保人口的大约23%。但是呢，还有582万城乡居民医保参保人员暂时还没有纳入长护险覆盖范围。放眼整个广西，60岁以上老年人口有756万，占比15.18%，老龄化压力不小啊。所以政府正在想办法把覆盖面扩大，让更多人享受到这个好政策。政策是好政策，就怕你不知道。',
       source: '南宁市医疗保障局公开数据（2026年度）',
       category: '基础认知',
     },
@@ -988,7 +1032,7 @@ var MockData = {
       id: 'qa003',
       keywords: ['申请条件', '怎么申请', '申请资格', '谁能申请', '职工医保', '失能6个月'],
       question: '什么人可以申请长护险待遇？',
-      answer: '阿婆跟你讲哦，申请长护险要同时满足三个条件：第一，必须是职工医保参保人员，而且要正常缴费；第二，失能状态要持续6个月以上，不是说今天摔倒了明天就能申请的；第三，要经过专业评估，达到规定的失能等级标准。你才35岁，现在不着急申请，但你要知道这个政策，将来家里老人需要的时候用得上。这个钱啊，该花的花，该省的省，但该知道的政策一定得知道。',
+      answer: '阿姨跟你讲哦，申请长护险要同时满足三个条件：第一，必须是职工医保参保人员，而且要正常缴费；第二，失能状态要持续6个月以上，不是说今天摔倒了明天就能申请的；第三，要经过专业评估，达到规定的失能等级标准。你才35岁，现在不着急申请，但你要知道这个政策，将来家里老人需要的时候用得上。这个钱啊，该花的花，该省的省，但该知道的政策一定得知道。',
       source: '《南宁市长护险委托经办服务管理办法》第三章 申请条件',
       category: '办事指引',
     },
@@ -996,7 +1040,7 @@ var MockData = {
       id: 'qa004',
       keywords: ['居家护理', '待遇标准', '1850', '生活照护', '医疗护理', '支持性器具'],
       question: '居家护理能报销多少？具体怎么算？',
-      answer: '阿婆跟你讲哦，居家护理月最高支付限额是1850元一个月，分三块来用。第一块是生活照护，每月不少于8次，每周至少2次，每次不少于90分钟，这块是737.5元；第二块是医疗护理，每月4到6次，每次30到60分钟，这块是750元；第三块是支持性器具，比如轮椅、护理床这些辅助器具的配置，这块是362.5元。你看，加起来正好1850元。这个钱不是直接给你现金，而是由护理机构提供服务后跟医保结算。政策是好政策，就怕你不知道。',
+      answer: '阿姨跟你讲哦，居家护理月最高支付限额是1850元一个月，分三块来用。第一块是生活照护，每月不少于8次，每周至少2次，每次不少于90分钟，这块是737.5元；第二块是医疗护理，每月4到6次，每次30到60分钟，这块是750元；第三块是支持性器具，比如轮椅、护理床这些辅助器具的配置，这块是362.5元。你看，加起来正好1850元。这个钱不是直接给你现金，而是由护理机构提供服务后跟医保结算。政策是好政策，就怕你不知道。',
       source: '南宁市医保局《居家护理月最高支付限额提升至1850元的通知》（2025-12-15）',
       category: '待遇解读',
     },
@@ -1004,7 +1048,7 @@ var MockData = {
       id: 'qa005',
       keywords: ['机构护理', '床日付费', '66元', '62元', '57元', '重度失能'],
       question: '住养老院做机构护理，长护险能报多少？',
-      answer: '阿婆跟你讲哦，机构护理是按床日付费的，就是按天算。根据失能等级不同，报销标准也不一样：重度失能Ⅲ级是66元一天，重度失能Ⅱ级是62元一天，重度失能Ⅰ级是57元一天。算下来一个月差不多1700到2000块钱的补贴。这个钱是直接给定点机构的，不用你自己先垫再报销。阿婆算给你听，Ⅲ级一个月30天就是1980元，Ⅱ级是1860元，Ⅰ级是1710元。这个钱啊，该花的花，该省的省，有长护险补贴比全自费省多了。',
+      answer: '阿姨跟你讲哦，机构护理是按床日付费的，就是按天算。根据失能等级不同，报销标准也不一样：重度失能Ⅲ级是66元一天，重度失能Ⅱ级是62元一天，重度失能Ⅰ级是57元一天。算下来一个月差不多1700到2000块钱的补贴。这个钱是直接给定点机构的，不用你自己先垫再报销。阿姨算给你听，Ⅲ级一个月30天就是1980元，Ⅱ级是1860元，Ⅰ级是1710元。这个钱啊，该花的花，该省的省，有长护险补贴比全自费省多了。',
       source: '《南宁市长护险委托经办服务管理办法》第四章 待遇标准',
       category: '待遇解读',
     },
@@ -1012,7 +1056,7 @@ var MockData = {
       id: 'qa006',
       keywords: ['长护险和医保区别', '医保区别', '有什么不同', '区别'],
       question: '长护险和医保有什么区别？',
-      answer: '阿婆跟你讲哦，医保是管你看病吃药住院的，是治病的；长护险是管你生活护理的，是照护的。医保报销的是医药费、检查费、手术费这些，长护险报销的是护理费、照护费。打个比方，你住院开刀，医保给你报销手术费；等你出院回家了不能自理，需要请人护理，这时候就是长护险管了。两个保险管的不一样，不冲突也不重复。你35岁现在交医保的时候，其实里面已经包含了一部分长护险的筹资。政策是好政策，就怕你不知道。',
+      answer: '阿姨跟你讲哦，医保是管你看病吃药住院的，是治病的；长护险是管你生活护理的，是照护的。医保报销的是医药费、检查费、手术费这些，长护险报销的是护理费、照护费。打个比方，你住院开刀，医保给你报销手术费；等你出院回家了不能自理，需要请人护理，这时候就是长护险管了。两个保险管的不一样，不冲突也不重复。你35岁现在交医保的时候，其实里面已经包含了一部分长护险的筹资。政策是好政策，就怕你不知道。',
       source: '《国家医保局 财政部关于扩大长期护理保险制度试点的指导意见》医保发〔2020〕37号',
       category: '基础认知',
     },
@@ -1020,7 +1064,7 @@ var MockData = {
       id: 'qa007',
       keywords: ['失能评估', '评估流程', '怎么评估', '评估标准', '评估机构'],
       question: '失能等级评估是怎么做的？流程是什么？',
-      answer: '阿婆跟你讲哦，失能评估分几步走。第一步，申请人提交申请材料；第二步，经办机构受理后安排评估人员上门评估；第三步，评估人员按照国家标准对日常生活活动能力进行评分，包括吃饭、穿衣、洗澡、如厕、移动、控制大小便这6项；第四步，评估结果出来后会公示，没异议就算正式生效了。南宁目前累计已经做了超过2.71万人的失能等级评估了。评估是不收费的，你放心申请。这个钱啊，该花的花，该省的省，评估这关不花钱。',
+      answer: '阿姨跟你讲哦，失能评估分几步走。第一步，申请人提交申请材料；第二步，经办机构受理后安排评估人员上门评估；第三步，评估人员按照国家标准对日常生活活动能力进行评分，包括吃饭、穿衣、洗澡、如厕、移动、控制大小便这6项；第四步，评估结果出来后会公示，没异议就算正式生效了。南宁目前累计已经做了超过2.71万人的失能等级评估了。评估是不收费的，你放心申请。这个钱啊，该花的花，该省的省，评估这关不花钱。',
       source: '《长期护理保险失能等级评估标准（试行）》及南宁市医保局实施办法',
       category: '办事指引',
     },
@@ -1028,7 +1072,7 @@ var MockData = {
       id: 'qa008',
       keywords: ['筹资标准', '缴费标准', '怎么缴费', '保费多少', '筹资'],
       question: '长护险怎么缴费？要交多少钱？',
-      answer: '阿婆跟你讲哦，南宁市长护险的筹资方式是从职工医保基金里面划转的，不需要你额外单独缴费。具体来说，用人单位和个人各按一定比例从职工医保缴费基数中划转。目前政策是单位缴费部分按0.15%的比例划入长护险基金，个人缴费部分按0.05%的比例划入。打个比方，你工资8000块，单位大概每月划12块钱，你自己划4块钱到长护险基金里面。你看，其实每个月就几块钱的事，但将来需要的时候能省大笔开支。政策是好政策，就怕你不知道。',
+      answer: '阿姨跟你讲哦，南宁市长护险的筹资方式是从职工医保基金里面划转的，不需要你额外单独缴费。具体来说，用人单位和个人各按一定比例从职工医保缴费基数中划转。目前政策是单位缴费部分按0.15%的比例划入长护险基金，个人缴费部分按0.05%的比例划入。打个比方，你工资8000块，单位大概每月划12块钱，你自己划4块钱到长护险基金里面。你看，其实每个月就几块钱的事，但将来需要的时候能省大笔开支。政策是好政策，就怕你不知道。',
       source: '《南宁市长护险委托经办服务管理办法》第二章 筹资标准',
       category: '基础认知',
     },
@@ -1036,7 +1080,7 @@ var MockData = {
       id: 'qa009',
       keywords: ['承办机构', '经办机构', '人保', '泰康', '太平', '中国人寿', '中标'],
       question: '长护险由哪些机构负责经办？',
-      answer: '阿婆跟你讲哦，南宁市通过公开招标确定了4家商业保险公司来经办长护险。分标A是人保财险广西分公司，负责西乡塘区和良庆区，覆盖约223万人；分标B是泰康人寿，负责江南区、横州市和隆安县，约221万人；分标C是太平人寿，负责青秀区、邕宁区、马山县和上林县，约219万人；分标D是中国人寿广西分公司，负责兴宁区、武鸣区和宾阳县，约210万人。你在青秀区，对应的经办机构就是太平人寿。这个钱啊，该花的花，该省的省，政府把活交给保险公司干，效率更高。',
+      answer: '阿姨跟你讲哦，南宁市通过公开招标确定了4家商业保险公司来经办长护险。分标A是人保财险广西分公司，负责西乡塘区和良庆区，覆盖约223万人；分标B是泰康人寿，负责江南区、横州市和隆安县，约221万人；分标C是太平人寿，负责青秀区、邕宁区、马山县和上林县，约219万人；分标D是中国人寿广西分公司，负责兴宁区、武鸣区和宾阳县，约210万人。你在青秀区，对应的经办机构就是太平人寿。这个钱啊，该花的花，该省的省，政府把活交给保险公司干，效率更高。',
       source: '《2026-2028年度长护险服务项目中标公告》（2026-01-06，广西科文招标）',
       category: '办事指引',
     },
@@ -1044,7 +1088,7 @@ var MockData = {
       id: 'qa010',
       keywords: ['经办服务费', '5%', '服务费标准', '经办费用'],
       question: '经办服务费是什么标准？',
-      answer: '阿婆跟你讲哦，经办服务费就是政府付给这些保险公司帮忙管理长护险的钱。按照规定，经办服务费不高于长护险基金年度筹资总额的5%。这个钱是从基金里面出的，不需要参保人另外掏钱。政府为啥要花钱请保险公司来干？因为保险公司有专业的理赔、风控和服务网络，比自己从头建一套体系要省钱省力得多。这个钱啊，该花的花，该省的省，5%以内的经办费是合理成本，关键是把服务做好。',
+      answer: '阿姨跟你讲哦，经办服务费就是政府付给这些保险公司帮忙管理长护险的钱。按照规定，经办服务费不高于长护险基金年度筹资总额的5%。这个钱是从基金里面出的，不需要参保人另外掏钱。政府为啥要花钱请保险公司来干？因为保险公司有专业的理赔、风控和服务网络，比自己从头建一套体系要省钱省力得多。这个钱啊，该花的花，该省的省，5%以内的经办费是合理成本，关键是把服务做好。',
       source: '《南宁市长护险委托经办服务管理办法》第六章 经办服务费',
       category: '待遇解读',
     },
@@ -1052,7 +1096,7 @@ var MockData = {
       id: 'qa011',
       keywords: ['扩面计划', '城乡居民', '582万', '扩大覆盖', '什么时候纳入'],
       question: '城乡居民什么时候能纳入长护险？',
-      answer: '阿婆跟你讲哦，目前南宁长护险只覆盖了175万职工医保参保人员，还有582万城乡居民暂时没纳入。广西60岁以上老年人口有756万，占比15.18%，这么大的群体都等着呢。政府正在分步推进扩面计划，先在职工医保里把制度跑通跑稳，下一步再逐步向城乡居民扩展。这个过程需要时间，因为城乡居民的筹资渠道和标准跟职工不一样，需要单独设计。政策是好政策，就怕你不知道，知道了才能一起推动它快点扩面。',
+      answer: '阿姨跟你讲哦，目前南宁长护险只覆盖了175万职工医保参保人员，还有582万城乡居民暂时没纳入。广西60岁以上老年人口有756万，占比15.18%，这么大的群体都等着呢。政府正在分步推进扩面计划，先在职工医保里把制度跑通跑稳，下一步再逐步向城乡居民扩展。这个过程需要时间，因为城乡居民的筹资渠道和标准跟职工不一样，需要单独设计。政策是好政策，就怕你不知道，知道了才能一起推动它快点扩面。',
       source: '南宁市医疗保障局扩面工作规划（2026-2028年度）',
       category: '基础认知',
     },
@@ -1060,7 +1104,7 @@ var MockData = {
       id: 'qa012',
       keywords: ['护理人员', '持证', '1.52万', '护工', '护理服务人员'],
       question: '长护险的护理人员都是什么资质？',
-      answer: '阿婆跟你讲哦，南宁市目前有持证护理服务人员1.52万人，全部100%持证上岗，一个都没有漏网的。这些护理人员都经过了专业培训，持有了护理员职业资格证书或者相关培训合格证。你去机构或者请居家护理，给你服务的都是这些持证人员，不用担心找来的是没经过培训的生手。阿婆当年在医保所干的时候，就知道这个持证上岗有多重要，关系到老人家的安全和护理质量。这个钱啊，该花的花，该省的省，但护理质量这关不能省。',
+      answer: '阿姨跟你讲哦，南宁市目前有持证护理服务人员1.52万人，全部100%持证上岗，一个都没有漏网的。这些护理人员都经过了专业培训，持有了护理员职业资格证书或者相关培训合格证。你去机构或者请居家护理，给你服务的都是这些持证人员，不用担心找来的是没经过培训的生手。阿姨当年在医保所干的时候，就知道这个持证上岗有多重要，关系到老人家的安全和护理质量。这个钱啊，该花的花，该省的省，但护理质量这关不能省。',
       source: '南宁市医疗保障局护理服务人员管理数据（2026年度）',
       category: '基础认知',
     },
@@ -1068,7 +1112,7 @@ var MockData = {
       id: 'qa013',
       keywords: ['定点机构', '定点护理机构', '94家', '查询', '机构查询', '辅助器具'],
       question: '怎么查询定点护理服务机构？',
-      answer: '阿婆跟你讲哦，南宁市目前有94家定点护理服务机构，还有2家辅助器具服务机构。你可以在小程序里面直接查询，按照城区筛选，看看你家附近有哪些定点机构。这些机构都是经过医保部门审核认证的，服务质量和收费都有标准，你放心选。选好机构以后，直接跟机构签服务协议，然后就可以享受长护险待遇了。如果你在青秀区，太平人寿那边管的，可以打他们客服电话问具体机构名单。政策是好政策，就怕你不知道。',
+      answer: '阿姨跟你讲哦，南宁市目前有94家定点护理服务机构，还有2家辅助器具服务机构。你可以在小程序里面直接查询，按照城区筛选，看看你家附近有哪些定点机构。这些机构都是经过医保部门审核认证的，服务质量和收费都有标准，你放心选。选好机构以后，直接跟机构签服务协议，然后就可以享受长护险待遇了。如果你在青秀区，太平人寿那边管的，可以打他们客服电话问具体机构名单。政策是好政策，就怕你不知道。',
       source: '南宁市医疗保障局定点机构名录（2026年度更新）',
       category: '办事指引',
     },
@@ -1076,7 +1120,7 @@ var MockData = {
       id: 'qa014',
       keywords: ['经济困难', '补贴', '200元', '低保', '70岁', '老人补贴'],
       question: '经济困难的失能老人有什么补贴政策？',
-      answer: '阿婆跟你讲哦，对于70周岁及以上的低保重度失能老人，南宁市还有一笔额外的经济困难失能老人护理补贴，标准是每人每月200元。这个补贴跟长护险待遇是不冲突的，可以叠加享受。也就是说，符合条件的老人既可以用长护险1850元的居家护理待遇，又能再拿200元的补贴。你要家里有符合条件的长辈，一定要去社区或者民政部门申请。这个钱啊，该花的花，该省的省，但该拿的补贴一定要拿到手。',
+      answer: '阿姨跟你讲哦，对于70周岁及以上的低保重度失能老人，南宁市还有一笔额外的经济困难失能老人护理补贴，标准是每人每月200元。这个补贴跟长护险待遇是不冲突的，可以叠加享受。也就是说，符合条件的老人既可以用长护险1850元的居家护理待遇，又能再拿200元的补贴。你要家里有符合条件的长辈，一定要去社区或者民政部门申请。这个钱啊，该花的花，该省的省，但该拿的补贴一定要拿到手。',
       source: '南宁市民政局《经济困难失能老人护理补贴实施办法》',
       category: '待遇解读',
     },
@@ -1084,7 +1128,7 @@ var MockData = {
       id: 'qa015',
       keywords: ['评估机构', '谁来评估', '评估机构有哪些'],
       question: '失能评估由什么机构来做？',
-      answer: '阿婆跟你讲哦，失能等级评估是由经办机构委托的第三方专业评估机构来做的，不是医院也不是保险公司自己评。评估人员都是经过专业培训的，上门评估的时候会带证件，按照国家统一标准逐项打分。南宁市累计已经有超过2.71万人接受过失能等级评估服务了。评估结果是严格保密的，你不用担心隐私泄露。评估如果对结果有异议，还可以申请复评。这个钱啊，该花的花，该省的省，评估环节全程不收费用。',
+      answer: '阿姨跟你讲哦，失能等级评估是由经办机构委托的第三方专业评估机构来做的，不是医院也不是保险公司自己评。评估人员都是经过专业培训的，上门评估的时候会带证件，按照国家统一标准逐项打分。南宁市累计已经有超过2.71万人接受过失能等级评估服务了。评估结果是严格保密的，你不用担心隐私泄露。评估如果对结果有异议，还可以申请复评。这个钱啊，该花的花，该省的省，评估环节全程不收费用。',
       source: '《南宁市长护险委托经办服务管理办法》第五章 失能评估',
       category: '办事指引',
     },
@@ -1092,7 +1136,7 @@ var MockData = {
       id: 'qa016',
       keywords: ['护理服务清单', '服务项目', '服务内容', '护理项目'],
       question: '长护险护理服务具体包括哪些项目？',
-      answer: '阿婆跟你讲哦，长护险护理服务清单分三大类。生活照护类包括洗脸、洗头、口腔清洁、擦浴、会阴护理、翻身扣背、压疮预防、进食护理、排泄护理这些日常照护项目。医疗护理类包括压疮护理、鼻饲护理、造口护理、导尿管护理、灌肠、血糖监测、生命体征监测、康复训练指导等。支持性器具类包括轮椅、助行器、护理床、防褥疮气垫床等辅助器具的配置和租赁。你看，从头到脚都管了，不是光给钱就完事的。政策是好政策，就怕你不知道。',
+      answer: '阿姨跟你讲哦，长护险护理服务清单分三大类。生活照护类包括洗脸、洗头、口腔清洁、擦浴、会阴护理、翻身扣背、压疮预防、进食护理、排泄护理这些日常照护项目。医疗护理类包括压疮护理、鼻饲护理、造口护理、导尿管护理、灌肠、血糖监测、生命体征监测、康复训练指导等。支持性器具类包括轮椅、助行器、护理床、防褥疮气垫床等辅助器具的配置和租赁。你看，从头到脚都管了，不是光给钱就完事的。政策是好政策，就怕你不知道。',
       source: '《南宁市长护险护理服务项目清单》（2026版）',
       category: '待遇解读',
     },
@@ -1100,7 +1144,7 @@ var MockData = {
       id: 'qa017',
       keywords: ['适老化', '辅助器具', '器具补贴', '362.5', '轮椅', '护理床'],
       question: '适老化产品和辅助器具怎么补贴？',
-      answer: '阿婆跟你讲哦，长护险居家护理里面有一块叫支持性器具类，每月有362.5元的额度。这些钱可以用来配置轮椅、助行器、护理床、防褥疮气垫床、坐便椅等辅助器具。有两种方式：一种是直接购买，按目录价格报销；另一种是租赁，按月付租金。一般建议先租后买，用着合适了再买。南宁市目前有2家辅助器具服务机构，你可以在小程序里查到他们的地址和联系方式。这个钱啊，该花的花，该省的省，器具选对了能大大减轻护理负担。',
+      answer: '阿姨跟你讲哦，长护险居家护理里面有一块叫支持性器具类，每月有362.5元的额度。这些钱可以用来配置轮椅、助行器、护理床、防褥疮气垫床、坐便椅等辅助器具。有两种方式：一种是直接购买，按目录价格报销；另一种是租赁，按月付租金。一般建议先租后买，用着合适了再买。南宁市目前有2家辅助器具服务机构，你可以在小程序里查到他们的地址和联系方式。这个钱啊，该花的花，该省的省，器具选对了能大大减轻护理负担。',
       source: '《南宁市长护险辅助器具配置管理办法》及器具目录',
       category: '待遇解读',
     },
@@ -1108,7 +1152,7 @@ var MockData = {
       id: 'qa018',
       keywords: ['惠邕保', '商业保险', '保障责任', '长护保障'],
       question: '惠邕保里的长护保障责任是什么？',
-      answer: '阿婆跟你讲哦，惠邕保是南宁市的城市定制型商业医疗保险，里面包含了长期护理保障责任。它的特点是：保费低，一年几百块，不像纯商业长护险那么贵；参保门槛低，不限健康状况，有职工医保或者居民医保都能买；保障责任覆盖了重度失能状态下的护理费用补偿。如果你觉得长护险的待遇还不够覆盖全部护理费用，可以考虑惠邕保做一个补充。但要注意，惠邕保和长护险是两套体系，理赔要分开申请。这个钱啊，该花的花，该省的省，多一层保障多一份安心。',
+      answer: '阿姨跟你讲哦，惠邕保是南宁市的城市定制型商业医疗保险，里面包含了长期护理保障责任。它的特点是：保费低，一年几百块，不像纯商业长护险那么贵；参保门槛低，不限健康状况，有职工医保或者居民医保都能买；保障责任覆盖了重度失能状态下的护理费用补偿。如果你觉得长护险的待遇还不够覆盖全部护理费用，可以考虑惠邕保做一个补充。但要注意，惠邕保和长护险是两套体系，理赔要分开申请。这个钱啊，该花的花，该省的省，多一层保障多一份安心。',
       source: '南宁市医疗保障局指导，惠邕保产品条款（2026版）',
       category: '待遇解读',
     },
@@ -1116,7 +1160,7 @@ var MockData = {
       id: 'qa019',
       keywords: ['申请材料', '需要什么材料', '准备材料', '申请文件'],
       question: '申请长护险待遇需要准备哪些材料？',
-      answer: '阿婆跟你讲哦，申请长护险待遇需要准备这几样东西：第一，身份证和医保卡原件及复印件；第二，近期的病历资料，包括住院病历、诊断证明、出院小结这些，证明你的失能跟什么病有关；第三，失能状态持续6个月以上的证明材料，比如就诊记录、护理记录等；第四，填写完整的《长期护理保险待遇申请表》；第五，如果有委托代理人，还要带代理人的身份证和委托书。材料齐全了经办机构一般5个工作日内就会受理。这个钱啊，该花的花，该省的省，材料备齐了申请就快。',
+      answer: '阿姨跟你讲哦，申请长护险待遇需要准备这几样东西：第一，身份证和医保卡原件及复印件；第二，近期的病历资料，包括住院病历、诊断证明、出院小结这些，证明你的失能跟什么病有关；第三，失能状态持续6个月以上的证明材料，比如就诊记录、护理记录等；第四，填写完整的《长期护理保险待遇申请表》；第五，如果有委托代理人，还要带代理人的身份证和委托书。材料齐全了经办机构一般5个工作日内就会受理。这个钱啊，该花的花，该省的省，材料备齐了申请就快。',
       source: '《南宁市长护险委托经办服务管理办法》第三章 申请材料',
       category: '办事指引',
     },
@@ -1124,7 +1168,7 @@ var MockData = {
       id: 'qa020',
       keywords: ['护理值', '积分', '怎么用', '价值银行', '护理值是什么'],
       question: '护理值是什么？怎么获取和使用？',
-      answer: '阿婆跟你讲哦，护理值就是我们这个"长护价值银行"小程序里的积分系统。你通过学政策、看视频、做问答、打卡健康行为这些方式来赚护理值。比如学一个政策可以得20分，答对一道题得15分，看一条视频得10分。攒够了护理值可以兑换各种权益，比如500分可以抵扣商业险保费，800分可以体验短期护理服务，1200分可以兑换居家护理服务。这个护理值不光是积分，它记录的是你对长护险的认知成长，将来申请长护险待遇的时候也是个参考。政策是好政策，就怕你不知道，知道了就来赚护理值吧。',
+      answer: '阿姨跟你讲哦，护理值就是我们这个"长护价值银行"小程序里的积分系统。你通过学政策、看视频、做问答、打卡健康行为这些方式来赚护理值。比如学一个政策可以得20分，答对一道题得15分，看一条视频得10分。攒够了护理值可以兑换各种权益，比如500分可以抵扣商业险保费，800分可以体验短期护理服务，1200分可以兑换居家护理服务。这个护理值不光是积分，它记录的是你对长护险的认知成长，将来申请长护险待遇的时候也是个参考。政策是好政策，就怕你不知道，知道了就来赚护理值吧。',
       source: '智伴长护—长护价值银行小程序产品说明',
       category: '基础认知',
     },
@@ -1132,7 +1176,7 @@ var MockData = {
       id: 'qa021',
       keywords: ['知晓率', '38.92', '80%', '宣传', '提升'],
       question: '南宁市长护险知晓率是多少？有什么提升计划？',
-      answer: '阿婆跟你讲哦，说实话这个数字不太好看——南宁市目前长护险政策知晓率只有38.92%，也就是说十个人里面有六个不知道长护险是啥。政府的目标是把这个知晓率提升到80%以上。怎么提升呢？就是靠我们这种小程序，用方言视频、护阿婆讲解、趣味问答这些接地气的方式，让大家听得懂、记得住、用得上。阿婆当年在巴马医保所干政策宣传30年，最知道老百姓需要什么样的宣传——不是念文件，是说人话。这个钱啊，该花的花，该省的省，宣传的钱该花就得花。',
+      answer: '阿姨跟你讲哦，说实话这个数字不太好看——南宁市目前长护险政策知晓率只有38.92%，也就是说十个人里面有六个不知道长护险是啥。政府的目标是把这个知晓率提升到80%以上。怎么提升呢？就是靠我们这种小程序，用方言视频、护阿姨讲解、趣味问答这些接地气的方式，让大家听得懂、记得住、用得上。阿姨当年在巴马医保所干政策宣传30年，最知道老百姓需要什么样的宣传——不是念文件，是说人话。这个钱啊，该花的花，该省的省，宣传的钱该花就得花。',
       source: '南宁市医疗保障局长护险知晓率调查报告（2026年一季度）',
       category: '基础认知',
     },
@@ -1140,48 +1184,48 @@ var MockData = {
       id: 'qa022',
       keywords: ['商业长护险', '商业保险推荐', '保险产品', '百万医疗', '重疾险'],
       question: '除了社保长护险，还需要买商业保险吗？',
-      answer: '阿婆跟你讲哦，社保长护险是基础保障，但它每月最多1850元的居家护理额度，如果你家老人需要全天候护理，这点钱可能不够。南宁本地请一个全职护工一个月至少4500块，机构床位一个月3500块左右。所以如果经济条件允许，建议补充商业保险。百万医疗险一年三百多块，管大病住院费用；重疾险一次性赔付，得了重病给一笔钱自由支配；商业长护险专门管长期护理费用，跟社保长护险是互补的。你看你的保障缺口在哪，缺啥补啥。这个钱啊，该花的花，该省的省，但保障的钱该花就得花。',
+      answer: '阿姨跟你讲哦，社保长护险是基础保障，但它每月最多1850元的居家护理额度，如果你家老人需要全天候护理，这点钱可能不够。南宁本地请一个全职护工一个月至少4500块，机构床位一个月3500块左右。所以如果经济条件允许，建议补充商业保险。百万医疗险一年三百多块，管大病住院费用；重疾险一次性赔付，得了重病给一笔钱自由支配；商业长护险专门管长期护理费用，跟社保长护险是互补的。你看你的保障缺口在哪，缺啥补啥。这个钱啊，该花的花，该省的省，但保障的钱该花就得花。',
       source: '智伴长护—长护价值银行保障测评模块',
       category: '待遇解读',
     },
     {
       id: 'qa023',
-      keywords: ['适老化改造', '居家改造', '防滑', '扶手', '安全改造'],
-      question: '家里有老人，适老化改造要做哪些？',
-      answer: '阿婆跟你讲哦，适老化改造就是把家里改造成适合老人居住的样子，花不了多少钱但能大大降低意外风险。重点有几处：第一，卫生间最关键，马桶旁边装扶手、洗澡的地方装防滑垫和淋浴椅、地面做防滑处理，这一项几百块到一千多块；第二，卧室床边装夜灯和扶手，起夜不摸黑；第三，厨房台面降低到适合老人坐轮椅操作的高度，装感应水龙头；第四，全屋去掉门槛，过道留够轮椅通行宽度（至少80公分）；第五，装紧急呼叫装置，老人摔倒了一按就有人知道。长护险里虽然不直接报销改造费，但可以用护理值兑换适老化改造评估服务，专业人员上门帮你出方案。这个钱啊，该花的花，该省的省，防摔的钱一定要花。',
+      keywords: ['适老化改造', '居家改造', '防滑', '扶手', '安全改造', '适老化改造要点', '改造要点'],
+      question: '适老化改造要点是什么？',
+      answer: '广西家庭适老化改造通常关注居家安全、照护便利和康复支持三个方面。常见改造要点包括地面防滑、扶手安装、卫生间安全改造、床边起身辅助、通道拓宽、照明改善、无障碍设施配置等。具体改造内容可根据老人身体状况、居住环境和家庭照护需求确定。',
       source: '南宁市民政局居家适老化改造指南',
       category: '办事指引',
     },
     {
       id: 'qa024',
-      keywords: ['家庭照护者', '家属护理', '照顾老人', '照护技巧', '心理疏导'],
-      question: '家属照护失能老人有什么注意事项？',
-      answer: '阿婆跟你讲哦，照护失能老人是个长期活儿，身体累心更累，南宁85%的失能老人是家属照护的。有几点要特别注意：第一，护理技巧要学，比如怎么给卧床老人翻身不闪腰、怎么预防褥疮（每2小时翻一次身，用气垫床）、怎么喂饭不呛咳（坐起来45度，小口慢喂）；第二，照护者自己的身体也要注意，别把自己累垮了，建议找兄弟姐妹轮班或者请钟点工分担；第三，心理疏导很重要，久病床前无孝子不是说说的，压力大了要找人倾诉，可以加入我们小程序的照护者互助社群；第四，别忘了该申请的补贴一定要申请，长护险每月1850元、低保失能老人每月200元补贴，这些钱能大大减轻负担。政策是好政策，就怕你不知道，该拿的一定要拿到手。',
+      keywords: ['家庭照护者', '家属护理', '照顾老人', '照护技巧', '心理疏导', '家属照护注意事项', '照护注意事项'],
+      question: '家属照护注意事项？',
+      answer: '家属照护时应注意观察老人的饮食、睡眠、用药、皮肤状态、排泄和情绪变化。长期照护中要保持规律记录，避免过度劳累，必要时可联合社区护理人员、医生和康复师共同制定照护方案。同时，家属自身也应注意休息和心理调适。',
       source: '广西护理学会居家照护指南',
       category: '办事指引',
     },
     {
       id: 'qa025',
-      keywords: ['国富人寿', '本地保险公司', '广西本土', '长护险合作'],
-      question: '广西本地保险公司在长护险方面有什么特色产品？',
-      answer: '阿婆跟你讲哦，广西本土有一家叫国富人寿的保险公司，是咱们自治区自己的寿险公司，总部就在南宁五象新区。他们专门针对广西人的需求设计了一款"岁岁无忧"商业长护险，有几个特色：第一，保费不贵，30岁的人一年不到两千块；第二，理赔跟社保长护险挂钩，社保认定了失能等级，他们直接认，不用再评估一次；第三，支持居家护理服务直接结算，不用自己先垫钱再报销；第四，还附加了广西常见的地贫、尘肺病等地方病种的护理责任。另外人保财险、泰康、太平、中国人寿这四家中标了南宁市长护险经办业务的保险公司，也都有各自的补充商业保险产品，你在小程序的保障测评里可以直接比较。这个钱啊，该花的花，该省的省，选本地公司理赔更方便。',
-      source: '国富人寿产品资料及南宁市长护险经办机构公告',
+      keywords: ['国富人寿', '本地保险公司', '广西本土', '长护险合作', '广西本土保险', '本土保险特色'],
+      question: '广西本土保险有哪些特色？',
+      answer: '广西本土保险保障通常结合地方医保政策、惠民保产品、长期护理保险试点和健康广西建设等方向。部分产品会重点关注住院医疗、慢病管理、意外伤害、长期护理和家庭综合保障。具体保障内容以当地医保部门、保险公司和官方发布信息为准。',
+      source: '广西保险行业协会及本地保险公司公开资料',
       category: '待遇解读',
     },
     {
       id: 'qa026',
-      keywords: ['中青年', '为什么要关心', '现在还年轻', '跟我有关系吗'],
-      question: '我才30多岁，长护险跟我有什么关系？',
-      answer: '阿婆跟你讲哦，你这个问题问得特别好！十个人里头有八个年轻人会说"我还年轻，长护险跟我没关系"。但是你想想：第一，你现在交的医保里头已经在扣长护险的钱了，你自己的钱你得知道花在哪了；第二，你的父母已经五六十岁了，未来5到10年就是他们最可能需要长护险的时候，你得先了解清楚政策，到时候才能从容应对；第三，老龄化越来越严重，等你60岁的时候，每三个广西人里头就有一个60岁以上的老人，到时候长护险的压力肯定比现在大，你现在了解政策、参与科普，其实也是在为自己的将来争取更好的保障；第四，你在我们小程序学知识赚护理值，这些护理值将来可以兑换护理服务或者抵扣商业保险保费，年轻人早规划早受益。政策是好政策，就怕你不知道，早知道早受益。',
+      keywords: ['中青年', '为什么要关心', '现在还年轻', '跟我有关系吗', '中青年关心长护险', '为什么中青年'],
+      question: '为什么中青年也要关心长护险？',
+      answer: '中青年关心长护险，不是因为现在需要长期照护，而是因为失能风险可能发生在任何年龄阶段。提前了解长护险，有助于家庭提前规划保障方案，避免因疾病、意外或年老失能后，再临时面对高额照护费用和照护压力。',
       source: '智伴长护—长护价值银行产品定位说明',
       category: '基础认知',
     },
     {
       id: 'qa027',
-      keywords: ['投诉电话', '服务质量', '不满意怎么办', '举报', '维权'],
-      question: '对护理服务不满意怎么投诉？维权渠道有哪些？',
-      answer: '阿婆跟你讲哦，如果你对定点护理机构的服务不满意，有好几个渠道可以维权。第一，直接找经办保险公司投诉，青秀区找太平人寿，他们的客服电话是95589，投诉后一般3个工作日内要给答复；第二，打南宁市长护险监督投诉电话12393，这是医保系统的官方热线；第三，打12345政务服务热线，什么问题都能受理，他们会转交给对应部门；第四，在我们智伴长护小程序里也有"服务评价与投诉"入口，你可以给每次护理服务打分打分，低分的我们会自动转办到经办机构跟进。南宁市规定，护理机构服务投诉率超过5%的，要扣减经办服务费，严重的还会取消定点资格。所以你放心大胆地维权，这个钱啊，该花的花，该省的省，服务质量的关一定要把好。',
-      source: '《南宁市长护险服务质量监督管理办法》',
+      keywords: ['投诉电话', '服务质量', '不满意怎么办', '举报', '维权', '服务投诉维权渠道', '投诉维权渠道'],
+      question: '服务投诉维权渠道有哪些？',
+      answer: '如遇到保险服务、护理服务、机构服务或政策咨询问题，可先通过服务机构客服、保险公司客服、医保经办窗口、12345政务服务热线、广西医保官方渠道等进行咨询或反馈。具体维权路径应根据问题类型和责任主体选择相应渠道。',
+      source: '《南宁市长护险服务质量监督管理办法》及政务服务渠道',
       category: '办事指引',
     },
   ],
@@ -1290,7 +1334,7 @@ var MockData = {
   },
 
   // ============================================================
-  // 4. 四阶段短视频数据（对应护阿婆脚本）
+  // 4. 四阶段短视频数据（对应护阿姨脚本）
   // ============================================================
   videos: [
     {
@@ -1298,10 +1342,10 @@ var MockData = {
       stageFrom: 'ignorant',
       stageTo: 'aware',
       title: '你每个月交的钱里面，有一笔叫长护险',
-      desc: '护阿婆从工资条说起，告诉你长护险是什么',
+      desc: '护阿姨从工资条说起，告诉你长护险是什么',
       duration: 180,
       coverImage: '/images/video1_cover.png',
-      script: '阿婆跟你讲哦，你每个月工资条上扣的医保，里面有一笔叫长护险，你晓不晓得？南宁175万职工医保参保人都在交，但十个人里头有六个不知道这个钱是干嘛的。阿婆今天跟你讲清楚……',
+      script: '阿姨跟你讲哦，你每个月工资条上扣的医保，里面有一笔叫长护险，你晓不晓得？南宁175万职工医保参保人都在交，但十个人里头有六个不知道这个钱是干嘛的。阿姨今天跟你讲清楚……',
       points: 10,
       watched: false,
     },
@@ -1313,7 +1357,7 @@ var MockData = {
       desc: '生活照护、医疗护理、辅助器具，三大块讲明白',
       duration: 210,
       coverImage: '/images/video2_cover.png',
-      script: '阿婆跟你讲哦，上次讲了长护险是啥，今天讲讲它管啥。居家护理一个月最多1850块，生活照护8次以上、每次90分钟，医疗护理4到6次，还能配轮椅护理床。住机构的话按天算，66块、62块、57块三个档。不管啥呢？不管看病吃药，那是医保的事……',
+      script: '阿姨跟你讲哦，上次讲了长护险是啥，今天讲讲它管啥。居家护理一个月最多1850块，生活照护8次以上、每次90分钟，医疗护理4到6次，还能配轮椅护理床。住机构的话按天算，66块、62块、57块三个档。不管啥呢？不管看病吃药，那是医保的事……',
       points: 10,
       watched: false,
     },
@@ -1322,10 +1366,10 @@ var MockData = {
       stageFrom: 'understanding',
       stageTo: 'concerned',
       title: '什么样的人能申请长护险？',
-      desc: '三个条件一个不能少，阿婆帮你对号入座',
+      desc: '三个条件一个不能少，阿姨帮你对号入座',
       duration: 195,
       coverImage: '/images/video3_cover.png',
-      script: '阿婆跟你讲哦，申请长护险要满足三个条件。第一，你是职工医保参保人，正常缴费的；第二，失能要持续6个月以上；第三，要过评估。你家里有老人脑梗后半身不遂的、老年痴呆不能自理的，都可以去申请评估。南宁已经2.71万人做过了，评估不收钱的……',
+      script: '阿姨跟你讲哦，申请长护险要满足三个条件。第一，你是职工医保参保人，正常缴费的；第二，失能要持续6个月以上；第三，要过评估。你家里有老人脑梗后半身不遂的、老年痴呆不能自理的，都可以去申请评估。南宁已经2.71万人做过了，评估不收钱的……',
       points: 10,
       watched: false,
     },
@@ -1334,10 +1378,10 @@ var MockData = {
       stageFrom: 'concerned',
       stageTo: 'action',
       title: '你的长护险，还能这样用',
-      desc: '从知道到行动，阿婆手把手教你申请',
+      desc: '从知道到行动，阿姨手把手教你申请',
       duration: 240,
       coverImage: '/images/video4_cover.png',
-      script: '阿婆跟你讲哦，前面三期你都看完了，现在该行动了。你在青秀区，找太平人寿经办。带上身份证、医保卡、病历资料，填一张申请表，5天就能受理。评估人员上门来看你家里人情况，打个分，7天公示完就能签协议享受待遇了。1850块一个月的护理，这个钱该花的花，该省的省，该拿的一定要拿到……',
+      script: '阿姨跟你讲哦，前面三期你都看完了，现在该行动了。你在青秀区，找太平人寿经办。带上身份证、医保卡、病历资料，填一张申请表，5天就能受理。评估人员上门来看你家里人情况，打个分，7天公示完就能签协议享受待遇了。1850块一个月的护理，这个钱该花的花，该省的省，该拿的一定要拿到……',
       points: 10,
       watched: false,
     },
@@ -1347,10 +1391,10 @@ var MockData = {
   // 5. 方言内容样本 - 4种方言科普片段
   // ============================================================
   dialectSamples: {
-    mandarin: '各位街坊邻居大家好，我是护阿婆韦秀兰。今天跟大家讲一讲长护险这个好政策。你每个月交的医保里面，有一笔就是长护险的钱。将来你要是失能了、不能自理了，这笔钱就能用来请人照顾你。居家护理一个月最高1850块，机构护理按天算，一天57到66块不等。这个政策好不好？好得很！就怕你不知道。',
-    guiliu: '阿婆跟你讲哦，这个长护险嘛，就是我们柳州人讲的"老来福"。你在邕江边、在南湖边上散步的时候，看到那些坐在轮椅上的老人家，你想想，要是将来自己也走不动了，哪个来照顾你？长护险就是帮你解决这个问题的。一个月最多1850块护理费，请人来家头帮你洗脸洗澡、翻身拍背。这个钱嘛，该花的花，该省的省，但是这个保险你要晓得。',
-    baihua: '阿婆同你讲啊，长护险呢，就系你每个月医保里面已经扣左嘅一笔钱。你识唔晓得？南宁175万职工都在交，但好多人唔知呢笔钱系用来做咩嘅。阿婆话你知，将来你老左唔识得自己照顾自己嘅时候，呢笔钱就可以请人来帮你。居家护理一个月最多1850蚊，住机构嘅话一天补贴57到66蚊。你话抵唔抵？好抵嘎！政策系好政策，就怕你唔知。',
-    zhuang: '阿婆跟你讲哦，这个长护险嘛，在我们壮乡也是一样的。巴马的长寿老人多，但是老了不能动了也要人照顾。你每个月医保里头扣的那点钱，有一笔就是长护险。将来你要是失能了，居家护理一个月最多1850块，可以请人来家里帮忙。我们壮话讲"布洛陀保佑"，但是光靠保佑不够，还得靠政策。这个钱该花的花，该省的省，政策是好政策，就怕你不知道。',
+    mandarin: '各位街坊邻居大家好，我是护阿姨韦秀兰。今天跟大家讲一讲长护险这个好政策。你每个月交的医保里面，有一笔就是长护险的钱。将来你要是失能了、不能自理了，这笔钱就能用来请人照顾你。居家护理一个月最高1850块，机构护理按天算，一天57到66块不等。这个政策好不好？好得很！就怕你不知道。',
+    guiliu: '阿姨跟你讲哦，这个长护险嘛，就是我们柳州人讲的"老来福"。你在邕江边、在南湖边上散步的时候，看到那些坐在轮椅上的老人家，你想想，要是将来自己也走不动了，哪个来照顾你？长护险就是帮你解决这个问题的。一个月最多1850块护理费，请人来家头帮你洗脸洗澡、翻身拍背。这个钱嘛，该花的花，该省的省，但是这个保险你要晓得。',
+    baihua: '阿姨同你讲啊，长护险呢，就系你每个月医保里面已经扣左嘅一笔钱。你识唔晓得？南宁175万职工都在交，但好多人唔知呢笔钱系用来做咩嘅。阿姨话你知，将来你老左唔识得自己照顾自己嘅时候，呢笔钱就可以请人来帮你。居家护理一个月最多1850蚊，住机构嘅话一天补贴57到66蚊。你话抵唔抵？好抵嘎！政策系好政策，就怕你唔知。',
+    zhuang: '阿姨跟你讲哦，这个长护险嘛，在我们壮乡也是一样的。巴马的长寿老人多，但是老了不能动了也要人照顾。你每个月医保里头扣的那点钱，有一笔就是长护险。将来你要是失能了，居家护理一个月最多1850块，可以请人来家里帮忙。我们壮话讲"布洛陀保佑"，但是光靠保佑不够，还得靠政策。这个钱该花的花，该省的省，政策是好政策，就怕你不知道。',
   },
 
   // ============================================================
@@ -1559,7 +1603,7 @@ var MockData = {
       points: 10,
       dailyLimit: 4,
       completed: true,
-      desc: '观看护阿婆科普短视频',
+      desc: '观看护阿姨科普短视频',
     },
     {
       id: 'task007',
@@ -1613,10 +1657,10 @@ var MockData = {
     },
     {
       id: 'rw006',
-      name: '护阿婆周边礼盒',
+      name: '护阿姨周边礼盒',
       cost: 300,
       category: 'merchandise',
-      desc: '护阿婆IP周边礼盒（含保温杯、帆布袋、政策手册）',
+      desc: '护阿姨IP周边礼盒（含保温杯、帆布袋、政策手册）',
     },
     {
       id: 'rw007',
@@ -1656,7 +1700,7 @@ var MockData = {
     { date: '2026-08-25', type: 'earn', desc: '健康打卡', amount: 10, balance: 1270 },
     { date: '2026-08-24', type: 'earn', desc: '政策学习《居家护理1850元/月详解》', amount: 20, balance: 1260 },
     { date: '2026-08-24', type: 'earn', desc: '知识问答答对5题', amount: 15, balance: 1240 },
-    { date: '2026-08-23', type: 'spend', desc: '兑换护阿婆周边礼盒', amount: -300, balance: 1225 },
+    { date: '2026-08-23', type: 'spend', desc: '兑换护阿姨周边礼盒', amount: -300, balance: 1225 },
     { date: '2026-08-23', type: 'earn', desc: '方言学习（桂柳话版）', amount: 30, balance: 1525 },
     { date: '2026-08-22', type: 'transfer', desc: '护理值转入家庭账户（父亲）', amount: -200, balance: 1495 },
     { date: '2026-08-22', type: 'earn', desc: '视频观看《你每个月交的钱里面，有一笔叫长护险》', amount: 10, balance: 1695 },
@@ -1752,7 +1796,7 @@ var MockData = {
   // ============================================================
   homeFeatures: [
     { id: 'education', name: '政策科普', icon: 'book', color: '#D97706', desc: '多方言政策解读' },
-    { id: 'qa', name: 'AI问答', icon: 'chat', color: '#1C7293', desc: '护阿婆在线解答' },
+    { id: 'qa', name: 'AI问答', icon: 'chat', color: '#1C7293', desc: '护阿姨在线解答' },
     { id: 'points', name: '积分商城', icon: 'gift', color: '#E8A838', desc: '护理值兑换' },
     { id: 'recommendation', name: '保障测评', icon: 'shield', color: '#065A82', desc: '缺口评估推荐' },
     { id: 'calculator', name: '成本测算', icon: 'calculator', color: '#C0392B', desc: '护理费用估算' },
@@ -1765,7 +1809,7 @@ var MockData = {
   todayRecommendation: {
     type: 'article',
     title: '你的工资条上，有一笔叫长护险',
-    desc: '阿婆帮你算算，每月交了多少，又能用回来多少',
+    desc: '阿姨帮你算算，每月交了多少，又能用回来多少',
     stage: 'ignorant',
     points: 20,
   },
@@ -1801,7 +1845,7 @@ if (typeof window !== 'undefined') {
  * 智伴长护—长护价值银行 小程序 AI 问答引擎模块
  * ============================================================
  * 项目背景：AI赋能的广西中青年长护险前置培育与商业保障转化方案
- * 角色原型：护阿婆（韦秀兰），62岁，退休社保工作者，30年工龄
+ * 角色原型：护阿姨（韦秀兰），62岁，退休社保工作者，30年工龄
  * 依赖数据：js/data.js 中的 MockData.policyKnowledge（22个Q&A对）
  *           与 MockData.dialectSamples（4种方言样本）
  * 运行环境：浏览器（window.MockData）/ CommonJS（require('./data.js')）
@@ -1833,21 +1877,16 @@ var AIConfig = {
 // 1. 常量：兜底回复 / 方言前缀 / 末尾语气词适配规则
 // ============================================================
 
-// 未匹配到知识库时的护阿婆风格兜底回复
+// 未匹配到知识库时的护阿姨风格兜底回复
 var FALLBACK_REPLY =
-  '这个问题阿婆暂时还没整理到知识库里，但你问得好！你可以试试这样问：\n' +
-  "1. '什么是长护险？'\n" +
-  "2. '长护险怎么申请？'\n" +
-  "3. '居家护理能报多少？'\n" +
-  "4. '申请需要什么材料？'\n" +
-  '阿婆慢慢补充，你慢慢问，政策嘛，就是要多问才知道。';
+  '当前为演示版本，该问题暂未纳入知识库。建议您咨询当地医保部门、保险公司或相关服务机构获取准确信息。';
 
 // 各方言的问候语前缀（mandarin 不加前缀，原样返回）
 var DIALECT_PREFIX = {
   mandarin: '',
-  guiliu: '阿婆跟你讲哦，',
-  baihua: '阿婆同你讲啊，',
-  zhuang: '阿婆跟你讲哦，',
+  guiliu: '阿姨跟你讲哦，',
+  baihua: '阿姨同你讲啊，',
+  zhuang: '阿姨跟你讲哦，',
 };
 
 // 回答末尾语气词的方言适配规则（仅处理结尾命中项，避免误伤正文）
@@ -2047,7 +2086,7 @@ function fallbackResult(score) {
   return {
     found: false,
     answer: FALLBACK_REPLY,
-    source: '护阿婆兜底回复',
+    source: '护阿姨兜底回复',
     category: '兜底',
     matchScore: score || 0,
     matchedQA: null,
@@ -2058,7 +2097,7 @@ function fallbackResult(score) {
  * 关键词匹配搜索引擎
  * @param {string} query 用户输入的问题文本
  * @returns {{found:boolean, answer:string, source:string, category:string, matchScore:number, matchedQA:(object|null)}}
- *          最高匹配分低于 30 时，found=false 并返回护阿婆兜底回复
+ *          最高匹配分低于 30 时，found=false 并返回护阿姨兜底回复
  */
 function searchAnswer(query) {
   var q = normalize(query);
@@ -2101,7 +2140,7 @@ function searchAnswer(query) {
 // ============================================================
 
 /**
- * 根据方言设置适配护阿婆的回答
+ * 根据方言设置适配护阿姨的回答
  * - mandarin：原样返回
  * - guiliu / baihua / zhuang：替换开场问候语前缀，并对结尾语气词做方言替换
  * @param {string} text 原始回答
@@ -2124,8 +2163,8 @@ function applyDialect(text, dialect) {
   // 普通话：不加前缀，原样返回
   if (dialect === 'mandarin') return text;
 
-  // 1) 去除已有的开场前缀，避免"阿婆…阿婆…"重复
-  var knownPrefixes = ['阿婆跟你讲哦，', '阿婆同你讲啊，'];
+  // 1) 去除已有的开场前缀，避免"阿姨…阿姨…"重复
+  var knownPrefixes = ['阿姨跟你讲哦，', '阿姨同你讲啊，'];
   var body = text;
   for (var i = 0; i < knownPrefixes.length; i++) {
     if (startsWith(body, knownPrefixes[i])) {
@@ -2207,7 +2246,7 @@ function buildRequestBody(query) {
     messages: [
       {
         role: 'system',
-        content: '你是"护阿婆"韦秀兰，62岁，退休社保工作者，在巴马医保所干了30年政策宣传。' +
+        content: '你是"护阿姨"韦秀兰，62岁，退休社保工作者，在巴马医保所干了30年政策宣传。' +
                  '你擅长用广西方言（桂柳话、白话、壮语）亲切、口语化地讲解长护险政策，' +
                  '语气像邻家奶奶，但内容要准确、专业。',
       },
@@ -2234,7 +2273,7 @@ function notImplementedResult(query) {
     ok: false,
     implemented: false,
     error: 'NOT_IMPLEMENTED',
-    message: '阿婆还没接上大模型呢~ 当前已自动用本地知识库给你匹配答案。' +
+    message: '阿姨还没接上大模型呢~ 当前已自动用本地知识库给你匹配答案。' +
              '要启用真实API，请在 ai-qa.js 里把 AIConfig.useRealAPI 设为 true，并填好 apiEndpoint 和 apiKey。',
     query: query,
     request: buildRequestBody(query),
@@ -2320,12 +2359,12 @@ if (typeof module !== 'undefined' && module.exports) module.exports = AIQA;
  *   - renderFunnel      漏斗图（颜色由深到浅、右侧数量与转化率）
  *   - renderDonut       环形图（stroke-dasharray 扇区 + 图例）
  *   - renderRegionTable 区域分布表格（含认知率进度条）
- * 设计规范：护阿婆 IP 配色（暖橙 / 深蓝 / 青蓝 / 金黄 / 砖红 / 墨蓝）
+ * 设计规范：护阿姨 IP 配色（暖橙 / 深蓝 / 青蓝 / 金黄 / 砖红 / 墨蓝）
  * 技术要点：所有 SVG 使用 viewBox 自适应缩放，宽度 100% 适配容器。
  * ============================================================
  */
 
-/* ===== 颜色方案（来自护阿婆 IP 设计规范）===== */
+/* ===== 颜色方案（来自护阿姨 IP 设计规范）===== */
 var COLORS = {
   primary: '#D97706',   // 主色暖橙
   darkBlue: '#065A82',  // 深蓝
@@ -2670,7 +2709,7 @@ function renderProgressBar(value, max, options) {
   if (showLabel) {
     html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-family:' + FONT_FAMILY + ';">';
     if (label) {
-      html += '<span style="font-size:calc(12px*var(--fs,1));color:' + COLORS.textLight + ';">' + escapeXml(label) + '</span>';
+      html += '<span style="font-size:calc(13px*var(--fs,1));color:' + COLORS.textLight + ';">' + escapeXml(label) + '</span>';
     } else {
       html += '<span></span>';
     }
@@ -2696,7 +2735,7 @@ function renderProgressBar(value, max, options) {
  */
 function renderFunnel(data) {
   if (!data || !data.length) {
-    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:calc(12px*var(--fs,1));padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
+    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:calc(13px*var(--fs,1));padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
   }
 
   // 颜色从深到浅渐变（基于深蓝色系）
@@ -2716,15 +2755,15 @@ function renderFunnel(data) {
 
     html += '<div style="display:flex;align-items:center;margin-bottom:10px;font-family:' + FONT_FAMILY + ';">';
     // 阶段名称
-    html += '<div style="width:72px;font-size:calc(12px*var(--fs,1));color:' + COLORS.text + ';flex-shrink:0;">' + escapeXml(d.stage) + '</div>';
+    html += '<div style="width:72px;font-size:calc(13px*var(--fs,1));color:' + COLORS.text + ';flex-shrink:0;">' + escapeXml(d.stage) + '</div>';
     // 进度条（轨道 + 填充）
     html += '<div style="flex:1;height:24px;background:' + COLORS.grid + ';border-radius:4px;overflow:hidden;">';
     html += '<div style="width:' + widthPct.toFixed(2) + '%;height:100%;background:' + color + ';border-radius:4px;transition:width 0.6s ease;"></div>';
     html += '</div>';
     // 右侧数量与转化率
     html += '<div style="margin-left:8px;text-align:right;flex-shrink:0;min-width:72px;">';
-    html += '<div style="font-size:calc(12px*var(--fs,1));color:' + COLORS.text + ';font-weight:600;">' + formatNum(d.count) + '</div>';
-    html += '<div style="font-size:calc(10px*var(--fs,1));color:' + COLORS.textLight + ';">转化率 ' + d.rate + '%</div>';
+    html += '<div style="font-size:calc(13px*var(--fs,1));color:' + COLORS.text + ';font-weight:600;">' + formatNum(d.count) + '</div>';
+    html += '<div style="font-size:calc(13px*var(--fs,1));color:' + COLORS.textLight + ';">转化率 ' + d.rate + '%</div>';
     html += '</div>';
     html += '</div>';
   }
@@ -2824,10 +2863,10 @@ function renderDonut(data, options) {
  */
 function renderRegionTable(data) {
   if (!data || !data.length) {
-    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:calc(12px*var(--fs,1));padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
+    return '<div style="text-align:center;color:' + COLORS.textLight + ';font-size:calc(13px*var(--fs,1));padding:20px;font-family:' + FONT_FAMILY + ';">暂无数据</div>';
   }
 
-  var html = '<table style="width:100%;border-collapse:collapse;font-family:' + FONT_FAMILY + ';font-size:calc(12px*var(--fs,1));">';
+  var html = '<table style="width:100%;border-collapse:collapse;font-family:' + FONT_FAMILY + ';font-size:calc(13px*var(--fs,1));">';
   // 表头
   html += '<thead><tr>' +
     '<th style="text-align:left;padding:8px 6px;color:' + COLORS.textLight + ';font-weight:500;border-bottom:1px solid ' + COLORS.grid + ';">区域</th>' +
@@ -2848,7 +2887,7 @@ function renderRegionTable(data) {
     html += '<div style="flex:1;height:6px;background:' + COLORS.grid + ';border-radius:3px;overflow:hidden;margin-right:6px;">';
     html += '<div style="width:' + aware.toFixed(1) + '%;height:100%;background:' + COLORS.primary + ';border-radius:3px;transition:width 0.5s;"></div>';
     html += '</div>';
-    html += '<span style="font-size:calc(11px*var(--fs,1));color:' + COLORS.text + ';min-width:32px;text-align:right;">' + aware + '%</span>';
+    html += '<span style="font-size:calc(13px*var(--fs,1));color:' + COLORS.text + ';min-width:32px;text-align:right;">' + aware + '%</span>';
     html += '</div>';
     html += '</td>';
     html += '</tr>';
@@ -2925,7 +2964,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // ===== 护阿婆SVG头像生成器 =====
+  // ===== 护阿姨SVG头像生成器 =====
   function huapoSVG(size) {
     var s = size || 48;
     return '<svg class="ayi-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
@@ -3063,16 +3102,16 @@ if (typeof module !== 'undefined') module.exports = Charts;
       if (stages[i].id === ui.cognitiveStage) { stageObj = stages[i]; break; }
     }
 
-    // 护阿婆头像
+    // 护阿姨头像
     $('ayiAvatarHome').innerHTML = huapoSVG(64);
 
     // 问候语
     var hour = new Date().getHours();
     var greeting = '';
-    if (hour < 11) greeting = '早上好！阿婆跟你讲哦，今天又是了解长护险的好日子';
-    else if (hour < 14) greeting = '中午好！吃饱了来看看政策，阿婆陪你';
-    else if (hour < 18) greeting = '下午好！阿婆跟你讲哦，今天又来了解长护险了？';
-    else greeting = '晚上好！睡前学点政策，阿婆给你讲故事';
+    if (hour < 11) greeting = '早上好！阿姨跟你讲哦，今天又是了解长护险的好日子';
+    else if (hour < 14) greeting = '中午好！吃饱了来看看政策，阿姨陪你';
+    else if (hour < 18) greeting = '下午好！阿姨跟你讲哦，今天又来了解长护险了？';
+    else greeting = '晚上好！睡前学点政策，阿姨给你讲故事';
     $('homeGreeting').textContent = greeting;
     $('homeSubGreeting').textContent = '你的护理值又涨了，当前' + ui.carePoints + '分，离兑换"居家护理服务"还差' + (1200 - ui.carePoints) + '分';
 
@@ -3188,7 +3227,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
           '<div class="edu-card__desc">' + escapeHtml(item.desc) + '</div>' +
           '<div class="edu-card__meta">' +
           '<span class="edu-card__tag" style="background:' + sec.color + '22;color:' + sec.color + '">' + sec.title + '</span>' +
-          '<span style="font-size:calc(11px*var(--fs,1));color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + ' ' + item.readingTime + '分钟</span>' +
+          '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + ' ' + item.readingTime + '分钟</span>' +
           '<span class="edu-card__points">+' + item.points + '分</span>' +
           '</div></div></div>';
       });
@@ -3223,11 +3262,11 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
     // 初始化消息
     if (state.qaMessages.length === 0) {
-      var welcomeText = '阿婆跟你讲哦，我是护阿婆韦秀兰，退休社保工作者，干了30年医保政策。你有什么长护险的问题，尽管问我！选了' + dialectNames[state.currentDialect] + '模式，阿婆就用' + dialectNames[state.currentDialect] + '跟你讲。';
+      var welcomeText = '阿姨跟你讲哦，我是护阿姨韦秀兰，退休社保工作者，干了30年医保政策。你有什么长护险的问题，尽管问我！选了' + dialectNames[state.currentDialect] + '模式，阿姨就用' + dialectNames[state.currentDialect] + '跟你讲。';
       state.qaMessages.push({
         type: 'ai',
         text: welcomeText,
-        source: '护阿婆欢迎语',
+        source: '护阿姨欢迎语',
       });
       renderQAMessages();
     } else {
@@ -3315,8 +3354,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     }
 
     // 用户信息卡
-    var badgeText = ui.accountType === 'authorized' ? '中青年授权账户' : '普惠账户';
-    var badgeColor = ui.accountType === 'authorized' ? 'var(--c-gold)' : 'var(--c-cyan)';
+    var badgeText = ui.accountType === 'authorized' ? '授权账户' : '普惠账户';
     $('profileHero').innerHTML =
       '<div class="profile-hero__top">' +
       '<div class="profile-hero__avatar">' + huapoSVG(56) + '</div>' +
@@ -3327,7 +3365,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<span>·</span>' +
       '<span>' + escapeHtml(ui.district) + '</span>' +
       '</div>' +
-      '<div style="margin-top:6px"><span class="profile-hero__badge" style="color:' + badgeColor + ';border-color:' + badgeColor + '44">' + badgeText + '</span></div>' +
+      '<div style="margin-top:6px"><span class="profile-hero__badge">' + badgeText + '</span></div>' +
       '</div></div>';
 
     // 护理值概览
@@ -3522,6 +3560,11 @@ if (typeof module !== 'undefined') module.exports = Charts;
       case 'productCompare': navTitle = '产品三维评分对比'; break;
       case 'productDetail': navTitle = '产品详情'; break;
       case 'giftPoints': navTitle = '护理值赠予长辈'; break;
+      case 'policyNews': navTitle = '政策速递'; break;
+      case 'scienceArticles': navTitle = '科普文章'; break;
+      case 'productLibrary': navTitle = '保险产品库'; break;
+      case 'benefitsMall': navTitle = '积分权益商城'; break;
+      case 'articleDetail': navTitle = '文章详情'; break;
       default: navTitle = '详情'; break;
     }
 
@@ -3551,6 +3594,11 @@ if (typeof module !== 'undefined') module.exports = Charts;
       case 'productCompare': html += renderProductCompare(); break;
       case 'productDetail': html += renderProductDetail(data); break;
       case 'giftPoints': html += renderGiftPoints(); break;
+      case 'policyNews': html += renderPolicyNews(); break;
+      case 'scienceArticles': html += renderScienceArticles(); break;
+      case 'productLibrary': html += renderProductLibrary(); break;
+      case 'benefitsMall': html += renderBenefitsMall(); break;
+      case 'articleDetail': html += renderArticleDetail(data); break;
       default: html += '<div style="padding:40px 20px;text-align:center;color:var(--c-text-tertiary)">功能开发中...</div>'; break;
     }
 
@@ -3690,13 +3738,13 @@ if (typeof module !== 'undefined') module.exports = Charts;
         '<div class="sp-rec__product-row"><span class="sp-rec__product-row-label">佣金率</span><span class="sp-rec__product-row-value" style="color:#16A34A">0%（不纳入推荐排序）</span></div>' +
         '</div>' +
         '<div class="sp-rec__product-body" style="padding-top:0">' +
-        '<div style="font-size:calc(12px*var(--fs,1));font-weight:600;color:var(--c-text-secondary);margin-bottom:6px">保障责任</div>';
+        '<div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-text-secondary);margin-bottom:6px">保障责任</div>';
       p.features.forEach(function (f) {
-        html += '<div style="font-size:calc(12px*var(--fs,1));color:var(--c-ink);padding:2px 0;display:flex;gap:6px"><span style="color:#16A34A">' + getIcon('check', 14) + '</span>' + escapeHtml(f) + '</div>';
+        html += '<div style="font-size:calc(13px*var(--fs,1));color:var(--c-ink);padding:2px 0;display:flex;gap:6px"><span style="color:#16A34A">' + getIcon('check', 14) + '</span>' + escapeHtml(f) + '</div>';
       });
-      html += '<div style="font-size:calc(12px*var(--fs,1));font-weight:600;color:var(--c-text-secondary);margin:8px 0 6px">免责条款</div>';
+      html += '<div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-text-secondary);margin:8px 0 6px">免责条款</div>';
       p.exclusions.forEach(function (e) {
-        html += '<div style="font-size:calc(12px*var(--fs,1));color:var(--c-text-secondary);padding:2px 0;display:flex;gap:6px"><span style="color:var(--c-red)">·</span>' + escapeHtml(e) + '</div>';
+        html += '<div style="font-size:calc(13px*var(--fs,1));color:var(--c-text-secondary);padding:2px 0;display:flex;gap:6px"><span style="color:var(--c-red)">·</span>' + escapeHtml(e) + '</div>';
       });
       html += '</div>' +
         '<div class="sp-rec__product-scores" style="padding:8px 16px">' +
@@ -3708,7 +3756,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
         '</div>';
     });
 
-    html += '<div style="padding:12px 16px;font-size:calc(12px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5" id="recDisclaimer">温馨提示：以上推荐基于AI保障缺口评估模型，以保障覆盖度、费率水平、理赔服务三维评分排序，产品入库和推荐排序均不纳入佣金率。推荐结果仅供参考，具体投保请咨询持证保险顾问。复杂条款问题可一键转接人工顾问。</div>';
+    html += '<div style="padding:12px 16px;font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5" id="recDisclaimer">温馨提示：以上推荐基于AI保障缺口评估模型，以保障覆盖度、费率水平、理赔服务三维评分排序，产品入库和推荐排序均不纳入佣金率。推荐结果仅供参考，具体投保请咨询持证保险顾问。复杂条款问题可一键转接人工顾问。</div>';
 
     return html;
   }
@@ -3762,7 +3810,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-calc__compare-row"><span>保障缺口（需自付）</span><span class="sp-calc__compare-gap">' + (m.institutionBed - 1980) + '元/月</span></div>' +
       '</div>';
 
-    html += '<div style="padding:12px 16px;font-size:calc(12px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5">以上数据基于南宁市医保局2026年度政策标准及本地护理行业市场调研均价。实际费用因机构等级、护理等级、服务频次不同而有差异。建议结合保障缺口测评，补充商业保险保障。</div>';
+    html += '<div style="padding:12px 16px;font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5">以上数据基于南宁市医保局2026年度政策标准及本地护理行业市场调研均价。实际费用因机构等级、护理等级、服务频次不同而有差异。建议结合保障缺口测评，补充商业保险保障。</div>';
 
     return html;
   }
@@ -3772,20 +3820,20 @@ if (typeof module !== 'undefined') module.exports = Charts;
     var rec = MockData.todayRecommendation;
     var html = '<div class="sp-detail">' +
       '<div class="sp-detail__title">' + escapeHtml(rec.title) + '</div>' +
-      '<div class="sp-detail__meta"><span>护阿婆推荐</span><span>·</span><span>阅读约5分钟</span><span>·</span><span style="color:var(--c-orange)">+' + rec.points + '护理值</span></div>' +
+      '<div class="sp-detail__meta"><span>护阿姨推荐</span><span>·</span><span>阅读约5分钟</span><span>·</span><span style="color:var(--c-orange)">+' + rec.points + '护理值</span></div>' +
       '<div class="sp-detail__content">' +
-      '<p>阿婆跟你讲哦，你每个月工资条上扣的医保，里面有一笔叫长护险，你晓不晓得？</p>' +
-      '<p>南宁175万职工医保参保人都在交，但十个人里头有六个不知道这个钱是干嘛的。阿婆今天跟你讲清楚——这笔钱是专门用来给你将来失能了、不能自理了的时候，请人照顾你的。</p>' +
+      '<p>阿姨跟你讲哦，你每个月工资条上扣的医保，里面有一笔叫长护险，你晓不晓得？</p>' +
+      '<p>南宁175万职工医保参保人都在交，但十个人里头有六个不知道这个钱是干嘛的。阿姨今天跟你讲清楚——这笔钱是专门用来给你将来失能了、不能自理了的时候，请人照顾你的。</p>' +
       '<div class="sp-detail__highlight">' +
       '<strong>关键数字：</strong>居家护理月最高支付限额1850元，机构护理按床日付费57-66元/天。这笔钱从你医保里自动划扣，不需要额外掏钱。' +
       '</div>' +
-      '<h4>阿婆帮你算笔账</h4>' +
+      '<h4>阿姨帮你算笔账</h4>' +
       '<p>假设你月薪8000元，单位每月划12元，你自己划4元到长护险基金。一年下来也就192元。但将来如果你家老人需要全职护理，市场价月费4500元，社保长护险能报1850元，帮你省了四成。这个钱啊，该花的花，该省的省，长护险就是该花的那笔钱。</p>' +
       '<h4>下一步该做什么？</h4>' +
       '<p>1. 在小程序里完成政策科普学习，赚护理值积分<br>2. 做一次保障缺口测评，看看你家保障够不够<br>3. 用护理成本测算工具，算算你家可能的护理费用</p>' +
       '<p>政策是好政策，就怕你不知道。知道了就来赚护理值吧！</p>' +
       '</div>' +
-      '<div class="sp-detail__source">来源：南宁市医疗保障局公开数据 · 护阿婆科普内容团队整理</div>' +
+      '<div class="sp-detail__source">来源：南宁市医疗保障局公开数据 · 护阿姨科普内容团队整理</div>' +
       '<div style="padding:12px 0"><button class="sp-rec__submit" onclick="app.claimRead(this,' + rec.points + ');setTimeout(function(){app.closeSubPage()},1500)">已阅读，领取护理值</button></div>' +
       '</div>';
     return html;
@@ -3808,14 +3856,14 @@ if (typeof module !== 'undefined') module.exports = Charts;
       html += '<div class="sp-task" style="margin:0 0 8px">' +
         '<div class="sp-task__icon" style="background:' + (m.linked ? '#065A82' : '#E8EAED') + ';color:' + (m.linked ? '#fff' : '#9CA3AF') + '">' + getIcon('user', 20) + '</div>' +
         '<div class="sp-task__info"><div class="sp-task__name">' + m.name + '（' + m.age + '岁·' + m.relation + '）</div><div class="sp-task__desc">失能风险：' + m.risk + '</div></div>' +
-        (m.linked ? '<span style="font-size:calc(11px*var(--fs,1));color:#16A34A;background:#DCFCE7;padding:2px 8px;border-radius:10px">已关联</span>' : '<button class="sp-task__btn" onclick="app.linkElder(\'' + m.name + '\')">关联 +50</button>') +
+        (m.linked ? '<span style="font-size:calc(13px*var(--fs,1));color:#16A34A;background:#DCFCE7;padding:2px 8px;border-radius:10px">已关联</span>' : '<button class="sp-task__btn" onclick="app.linkElder(\'' + m.name + '\')">关联 +50</button>') +
         '</div>';
     });
 
     html += '<div style="margin-top:16px">' +
       '<button class="sp-rec__submit" onclick="app.toast(\'添加家庭成员功能演示中\')">+ 添加家庭成员</button>' +
       '</div>' +
-      '<div style="margin-top:12px;padding:12px;background:var(--c-blue-light);border-radius:8px;font-size:calc(12px*var(--fs,1));color:var(--c-deep-blue);line-height:1.5">' +
+      '<div style="margin-top:12px;padding:12px;background:var(--c-blue-light);border-radius:8px;font-size:calc(13px*var(--fs,1));color:var(--c-deep-blue);line-height:1.5">' +
       '<strong>护理值转赠规则：</strong>每人每日转赠上限200分，转赠后进入冷静期24小时。非中青年家庭成员停留普惠账户，不接触商业保险产品。' +
       '</div></div>';
     return html;
@@ -3849,7 +3897,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-calc__item"><span class="sp-calc__item-label">年龄</span><span class="sp-calc__item-value">' + ui.age + '岁</span></div>' +
       '<div class="sp-calc__item"><span class="sp-calc__item-label">手机号</span><span class="sp-calc__item-value">' + ui.phone + '</span></div>' +
       '<div class="sp-calc__item"><span class="sp-calc__item-label">所在城区</span><span class="sp-calc__item-value">' + escapeHtml(ui.district) + '</span></div>' +
-      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户类型</span><span class="sp-calc__item-value" style="color:var(--c-orange)">' + (ui.accountType === 'authorized' ? '中青年授权账户' : '普惠账户') + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户类型</span><span class="sp-calc__item-value" style="color:var(--c-orange)">' + (ui.accountType === 'authorized' ? '授权账户' : '普惠账户') + '</span></div>' +
       '<div class="sp-calc__item"><span class="sp-calc__item-label">授权日期</span><span class="sp-calc__item-value">' + ui.authorizedDate + '</span></div>' +
       '</div>';
 
@@ -3872,7 +3920,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     html += '<div style="padding:12px 0"><button class="sp-rec__submit" style="background:var(--c-red)" onclick="app.toast(\'撤回授权后将无法使用积分与推荐功能\')">撤回商业推荐授权</button></div>';
     html += '<div style="padding:8px 0"><button class="sp-rec__submit" style="background:var(--c-gray);color:var(--c-text-secondary)" onclick="app.toast(\'退出登录功能演示中\')">退出登录</button></div>';
 
-    html += '<div style="padding:12px;background:var(--c-gray);border-radius:8px;font-size:calc(11px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5;margin-top:8px">' +
+    html += '<div style="padding:12px;background:var(--c-gray);border-radius:8px;font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.5;margin-top:8px">' +
       '智伴长护—长护价值银行 v1.0.0 · 广西财经学院金融学院 智伴长护团队 · 指导教师：刘家养教授 李瑾专业教师<br>数据来源：南宁市医疗保障局 · 政策截至2026年7月' +
       '</div></div>';
     return html;
@@ -3895,16 +3943,16 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-detail__title">' + escapeHtml(item.title) + '</div>' +
       '<div class="sp-detail__meta"><span>' + sectionNames[section] + '</span><span>·</span><span>阅读约' + item.readingTime + '分钟</span><span>·</span><span style="color:var(--c-orange)">+' + item.points + '护理值</span></div>' +
       '<div class="sp-detail__content"><p>' + escapeHtml(item.content).replace(/\n/g, '</p><p>') + '</p></div>' +
-      '<div class="sp-detail__source">来源：南宁市医疗保障局公开政策文件 · 护阿婆科普内容团队整理</div>';
+      '<div class="sp-detail__source">来源：南宁市医疗保障局公开政策文件 · 护阿姨科普内容团队整理</div>';
 
     // 方言版本
-    html += '<div style="padding:12px 0"><div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆方言版讲解</div>';
+    html += '<div style="padding:12px 0"><div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿姨方言版讲解</div>';
     var dialectNames = { mandarin: '普通话', guiliu: '桂柳话', baihua: '白话', zhuang: '壮语' };
     for (var d in MockData.dialectSamples) {
       html += '<div style="padding:8px 12px;background:var(--c-gray);border-radius:8px;margin-bottom:6px;cursor:pointer" onclick="app.toast(\'' + dialectNames[d] + '语音播放演示\')">' +
-        '<div style="font-size:calc(12px*var(--fs,1));color:var(--c-text-secondary);margin-bottom:4px">' + dialectNames[d] + '版</div>' +
+        '<div style="font-size:calc(13px*var(--fs,1));color:var(--c-text-secondary);margin-bottom:4px">' + dialectNames[d] + '版</div>' +
         '<div style="font-size:calc(13px*var(--fs,1));color:var(--c-ink);line-height:1.4">' + escapeHtml(MockData.dialectSamples[d].substring(0, 80)) + '...</div>' +
-        '<div style="display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--c-cyan)">' + getIcon('play', 14) + '<span style="font-size:calc(11px*var(--fs,1))">播放语音</span></div>' +
+        '<div style="display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--c-cyan)">' + getIcon('play', 14) + '<span style="font-size:calc(13px*var(--fs,1))">播放语音</span></div>' +
         '</div>';
     }
     html += '</div>';
@@ -4080,17 +4128,17 @@ if (typeof module !== 'undefined') module.exports = Charts;
       // 视频播放区（模拟）
       '<div style="height:200px;background:linear-gradient(135deg,#065A82,#1C7293);display:flex;align-items:center;justify-content:center;color:#fff;position:relative">' +
       '<div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center">' + getIcon('play', 28) + '</div>' +
-      '<div style="position:absolute;bottom:10px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:calc(12px*var(--fs,1));opacity:0.8"><span>护阿婆说长护险</span><span>00:00 / ' + Math.floor(video.duration / 60) + ':' + String(video.duration % 60).padStart(2, '0') + '</span></div>' +
+      '<div style="position:absolute;bottom:10px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:calc(13px*var(--fs,1));opacity:0.8"><span>护阿姨说长护险</span><span>00:00 / ' + Math.floor(video.duration / 60) + ':' + String(video.duration % 60).padStart(2, '0') + '</span></div>' +
       '</div>' +
       '<div style="padding:16px">' +
       '<div style="font-size:calc(18px*var(--fs,1));font-weight:700;color:var(--c-ink);line-height:1.4">' + escapeHtml(video.title) + '</div>' +
       '<div style="display:flex;gap:8px;margin-top:8px">' +
       '<span class="edu-card__tag" style="background:#D9770622;color:#D97706">' + stageNames[video.stageFrom] + ' → ' + stageNames[video.stageTo] + '</span>' +
-      '<span style="font-size:calc(11px*var(--fs,1));color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + Math.floor(video.duration / 60) + '分' + (video.duration % 60) + '秒</span>' +
-      '<span style="font-size:calc(11px*var(--fs,1));color:var(--c-orange);font-weight:600">+' + video.points + '护理值</span>' +
+      '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);display:flex;align-items:center;gap:2px">' + getIcon('clock', 14) + Math.floor(video.duration / 60) + '分' + (video.duration % 60) + '秒</span>' +
+      '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-orange);font-weight:600">+' + video.points + '护理值</span>' +
       '</div>' +
       '<div style="margin-top:16px;padding:14px;background:var(--c-gray);border-radius:8px">' +
-      '<div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿婆台词稿</div>' +
+      '<div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:var(--c-deep-blue);margin-bottom:8px">护阿姨台词稿</div>' +
       '<div style="font-size:calc(14px*var(--fs,1));color:var(--c-ink);line-height:1.7">' + escapeHtml(video.script) + '</div>' +
       '</div>' +
       '<div style="margin-top:16px"><button class="sp-rec__submit" onclick="app.toast(\'观看完成，+' + video.points + '护理值到账！\');setTimeout(function(){app.closeSubPage()},1500)">已观看，领取护理值</button></div>' +
@@ -4564,6 +4612,233 @@ if (typeof module !== 'undefined') module.exports = Charts;
     openSubPage('points');
   }
 
+  // ===== 子页面：政策速递（5条广西本地长护政策，卡片可展开） =====
+  function renderPolicyNews() {
+    var policies = [
+      {
+        id: 'p001',
+        title: '广西长护险扩面推进会',
+        date: '2026-08-15',
+        source: '广西医保局',
+        summary: '广西进一步推进长期护理保险制度扩面，提升重点人群保障覆盖范围。',
+        detail: '本次推进会围绕长期护理保险制度覆盖范围、参保人群培育、服务供给优化等方向展开，旨在推动更多中青年、失能老人、低保家庭等群体了解长护险保障价值。会议强调要继续完善筹资机制、加强经办管理、扩大定点机构覆盖面，逐步推动城乡居民医保参保人员纳入长护险保障范围。',
+      },
+      {
+        id: 'p002',
+        title: '护理人员 1.52 万人 100% 持证',
+        date: '2026-07-22',
+        source: '南宁市医保局',
+        summary: '全区护理人员队伍建设持续加强，持证率进一步提升。',
+        detail: '护理人员规范化培训和资格认证工作稳步推进，1.52 万名护理人员实现 100% 持证上岗，有利于提高长期护理服务质量和专业化水平。所有在岗护理服务人员均持有护理员职业资格证书或相关培训合格证，经办机构定期开展继续教育和考核，确保服务标准统一。',
+      },
+      {
+        id: 'p003',
+        title: '70 岁 + 低保失能老人 200 元 / 月补贴落地',
+        date: '2026-06-30',
+        source: '南宁市民政局',
+        summary: '针对高龄低保失能老人的照护补贴政策进一步落地。',
+        detail: '符合条件的 70 岁以上低保失能老人可享受每月 200 元照护补贴，用于支持家庭照护、机构照护或相关护理服务支出，减轻困难家庭照护负担。该补贴与长护险待遇不冲突，可叠加享受。申请人可向所在社区或民政部门提交材料办理。',
+      },
+      {
+        id: 'p004',
+        title: '惠邕保 2026 版升级长护责任',
+        date: '2026-05-18',
+        source: '南宁市医保局指导',
+        summary: '地方惠民保障产品升级，长期护理相关保障责任进一步增强。',
+        detail: '惠邕保 2026 版在原有保障基础上升级长期护理责任，进一步衔接地方医保、长护险和商业保障，为参保人提供更完整的健康保障方案。新版产品扩展了重度失能状态下的护理费用补偿责任，并优化了与社保长护险的衔接理赔流程，参保门槛低、保费亲民，可作为社保长护险的有效补充。',
+      },
+      {
+        id: 'p005',
+        title: '定点机构增至 94 家',
+        date: '2026-04-10',
+        source: '南宁市医保局',
+        summary: '长期护理保险定点服务机构数量持续增加。',
+        detail: '定点机构覆盖范围进一步扩大，目前已增至 94 家，服务资源更加丰富，有利于提升失能老人、长期照护家庭的服务可及性。此外还有 2 家辅助器具服务机构，为参保人提供轮椅、护理床、防褥疮气垫床等辅助器具的配置和租赁服务。参保人可在小程序内按城区查询定点机构名单。',
+      },
+    ];
+    var html = '<div style="padding:16px">';
+    html += '<div style="padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,var(--c-blue-light),#fff);border:1px solid #BFDBFE;margin-bottom:14px"><div style="font-weight:700;color:var(--c-deep-blue);font-size:calc(19px*var(--fs,1));line-height:1.6">广西本地长护政策速递</div><div style="margin-top:4px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">点击条目可展开查看详情</div></div>';
+    policies.forEach(function (p) {
+      html += '<div class="sp-task" id="policy-' + p.id + '" style="display:block;padding:14px;margin-bottom:10px;border-radius:12px;background:#fff;box-shadow:var(--shadow-sm);border:1px solid var(--c-gray-border)">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;cursor:pointer" onclick="app.togglePolicy(\'' + p.id + '\')">' +
+        '<div style="flex:1"><div style="font-weight:700;color:var(--c-ink);font-size:calc(19px*var(--fs,1));line-height:1.5">' + p.title + '</div>' +
+        '<div style="margin-top:6px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">' + p.summary + '</div>' +
+        '<div style="margin-top:6px;display:flex;gap:8px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1))"><span>' + p.date + '</span><span>·</span><span>' + p.source + '</span></div></div>' +
+        '<div style="color:var(--c-cyan);font-size:calc(19px*var(--fs,1));flex-shrink:0;margin-top:4px" id="policy-arrow-' + p.id + '">展开 ▾</div>' +
+        '</div>' +
+        '<div id="policy-detail-' + p.id + '" style="display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--c-gray-border);color:var(--c-ink);font-size:calc(19px*var(--fs,1));line-height:1.8">' + p.detail + '</div>' +
+        '</div>';
+    });
+    html += '<div style="padding:10px 4px 4px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6;text-align:center">本小程序为竞赛演示原型，内容仅作方案验证，不作为业务办理依据。</div>';
+    html += '</div>';
+    return html;
+  }
+
+  function togglePolicy(id) {
+    var detail = $('policy-detail-' + id);
+    var arrow = $('policy-arrow-' + id);
+    if (!detail) return;
+    if (detail.style.display === 'none') {
+      detail.style.display = 'block';
+      arrow.textContent = '收起 ▴';
+    } else {
+      detail.style.display = 'none';
+      arrow.textContent = '展开 ▾';
+    }
+  }
+
+  // ===== 子页面：科普文章列表 =====
+  function renderScienceArticles() {
+    var articles = [
+      { id: 'a001', title: '老龄化时代我们为什么需要长护险', summary: '长护险不仅是老年人的保障，更是中青年家庭应当提前了解的重要风险保障工具。', readingTime: 5, tag: '基础认知' },
+      { id: 'a002', title: '长护险 vs 医保 vs 养老险，一张表看懂区别', summary: '医保管看病，长护险管失能照护，养老险管退休收入——三者相互补充，不能互相替代。', readingTime: 4, tag: '保障对比' },
+    ];
+    var html = '<div style="padding:16px">';
+    html += '<div style="padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,var(--c-orange-light),#fff);border:1px solid #FED7AA;margin-bottom:14px"><div style="font-weight:700;color:var(--c-orange);font-size:calc(19px*var(--fs,1));line-height:1.6">科普文章</div><div style="margin-top:4px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">点击文章卡片进入阅读</div></div>';
+    articles.forEach(function (a) {
+      html += '<div onclick="app.openSubPage(\'articleDetail\',{id:\'' + a.id + '\'})" style="padding:14px;margin-bottom:10px;border-radius:12px;background:#fff;box-shadow:var(--shadow-sm);border:1px solid var(--c-gray-border);cursor:pointer;transition:transform 0.15s">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="font-weight:700;color:var(--c-ink);font-size:calc(23px*var(--fs,1));line-height:1.5;flex:1">' + a.title + '</div>' +
+        '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-orange);background:var(--c-orange-light);padding:2px 8px;border-radius:10px;flex-shrink:0">' + a.tag + '</span></div>' +
+        '<div style="margin-top:8px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">' + a.summary + '</div>' +
+        '<div style="margin-top:8px;display:flex;align-items:center;gap:6px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1))"><span>阅读约 ' + a.readingTime + ' 分钟</span><span>·</span><span>护阿姨科普内容团队</span></div>' +
+        '</div>';
+    });
+    html += '<div style="padding:10px 4px 4px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6;text-align:center">本小程序为竞赛演示原型，内容仅作方案验证，不作为业务办理依据。</div>';
+    html += '</div>';
+    return html;
+  }
+
+  // ===== 子页面：文章详情（2篇科普文章，第二篇含对比表格） =====
+  function renderArticleDetail(data) {
+    var id = (data && data.id) || 'a001';
+    var html = '<div style="padding:16px">';
+    if (id === 'a001') {
+      html += '<h1 style="font-size:calc(28px*var(--fs,1));font-weight:800;color:var(--c-ink);line-height:1.4;margin-bottom:8px">老龄化时代我们为什么需要长护险</h1>';
+      html += '<div style="display:flex;align-items:center;gap:8px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--c-gray-border)"><span>护阿姨科普内容团队</span><span>·</span><span>阅读约5分钟</span></div>';
+      html += '<div style="color:var(--c-ink);font-size:calc(19px*var(--fs,1));line-height:1.8">';
+      html += '<p style="margin-bottom:14px">随着人口老龄化程度加深，老年照护、失能照护、家庭照护压力逐渐增加。长期护理保险主要解决的是因年老、疾病、伤残等导致失能后，护理服务和照护费用保障问题。</p>';
+      html += '<p style="margin-bottom:14px">对于中青年群体来说，长护险不是遥远的"老年保险"，而是一种家庭风险前置管理。提前了解长护险，有助于在风险发生前建立保障意识，避免因一人失能导致整个家庭陷入照护压力和经济压力。</p>';
+      html += '<h2 style="font-size:calc(26px*var(--fs,1));font-weight:700;color:var(--c-deep-blue);margin:18px 0 10px;line-height:1.45">长护险的核心价值</h2>';
+      html += '<ol style="padding-left:20px;line-height:1.9">';
+      html += '<li>减轻家庭照护负担；</li>';
+      html += '<li>补充医保之外的长期护理保障；</li>';
+      html += '<li>提高失能老人照护质量；</li>';
+      html += '<li>帮助中青年家庭提前规划风险；</li>';
+      html += '<li>衔接社保、医保、商业保险和养老服务资源。</li>';
+      html += '</ol>';
+      html += '<p style="margin-top:14px">因此，长护险不仅是老年人需要关注的保障，也是中青年家庭应当提前了解的重要风险保障工具。</p>';
+      html += '</div>';
+    } else {
+      html += '<h1 style="font-size:calc(28px*var(--fs,1));font-weight:800;color:var(--c-ink);line-height:1.4;margin-bottom:8px">长护险 vs 医保 vs 养老险，一张表看懂区别</h1>';
+      html += '<div style="display:flex;align-items:center;gap:8px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--c-gray-border)"><span>护阿姨科普内容团队</span><span>·</span><span>阅读约4分钟</span></div>';
+      html += '<div style="color:var(--c-ink);font-size:calc(19px*var(--fs,1));line-height:1.8">';
+      html += '<p style="margin-bottom:14px">长护险、医保和养老险都属于社会保障或商业保障中的重要组成部分，但三者的保障重点不同。</p>';
+      html += '<h2 style="font-size:calc(26px*var(--fs,1));font-weight:700;color:var(--c-deep-blue);margin:18px 0 10px;line-height:1.45">三类保障对比</h2>';
+      // 对比表格
+      html += '<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--c-gray-border);margin-bottom:14px">';
+      html += '<table style="width:100%;border-collapse:collapse;font-size:calc(19px*var(--fs,1));line-height:1.6">';
+      html += '<thead><tr style="background:var(--c-blue-light);color:var(--c-deep-blue)">';
+      html += '<th style="padding:10px 8px;text-align:left;border-bottom:1px solid var(--c-gray-border);font-weight:700">保障类型</th>';
+      html += '<th style="padding:10px 8px;text-align:left;border-bottom:1px solid var(--c-gray-border);font-weight:700">主要解决问题</th>';
+      html += '<th style="padding:10px 8px;text-align:left;border-bottom:1px solid var(--c-gray-border);font-weight:700">保障重点</th>';
+      html += '<th style="padding:10px 8px;text-align:left;border-bottom:1px solid var(--c-gray-border);font-weight:700">典型适用场景</th>';
+      html += '</tr></thead><tbody>';
+      html += '<tr><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border);font-weight:600;color:var(--c-orange)">长护险</td><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border)">长期照护、失能照护</td><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border)">失能后的护理服务和照护费用</td><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border)">老人失能、瘫痪、术后长期照护</td></tr>';
+      html += '<tr><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border);font-weight:600;color:var(--c-cyan)">医保</td><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border)">疾病医疗费用</td><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border)">门诊、住院、药品、检查等医疗支出</td><td style="padding:10px 8px;border-bottom:1px solid var(--c-gray-border)">生病就医、住院治疗、手术治疗</td></tr>';
+      html += '<tr><td style="padding:10px 8px;font-weight:600;color:var(--c-deep-blue)">养老险</td><td style="padding:10px 8px">养老收入补充</td><td style="padding:10px 8px">退休后的稳定现金流</td><td style="padding:10px 8px">养老金领取、养老规划、储蓄型保障</td></tr>';
+      html += '</tbody></table></div>';
+      html += '<h2 style="font-size:calc(26px*var(--fs,1));font-weight:700;color:var(--c-deep-blue);margin:18px 0 10px;line-height:1.45">说明</h2>';
+      html += '<p>医保主要解决"看病花钱"的问题，长护险主要解决"失能后长期照护花钱"的问题，养老险主要解决"退休后生活收入"的问题。三者相互补充，不能互相替代。</p>';
+      html += '</div>';
+    }
+    html += '<div style="margin-top:18px;padding:10px 4px 4px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6;text-align:center;border-top:1px solid var(--c-gray-border)">本小程序为竞赛演示原型，内容仅作方案验证，不作为业务办理依据。</div>';
+    html += '</div>';
+    return html;
+  }
+
+  // ===== 子页面：保险产品库（2款产品基础信息，不展示价格） =====
+  function renderProductLibrary() {
+    var products = [
+      {
+        id: 'pl001',
+        name: '国富人寿岁岁无忧商业长护险',
+        company: '国富人寿',
+        target: '适合关注失能风险、长期护理费用、家庭照护保障的中青年家庭、中老年人群、独生子女家庭。',
+        responsibilities: [
+          '长期护理费用保障',
+          '失能状态下的护理服务支持',
+          '家庭照护费用补充',
+          '与地方长护险、医保保障形成补充',
+          '帮助用户降低失能后的经济压力',
+        ],
+      },
+      {
+        id: 'pl002',
+        name: '人保财险全家福家庭综合保障',
+        company: '人保财险广西分公司',
+        target: '适合希望为家庭成员提供综合健康、意外、医疗和长期护理保障的家庭用户。',
+        responsibilities: [
+          '家庭综合保障',
+          '健康医疗保障',
+          '意外伤害保障',
+          '部分产品可衔接长期护理责任',
+          '适用于家庭型风险保障规划',
+        ],
+      },
+    ];
+    var html = '<div style="padding:16px">';
+    html += '<div style="padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,var(--c-blue-light),#fff);border:1px solid #BFDBFE;margin-bottom:14px"><div style="font-weight:700;color:var(--c-deep-blue);font-size:calc(19px*var(--fs,1));line-height:1.6">中立保险产品库</div><div style="margin-top:4px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">仅展示产品基础信息，不展示真实价格</div></div>';
+    products.forEach(function (p) {
+      html += '<div style="padding:14px;margin-bottom:12px;border-radius:12px;background:#fff;box-shadow:var(--shadow-sm);border:1px solid var(--c-gray-border)">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">' +
+        '<div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--c-deep-blue),var(--c-cyan));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:calc(23px*var(--fs,1));flex-shrink:0">' + p.name.charAt(0) + '</div>' +
+        '<div><div style="font-weight:700;color:var(--c-ink);font-size:calc(23px*var(--fs,1));line-height:1.4">' + p.name + '</div>' +
+        '<div style="color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));margin-top:2px">' + p.company + '</div></div>' +
+        '</div>' +
+        '<div style="margin-top:10px"><div style="font-weight:700;color:var(--c-deep-blue);font-size:calc(19px*var(--fs,1));margin-bottom:6px;line-height:1.6">面向人群</div>' +
+        '<div style="color:var(--c-ink);font-size:calc(19px*var(--fs,1));line-height:1.8;padding:10px;background:var(--c-blue-light);border-radius:8px">' + p.target + '</div></div>' +
+        '<div style="margin-top:12px"><div style="font-weight:700;color:var(--c-deep-blue);font-size:calc(19px*var(--fs,1));margin-bottom:6px;line-height:1.6">核心长护保障责任</div>' +
+        '<ul style="list-style:none;padding:0;margin:0">';
+      p.responsibilities.forEach(function (r) {
+        html += '<li style="display:flex;align-items:flex-start;gap:8px;padding:5px 0;color:var(--c-ink);font-size:calc(19px*var(--fs,1));line-height:1.7"><span style="color:var(--c-orange);flex-shrink:0;margin-top:2px">●</span><span>' + r + '</span></li>';
+      });
+      html += '</ul></div>';
+      // 统一提示文字
+      html += '<div style="margin-top:12px;padding:10px 12px;border-radius:8px;background:#FEF3C7;color:#92400E;font-size:calc(19px*var(--fs,1));line-height:1.7;text-align:center">本处为方案模拟演示，非真实投保入口。</div>';
+      html += '</div>';
+    });
+    html += '<div style="padding:10px 4px 4px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6;text-align:center">本小程序为竞赛演示原型，内容仅作方案验证，不作为业务办理依据。</div>';
+    html += '</div>';
+    return html;
+  }
+
+  // ===== 子页面：积分权益商城（4项权益，模拟兑换按钮） =====
+  function renderBenefitsMall() {
+    var benefits = [
+      { id: 'b001', name: '免费失能评估', icon: '📋', desc: '了解失能风险等级，提前规划照护保障。', target: '中老年人、慢病患者、术后康复人群、失能高风险家庭。', status: '可兑换' },
+      { id: 'b002', name: '养老机构参观体验券', icon: '🏥', desc: '实地了解养老机构环境、照护服务和入住条件。', target: '有养老规划需求、家庭照护压力较大、需要机构照护支持的用户。', status: '可兑换' },
+      { id: 'b003', name: '营养膳食咨询', icon: '🥗', desc: '针对老人、慢病患者、康复人群提供饮食营养建议。', target: '中老年用户、术后康复人群、慢病管理人群。', status: '可兑换' },
+      { id: 'b004', name: '适老化改造评估', icon: '🏠', desc: '评估家庭居住环境是否适合老年人安全照护。', target: '有老人居家照护、失能照护、康复训练需求的家庭。', status: '可兑换' },
+    ];
+    var html = '<div style="padding:16px">';
+    html += '<div style="padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,var(--c-orange-light),#fff);border:1px solid #FED7AA;margin-bottom:14px"><div style="font-weight:700;color:var(--c-orange);font-size:calc(19px*var(--fs,1));line-height:1.6">积分权益商城</div><div style="margin-top:4px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">护理值兑换服务类权益</div></div>';
+    benefits.forEach(function (b) {
+      html += '<div style="padding:14px;margin-bottom:12px;border-radius:12px;background:#fff;box-shadow:var(--shadow-sm);border:1px solid var(--c-gray-border)">' +
+        '<div style="display:flex;gap:12px;align-items:flex-start">' +
+        '<div style="width:44px;height:44px;border-radius:12px;background:var(--c-orange-light);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">' + b.icon + '</div>' +
+        '<div style="flex:1"><div style="font-weight:700;color:var(--c-ink);font-size:calc(23px*var(--fs,1));line-height:1.4">' + b.name + '</div>' +
+        '<div style="margin-top:4px;color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1));line-height:1.6">' + b.desc + '</div>' +
+        '<div style="margin-top:6px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6">适用人群：' + b.target + '</div>' +
+        '<div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">' +
+        '<span style="font-size:calc(13px*var(--fs,1));color:var(--c-cyan);font-weight:600">状态：' + b.status + '</span>' +
+        '<button class="sp-reward__btn" style="min-height:48px;padding:12px 20px" onclick="app.toast(\'当前为演示版本，权益兑换功能暂未上线\')">模拟兑换</button>' +
+        '</div></div></div></div>';
+    });
+    html += '<div style="padding:10px 4px 4px;color:var(--c-text-tertiary);font-size:calc(13px*var(--fs,1));line-height:1.6;text-align:center">本小程序为竞赛演示原型，内容仅作方案验证，不作为业务办理依据。</div>';
+    html += '</div>';
+    return html;
+  }
+
   // ===== 字体双模式（标准/大字，全局记忆，与顶部导航栏同步） =====
   function applyFontMode(mode, save) {
     if (mode !== 'large' && mode !== 'standard') mode = 'standard';
@@ -4612,6 +4887,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     dashLogin: dashLogin,
     closeDashAuth: closeDashAuth,
     exitDash: exitDash,
+    togglePolicy: togglePolicy,
     // 护理值路径 + 赠予
     doCheckin: doCheckin,
     linkElder: linkElder,
@@ -4653,7 +4929,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-calc__item"><span class="sp-calc__item-label">年龄</span><span class="sp-calc__item-value">' + ui.age + '岁</span></div>' +
       '<div class="sp-calc__item"><span class="sp-calc__item-label">手机号</span><span class="sp-calc__item-value">' + ui.phone + '</span></div>' +
       '<div class="sp-calc__item"><span class="sp-calc__item-label">所在城区</span><span class="sp-calc__item-value">' + escapeHtml(ui.district) + '</span></div>' +
-      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户类型</span><span class="sp-calc__item-value" style="color:var(--c-orange)">' + (ui.accountType === 'authorized' ? '中青年授权账户' : '普惠账户') + '</span></div>' +
+      '<div class="sp-calc__item"><span class="sp-calc__item-label">账户类型</span><span class="sp-calc__item-value" style="color:var(--c-orange)">' + (ui.accountType === 'authorized' ? '授权账户' : '普惠账户') + '</span></div>' +
       '<div class="sp-calc__item"><span class="sp-calc__item-label">授权日期</span><span class="sp-calc__item-value">' + (ui.authorizedDate?ui.authorizedDate:'—（尚未授权）') + '</span></div>' +
       '</div>';
     html += '<div class="sp-calc__card" style="margin-top:12px"><div class="sp-calc__card-title">合规保障</div>' +
@@ -4735,15 +5011,15 @@ if (typeof module !== 'undefined') module.exports = Charts;
 <div id="qrOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10000;align-items:center;justify-content:center;" onclick="toggleQRCode()">
   <div style="background:#fff;border-radius:16px;padding:28px 24px 20px;text-align:center;max-width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
     <div style="font-size:calc(16px*var(--fs,1));font-weight:700;color:#1A2744;margin-bottom:4px;">微信扫码访问</div>
-    <div style="font-size:calc(12px*var(--fs,1));color:#6B7280;margin-bottom:16px;">扫一扫，在手机上体验小程序</div>
+    <div style="font-size:calc(13px*var(--fs,1));color:#6B7280;margin-bottom:16px;">扫一扫，在手机上体验小程序</div>
     <div id="qrCodeContainer" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
     <div id="qrLocalWarn" style="display:none;background:#FEF3E7;border-radius:8px;padding:12px;margin-bottom:12px;text-align:left;">
-      <div style="font-size:calc(12px*var(--fs,1));font-weight:600;color:#D97706;margin-bottom:4px;">当前是本地地址，手机无法直接访问</div>
-      <div style="font-size:calc(11px*var(--fs,1));color:#6B7280;line-height:1.6;">请将此文件上传到任意公网服务器（如 GitHub Pages、Vercel 等），通过公网链接打开后，二维码即可扫码访问。</div>
-      <div style="margin-top:8px;font-size:calc(11px*var(--fs,1));color:#065A82;cursor:pointer;text-decoration:underline;" onclick="showDeployGuide()">查看部署方法</div>
+      <div style="font-size:calc(13px*var(--fs,1));font-weight:600;color:#D97706;margin-bottom:4px;">当前是本地地址，手机无法直接访问</div>
+      <div style="font-size:calc(13px*var(--fs,1));color:#6B7280;line-height:1.6;">请将此文件上传到任意公网服务器（如 GitHub Pages、Vercel 等），通过公网链接打开后，二维码即可扫码访问。</div>
+      <div style="margin-top:8px;font-size:calc(13px*var(--fs,1));color:#065A82;cursor:pointer;text-decoration:underline;" onclick="showDeployGuide()">查看部署方法</div>
     </div>
-    <div style="font-size:calc(11px*var(--fs,1));color:#9CA3AF;line-height:1.5;">当前链接：<span id="qrUrlDisplay" style="word-break:break-all"></span></div>
-    <button id="copyLinkBtn" onclick="copyCurrentLink()" style="margin-top:10px;padding:8px 18px;border-radius:20px;background:#E8F1F8;color:#065A82;font-size:calc(12px*var(--fs,1));font-weight:600;border:1px solid #065A82;cursor:pointer;">复制链接</button>
+    <div style="font-size:calc(13px*var(--fs,1));color:#9CA3AF;line-height:1.5;">当前链接：<span id="qrUrlDisplay" style="word-break:break-all"></span></div>
+    <button id="copyLinkBtn" onclick="copyCurrentLink()" style="margin-top:10px;padding:8px 18px;border-radius:20px;background:#E8F1F8;color:#065A82;font-size:calc(13px*var(--fs,1));font-weight:600;border:1px solid #065A82;cursor:pointer;">复制链接</button>
     <button onclick="toggleQRCode()" style="margin-top:10px;padding:8px 24px;border-radius:20px;background:#065A82;color:#fff;font-size:calc(13px*var(--fs,1));font-weight:600;border:none;cursor:pointer;">关闭</button>
   </div>
 </div>
@@ -4751,7 +5027,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
 <div id="deployGuide" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;" onclick="document.getElementById('deployGuide').style.display='none'">
   <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
     <div style="font-size:calc(16px*var(--fs,1));font-weight:700;color:#1A2744;margin-bottom:12px;">如何部署到公网</div>
-    <div style="font-size:calc(12px*var(--fs,1));color:#374151;line-height:1.8;text-align:left;">
+    <div style="font-size:calc(13px*var(--fs,1));color:#374151;line-height:1.8;text-align:left;">
       <div style="margin-bottom:12px;">
         <b>方法一：Vercel（推荐，免费）</b><br/>
         1. 注册 vercel.com 账号<br/>
