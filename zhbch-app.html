@@ -518,8 +518,9 @@ svg { display: block; }
 .toast {
   position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
   background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px;
-  border-radius: 10px; font-size:calc(23px*var(--fs,1)); z-index: 9999;
-  animation: toastIn 0.3s; pointer-events: none; white-space: nowrap;
+  border-radius: 10px; font-size:calc(23px*var(--fs,1)); z-index: 30000;
+  animation: toastIn 0.3s; pointer-events: none;
+  max-width: 82vw; white-space: normal; word-break: break-all; text-align: center; line-height: 1.5;
 }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%,-40%) scale(0.9); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
 
@@ -554,7 +555,7 @@ body[data-account="inclusive"] .biz-only { display: none !important; }
 .switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .2s; }
 .switch--on::after { left: 23px; }
 /* 授权说明弹窗 */
-.auth-mask { position: fixed; inset: 0; background: rgba(15,35,60,.55); z-index: 20000; display: none; align-items: center; justify-content: center; }
+.auth-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,35,60,.55); z-index: 20000; display: none; align-items: center; justify-content: center; }
 .auth-modal { width: 360px; max-width: 88vw; background: #fff; border-radius: 16px; padding: 22px 20px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
 .auth-modal h3 { margin: 0 0 6px; font-size: calc(28px*var(--fs,1)); color: var(--c-ink); }
 .auth-modal p  { margin: 0 0 10px; font-size: calc(23px*var(--fs,1)); color: var(--c-text-secondary); line-height: 1.7; }
@@ -607,7 +608,9 @@ html[data-fs="large"] .section__tag, html[data-fs="large"] .home-news__meta, htm
 .demo-float__btn { display:inline-block; padding:8px 16px; border-radius:999px; background:var(--c-orange); color:#fff; font-size:calc(14px*var(--fs,1)); font-weight:700; white-space:nowrap; }
 
 /* ===== 新手帮助悬浮按钮 ===== */
-.help-fab { position:fixed; right:12px; bottom:80px; z-index:9997; width:44px; height:44px; border-radius:50%; background:var(--c-orange); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,0.3); cursor:pointer; font-size:20px; }
+.help-fab { position:fixed; right:12px; bottom:calc(80px + var(--safe-bottom)); z-index:9997; width:48px; height:48px; border-radius:50%; background:var(--c-orange); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; box-shadow:0 2px 10px rgba(0,0,0,0.3); cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.help-fab__ico { font-size:18px; line-height:1; }
+.help-fab__txt { font-size:10px; font-weight:800; line-height:1.2; }
 
 /* ===== 积分流水弹窗 ===== */
 .points-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:10002; align-items:center; justify-content:center; }
@@ -622,7 +625,7 @@ html[data-fs="large"] .section__tag, html[data-fs="large"] .home-news__meta, htm
 .points-modal__item-amt { font-size:calc(19px*var(--fs,1)); font-weight:700; }
 
 /* ===== 回到首页悬浮按钮（子页面内显示） ===== */
-.home-fab { position:fixed; right:12px; bottom:130px; z-index:9997; width:44px; height:44px; border-radius:50%; background:var(--c-deep-blue); color:#fff; display:none; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,0.3); cursor:pointer; font-size:20px; }
+.home-fab { position:fixed; right:12px; bottom:calc(130px + var(--safe-bottom)); z-index:9997; width:44px; height:44px; border-radius:50%; background:var(--c-deep-blue); color:#fff; display:none; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,0.3); cursor:pointer; font-size:20px; }
 .home-fab--show { display:flex; }
 /* 护理值赠予长辈页 */
 .gift-opt { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: calc(26px*var(--fs,1)); color: var(--c-ink); cursor: pointer; margin: 4px 10px 4px 0; }
@@ -4471,6 +4474,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
     try { if (/MicroMessenger|MicroMsg/i.test(navigator.userAgent)) document.body.classList.add('env-wechat'); } catch (e) {}
     // 演示飘窗：长按拖拽 + 位置记忆
     initDemoFloatDrag();
+    // 新手指引卡片：手柄拖拽 + 位置记忆
+    initGuideDrag();
     // 启动后检查是否需要弹出新手指引
     setTimeout(function () { checkAndShowGuide(); }, 800);
   }
@@ -5115,6 +5120,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
       btn.className = 'guide-card__btn guide-card__btn--next';
     }
     ov.classList.add('guide-overlay--show');
+    // 弹窗显示后校正拖动位置（防止上次保存的位置在当前屏幕出界）
+    if (typeof _guidePosEnsure === 'function') _guidePosEnsure();
   }
   // 🔊 语音朗读当前指引（适配不识字老年用户）
   function speakGuide() {
@@ -5184,6 +5191,71 @@ if (typeof module !== 'undefined') module.exports = Charts;
     }
   }
   // 悬浮控件交互：按住拖动移位；小按钮点击/长按展开；面板长按空白处收回
+  // ===== 新手指引卡片：按住手柄可拖动移位（避开表单/按钮关键区域，位置本机记忆） =====
+  var _guideDragPos = { x: 0, y: 0 };
+  function _guideMove(noTransition) {
+    var card = $('guideCard');
+    if (!card) return;
+    card.style.transition = noTransition ? 'none' : 'transform .18s ease';
+    card.style.transform = 'translate(' + _guideDragPos.x + 'px,' + _guideDragPos.y + 'px)';
+  }
+  function _guideClamp() {
+    var card = $('guideCard');
+    if (!card) return;
+    var r = card.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return;
+    var M = 6;
+    if (r.left < M) _guideDragPos.x += (M - r.left);
+    if (r.right > window.innerWidth - M) _guideDragPos.x -= (r.right - (window.innerWidth - M));
+    if (r.top < M) _guideDragPos.y += (M - r.top);
+    if (r.bottom > window.innerHeight - M) _guideDragPos.y -= (r.bottom - (window.innerHeight - M));
+  }
+  function initGuideDrag() {
+    var card = $('guideCard');
+    var grip = $('guideGrip');
+    if (!card || !grip || grip._dragInit) return;
+    grip._dragInit = true;
+    try {
+      var p = JSON.parse(localStorage.getItem('zbchGuidePos') || 'null');
+      if (p && typeof p.x === 'number' && typeof p.y === 'number') { _guideDragPos = { x: p.x, y: p.y }; _guideMove(true); }
+    } catch (e) {}
+    grip.addEventListener('pointerdown', function (e) {
+      if (e.button && e.button !== 0) return;
+      e.preventDefault();
+      var sx = e.clientX, sy = e.clientY;
+      var startPos = { x: _guideDragPos.x, y: _guideDragPos.y };
+      var moved = false;
+      card.classList.add('guide-card--dragging');
+      function onMove(ev) {
+        var dx = ev.clientX - sx, dy = ev.clientY - sy;
+        if (!moved && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+          moved = true;
+          try { if (navigator.vibrate) navigator.vibrate(12); } catch (err) {}
+        }
+        if (!moved) return;
+        ev.preventDefault();
+        var r = card.getBoundingClientRect();
+        var minX = 6 - r.left, maxX = window.innerWidth - 6 - r.right;
+        var minY = 6 - r.top, maxY = window.innerHeight - 6 - r.bottom;
+        _guideDragPos.x = startPos.x + Math.max(minX, Math.min(dx, maxX));
+        _guideDragPos.y = startPos.y + Math.max(minY, Math.min(dy, maxY));
+        _guideMove(true);
+      }
+      function onUp() {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        document.removeEventListener('pointercancel', onUp);
+        card.classList.remove('guide-card--dragging');
+        if (moved) { try { localStorage.setItem('zbchGuidePos', JSON.stringify(_guideDragPos)); } catch (err) {} }
+      }
+      document.addEventListener('pointermove', onMove, { passive: false });
+      document.addEventListener('pointerup', onUp);
+      document.addEventListener('pointercancel', onUp);
+    });
+    window.addEventListener('resize', function () { _guideClamp(); _guideMove(false); });
+  }
+  function _guidePosEnsure() { _guideClamp(); _guideMove(true); }
+
   function initDemoFloatDrag() {
     var df = $('demoFloat');
     if (!df || df._dragInit) return;
@@ -5978,7 +6050,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
 .guide-card__speak { flex-shrink: 0; background: #ECFEFF; color: #0E7490; border: 1px solid #A5F3FC; border-radius: 999px; padding: 4px 11px; font-size: 13px; font-weight: 700; cursor: pointer; line-height: 1.5; }
 
 /* ===== AI问答：语音输入麦克风按钮（强化辨识度） ===== */
-.qa-voice-btn { background: linear-gradient(135deg, #F97316, #F59E0B); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; color: #fff; box-shadow: 0 2px 8px rgba(249,115,22,0.45); }
+.qa-voice-btn { background: linear-gradient(135deg, #F97316, #F59E0B); width: 42px; height: 42px; min-width: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; font-size: 20px; color: #fff; box-shadow: 0 2px 8px rgba(249,115,22,0.45); padding: 0; }
 
 /* ===== 微信内置浏览器 / 真机全屏适配：手机上去掉演示外框，内容铺满全屏 ===== */
 @media (max-width: 520px) {
@@ -5999,8 +6071,13 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 }
 
 /* ===== 问答页语音按钮：麦克风图标+小字提示 ===== */
-.qa-voice-wrap { display: flex; flex-direction: column; align-items: center; gap: 1px; flex-shrink: 0; }
+/* 输入栏 flex 防溢出（安卓 WebView 下 input 默认最小宽度会把按钮挤出屏幕） */
+.qa-input-bar { flex-wrap: nowrap; }
+.qa-input { min-width: 0 !important; flex: 1 1 auto; }
+.qa-voice-wrap { display: flex; flex-direction: column; align-items: center; gap: 1px; flex: 0 0 auto; }
 .qa-voice-label { font-size: 10px; color: var(--c-text-tertiary); line-height: 1.2; white-space: nowrap; }
+/* 发送按钮：重置适老通用规则带来的大内边距，保持正圆不挤压 */
+.qa-input-bar .qa-send { width: 40px; height: 40px; min-width: 0; min-height: 0; padding: 0; flex: 0 0 auto; border-radius: 50%; }
 
 /* ===== 全自动演示悬浮控件：mini小按钮 / 展开面板 双态 ===== */
 .demo-float--mini { padding: 9px 13px; max-width: none; border-radius: 999px 0 0 999px; }
@@ -6014,12 +6091,12 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 .demo-float__fold { flex-shrink: 0; min-width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; cursor: pointer; }
 
 /* ===== 首页「赚取护理积分」快捷悬浮按钮 ===== */
-.earn-fab { position: fixed; right: 12px; bottom: 186px; z-index: 9996; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #F97316); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.3); cursor: pointer; }
+.earn-fab { position: fixed; right: 12px; bottom: calc(186px + var(--safe-bottom)); z-index: 9996; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #F97316); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.3); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .earn-fab__ico { font-size: 18px; line-height: 1; }
 .earn-fab__txt { font-size: 10px; font-weight: 800; line-height: 1.2; }
 
-/* ===== 赚积分任务清单弹窗：自适应+内部滚动+安全区 ===== */
-.earn-modal { display: none; position: fixed; inset: 0; background: rgba(15,35,60,.55); z-index: 10002; align-items: center; justify-content: center; padding: 16px; }
+/* ===== 赚积分任务清单弹窗：自适应+内部滚动+安全区（inset展开为四向偏移，兼容旧安卓X5） ===== */
+.earn-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,35,60,.55); z-index: 10002; align-items: center; justify-content: center; padding: 16px; }
 .earn-modal__box { position: relative; width: 100%; max-width: 360px; max-height: 78vh; max-height: min(78vh, 560px); overflow-y: auto; -webkit-overflow-scrolling: touch; background: #fff; border-radius: 18px; padding: 20px 16px calc(16px + var(--safe-bottom)); box-sizing: border-box; }
 .earn-modal__close { position: absolute; right: 12px; top: 10px; font-size: 22px; color: var(--c-text-tertiary); cursor: pointer; padding: 4px; line-height: 1; }
 .earn-modal__title { font-size: calc(26px*var(--fs,1)); font-weight: 800; color: var(--c-ink); margin-bottom: 8px; }
@@ -6063,6 +6140,17 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
   .dash-hint { font-size: calc(16px*var(--fs,1)); margin-top: 8px; }
   .dash-modal .dash-btns { margin: 12px -16px 0; padding: 8px 16px calc(12px + var(--safe-bottom)); }
 }
+
+/* ===== 新手指引卡片：长按拖拽手柄（独立手柄层，不与按钮/滚动冲突） ===== */
+.guide-card { will-change: transform; }
+.guide-card__grip { flex-shrink: 0; touch-action: none; -webkit-user-select: none; user-select: none; cursor: grab; text-align: center; padding: 2px 0 8px; margin: -6px -4px 10px; color: var(--c-text-tertiary); font-size: 12px; line-height: 1.4; }
+.guide-card__grip-bar { display: block; width: 44px; height: 5px; border-radius: 3px; background: #D1D5DB; margin: 0 auto 6px; }
+.guide-card__grip:active { cursor: grabbing; }
+.guide-card__grip-txt { display: block; }
+.guide-card--dragging { box-shadow: 0 14px 44px rgba(0,0,0,0.35); }
+.guide-card--dragging .guide-card__grip { cursor: grabbing; }
+/* 旧安卓 X5 兼容：遮罩用四向偏移替代 inset；底部留安全区 */
+.guide-overlay { right: 0; bottom: 0; width: auto; height: auto; padding-bottom: var(--safe-bottom); }
 </style>
 <div class="dash-modal-mask" id="dashAuthModal" style="display:none">
   <div class="dash-modal">
@@ -6083,7 +6171,11 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 
 <!-- ===== 新手指引遮罩 ===== -->
 <div class="guide-overlay" id="guideOverlay">
-  <div class="guide-card">
+  <div class="guide-card" id="guideCard">
+    <div class="guide-card__grip" id="guideGrip" title="按住此处可拖动，挪到不遮挡的位置">
+      <span class="guide-card__grip-bar"></span>
+      <span class="guide-card__grip-txt">⋮⋮ 按住此处可拖动，不挡内容</span>
+    </div>
     <div class="guide-card__top">
       <div class="guide-card__title" id="guideTitle"></div>
       <span class="guide-card__speak" id="guideSpeakBtn" onclick="app.speakGuide()" title="语音朗读本步骤">🔊 朗读</span>
@@ -6114,8 +6206,11 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 <!-- ===== 全自动演示顶部提示横幅（非阻塞，护阿姨人设） ===== -->
 <div id="demoBanner" style="display:none;position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:10000;max-width:92%;pointer-events:none;background:linear-gradient(135deg,#065A82,#1C7293);color:#fff;padding:10px 18px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-size:calc(15px*var(--fs,1));font-weight:600;line-height:1.5;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
 
-<!-- ===== 新手帮助悬浮按钮 ===== -->
-<div class="help-fab" id="helpFab" onclick="app.restartGuide()">📖</div>
+<!-- ===== 新手帮助悬浮按钮（带文字说明，与赚积分按钮样式统一） ===== -->
+<div class="help-fab" id="helpFab" onclick="app.restartGuide()" title="新手指引：点我重新学一遍">
+  <span class="help-fab__ico">📖</span>
+  <span class="help-fab__txt">指引</span>
+</div>
 
 <!-- ===== 首页「赚取护理积分」快捷悬浮按钮（仅首页显示） ===== -->
 <div class="earn-fab" id="earnFab" onclick="app.showEarnTasks()" title="赚取护理积分">
