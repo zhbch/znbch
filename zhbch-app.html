@@ -98,8 +98,8 @@ svg { display: block; }
 .page { min-height: 100%; padding-bottom: 8px; }
 
 /* ===== 通用区块 ===== */
-.section { padding: 0 16px; margin-top: 16px; }
-.section__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.section { padding: 0 12px; margin-top: 12px; }
+.section__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .section__header h3 { font-size:calc(28px*var(--fs,1)); font-weight: 700; color: var(--c-ink); }
 .section__more { font-size:calc(28px*var(--fs,1)); color: var(--c-cyan); cursor: pointer; }
 .section__tag { font-size:calc(23px*var(--fs,1)); color: var(--c-orange); background: var(--c-orange-light); padding: 2px 8px; border-radius: 10px; }
@@ -5379,6 +5379,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
       },
       // ⑦ 商业授权页面：演示模式绕过校验，下一步按钮正常渲染
       function (done) {
+        closeSubPage();
+        if (state.userRole !== 'elder') switchRole('elder'); // 家属账号切回老人再演示商业授权
         navigateTo('home');
         setAccountMode('authorized', false);
         openSubPage('gapQuestionnaire');
@@ -5497,6 +5499,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     dashLogin: dashLogin,
     showDashAuth: showDashAuth,
     closeDashAuth: closeDashAuth,
+    prefillDashAuth: prefillDashAuth,
     exitDash: exitDash,
     togglePolicy: togglePolicy,
     // 护理值路径 + 赠予
@@ -5955,7 +5958,10 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 <!-- ===== 新手指引遮罩 ===== -->
 <div class="guide-overlay" id="guideOverlay">
   <div class="guide-card">
-    <div class="guide-card__title" id="guideTitle"></div>
+    <div class="guide-card__top">
+      <div class="guide-card__title" id="guideTitle"></div>
+      <span class="guide-card__speak" id="guideSpeakBtn" onclick="app.speakGuide()" title="语音朗读本步骤">🔊 朗读</span>
+    </div>
     <div class="guide-card__desc" id="guideDesc"></div>
     <div class="guide-card__steps" id="guideSteps"></div>
     <div class="guide-card__btns">
