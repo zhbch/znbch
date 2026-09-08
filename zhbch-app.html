@@ -6045,10 +6045,24 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 .acct-info-row b { font-weight: 600; color: var(--c-ink); text-align: right; }
 
 /* ===== 全弹窗统一自适应：不写死高度、内部滚动、避开微信底部安全区 ===== */
-.dash-modal { max-height: 88vh; max-height: min(88vh, 640px); overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(22px + var(--safe-bottom)); }
+.dash-modal { max-height: 88vh; max-height: min(88vh, 640px); overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+/* 看板授权弹窗：操作按钮吸底，内容再长也始终可见可点（不遮挡微信底部导航） */
+.dash-modal .dash-btns { position: sticky; bottom: 0; background: #fff; margin: 14px -20px 0; padding: 10px 20px calc(14px + var(--safe-bottom)); box-shadow: 0 -6px 14px rgba(15,35,60,0.08); border-radius: 0 0 16px 16px; }
 .guide-card { max-height: 84vh; max-height: min(84vh, 640px); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .auth-modal { max-height: 88vh; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(22px + var(--safe-bottom)); }
 .points-modal__box { max-height: 76vh; padding-bottom: calc(20px + var(--safe-bottom)); }
+
+/* 矮屏（小屏手机/微信键盘弹起）：压缩看板授权弹窗密度，尽量一屏放下 */
+@media (max-height: 700px) {
+  .dash-modal { padding: 14px 16px 4px; }
+  .dash-modal h3 { font-size: calc(24px*var(--fs,1)); margin-bottom: 4px; }
+  .dash-modal p { font-size: calc(19px*var(--fs,1)); margin-bottom: 8px; line-height: 1.55; }
+  .dash-role { padding: 8px 10px; margin-bottom: 6px; font-size: calc(22px*var(--fs,1)); }
+  .dash-field { margin-top: 8px; }
+  .dash-field input { min-height: 36px; }
+  .dash-hint { font-size: calc(16px*var(--fs,1)); margin-top: 8px; }
+  .dash-modal .dash-btns { margin: 12px -16px 0; padding: 8px 16px calc(12px + var(--safe-bottom)); }
+}
 </style>
 <div class="dash-modal-mask" id="dashAuthModal" style="display:none">
   <div class="dash-modal">
