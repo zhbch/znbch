@@ -3092,10 +3092,10 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
   // ===== 页面路由 =====
   function navigateTo(pageId) {
-    // 权限闸门：数据看板仅限保险公司/政府监管授权查看
+    // 数据看板：老人/家属账号可进入，但运营数据置灰（renderDashboard 内部分流）；管理人员授权后解锁
     if (pageId === 'dashboard') {
-      if (!dashAuthed()) { showDashAuth(); return; }
-      renderDashChip();
+      if (dashAuthed()) { renderDashChip(); }
+      else { var _chip = $('dashAuthChip'); if (_chip) _chip.style.display = 'none'; }
     }
     // 隐藏所有页面
     var pages = document.querySelectorAll('.page');
@@ -3489,7 +3489,54 @@ if (typeof module !== 'undefined') module.exports = Charts;
   }
 
   // ===== 数据看板渲染 =====
+  // 数据看板·普通用户视图（老人/家属账号）：权限提示 + 个人护理值流水 + 运营区置灰
+  function renderDashboardLocked() {
+    $('dashTabs').innerHTML =
+      '<div class="dash-tab dash-tab--locked" style="opacity:0.4;pointer-events:none">政务端</div>' +
+      '<div class="dash-tab dash-tab--locked" style="opacity:0.4;pointer-events:none">保险端</div>';
+    var html = '';
+    // 权限提示
+    html += '<div style="margin:12px 12px 0;padding:14px 16px;border-radius:12px;background:#FEF3C7;border:2px solid #FCD34D;color:#92400E;font-size:calc(19px*var(--fs,1));font-weight:600;line-height:1.7">⚠️本数据看板运营统计模块仅限管理人员才能查看，普通用户仅可查看个人护理值流水</div>';
+    // 个人护理值流水（正常可见）
+    html += '<div class="dash-chart-card" style="margin-top:12px"><div class="dash-chart-card__title">💧 我的护理值流水<span class="dash-chart-card__title-tag">个人可见</span></div>';
+    var cur = MockData.userInfo.carePoints;
+    html += '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:6px 0 10px;border-bottom:1px dashed #E5E7EB;margin-bottom:6px"><span style="color:var(--c-text-secondary);font-size:calc(19px*var(--fs,1))">当前护理值余额</span><b style="color:var(--c-orange);font-size:calc(30px*var(--fs,1))">' + cur.toLocaleString() + '</b></div>';
+    MockData.pointsHistory.slice(0, 6).forEach(function (h) {
+      var color = h.type === 'earn' ? '#16A34A' : (h.type === 'spend' ? '#B91C1C' : '#D97706');
+      var sign = h.amount > 0 ? '+' : '';
+      html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed #F3F4F6">' +
+        '<div style="flex:1;padding-right:8px"><div style="font-size:calc(17px*var(--fs,1));color:var(--c-ink);line-height:1.4">' + escapeHtml(h.desc) + '</div>' +
+        '<div style="font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);margin-top:2px">' + h.date + '</div></div>' +
+        '<b style="font-size:calc(19px*var(--fs,1));color:' + color + ';white-space:nowrap">' + sign + h.amount + '</b></div>';
+    });
+    html += '</div>';
+    // 运营数据追踪区（置灰，不可操作）
+    html += '<div style="position:relative;margin-top:12px;border-radius:12px;overflow:hidden">' +
+      '<div style="pointer-events:none;opacity:0.35;filter:grayscale(0.8)">' +
+      '<div class="dash-chart-card"><div class="dash-chart-card__title">运营数据追踪（政务端）</div>' +
+      '<div class="dash-overview">' +
+      '<div class="dash-stat"><div class="dash-stat__label">覆盖用户</div><div class="dash-stat__value">—</div></div>' +
+      '<div class="dash-stat"><div class="dash-stat__label">知晓率</div><div class="dash-stat__value">—</div></div>' +
+      '<div class="dash-stat"><div class="dash-stat__label">县域覆盖</div><div class="dash-stat__value">—</div></div>' +
+      '<div class="dash-stat"><div class="dash-stat__label">转化漏斗</div><div class="dash-stat__value">—</div></div>' +
+      '</div>' +
+      '<div style="height:120px;border-radius:10px;background:repeating-linear-gradient(45deg,#F3F4F6,#F3F4F6 12px,#E5E7EB 12px,#E5E7EB 24px);display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:calc(15px*var(--fs,1))">运营统计图表区域</div>' +
+      '</div></div>' +
+      '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">' +
+      '<div style="font-size:40px">🔒</div>' +
+      '<div style="font-size:calc(17px*var(--fs,1));color:var(--c-text-secondary);font-weight:600;background:rgba(255,255,255,0.85);padding:6px 14px;border-radius:999px">运营数据已锁定，仅供管理人员查看</div>' +
+      '</div></div>';
+    // 管理人员授权入口（演示授权码）
+    html += '<div style="margin-top:14px;text-align:center">' +
+      '<button class="sp-rec__submit" style="background:var(--c-deep-blue);max-width:280px;margin:0 auto" onclick="app.showDashAuth()">管理人员授权进入（演示）</button>' +
+      '<div style="margin-top:8px;font-size:calc(13px*var(--fs,1));color:var(--c-text-tertiary);line-height:1.6">演示授权码：保险公司 BX2026 · 政府 ZF2026<br/>正式环境由机构统一发放工号并动态校验</div>' +
+      '</div>';
+    $('dashContent').innerHTML = html;
+  }
+
   function renderDashboard() {
+    // 未授权（老人/家属账号）：权限提示 + 个人流水 + 运营区置灰
+    if (!dashAuthed()) { renderDashboardLocked(); return; }
     var tabs = [
       { id: 'gov', name: '政务端' },
       { id: 'insurance', name: '保险端' },
@@ -4481,8 +4528,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
   }
   function exitDash() {
     try { sessionStorage.removeItem('zbchDashRole'); } catch (e) {}
-    toast('已退出看板监管视图');
-    navigateTo('home');
+    toast('已退出看板管理视图，运营数据已重新锁定');
+    navigateTo('dashboard');
   }
 
   // ===== 双层账户隔离：核心 =====
@@ -5048,6 +5095,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
   function getGuideKey() { return 'zn_hasGuide_' + state.currentUserId; }
   function checkAndShowGuide() {
+    // 全自动演示进行中不弹指引，避免打断演示流程
+    if (state._demoRunning) return;
     var seen = false;
     try { seen = localStorage.getItem(getGuideKey()) === '1'; } catch (e) {}
     if (!seen) { startGuide(); }
@@ -5100,49 +5149,148 @@ if (typeof module !== 'undefined') module.exports = Charts;
     if (df) df.style.display = 'none';
   }
 
-  // ===== 全自动演示脚本 =====
+  // ===== 全自动演示脚本（真实页面导航，无alert弹窗，全程不阻断交互） =====
+  function setDemoBanner(text) {
+    var b = $('demoBanner');
+    if (!b) return;
+    if (text) { b.textContent = '🎬 演示中 · 护阿姨：' + text; b.style.display = 'block'; }
+    else { b.style.display = 'none'; }
+  }
   function startAutoDemo(e) {
     if (e) e.stopPropagation();
+    // 重入锁：演示进行中再次点击直接忽略（经验：单序列+token防重入）
+    if (state._demoRunning) return;
+    state._demoRunning = true;
+    state._demoToken = (state._demoToken || 0) + 1;
+    var token = state._demoToken;
     window.isDemoEnv = true;
     hideDemoFloat();
+    // 关闭可能打开的指引/子弹窗，不弹任何 alert
+    var gov = $('guideOverlay'); if (gov) gov.classList.remove('guide-overlay--show');
+    closeSubPage();
+
+    // 演示步骤序列：每步真实导航到业务页面，停留 1.2~1.5 秒，done() 进入下一步
     var steps = [
-      { msg: '🎬 全自动演示启动！\n\n第一步：模拟老人账号阅读政策 +20护理值', delay: 1500, action: function() {
+      // ① 首页 → 政策科普，模拟阅读 +20
+      function (done) {
+        setDemoBanner('先从首页开始，带您去「政策科普」读读政策');
         if (state.userRole !== 'elder') switchRole('elder');
+        MockData.userInfo.carePoints = 1130; // 演示基准分，+20+30+100 后正好 1280
         navigateTo('home');
-      }},
-      { msg: '📖 正在模拟阅读政策文章…', delay: 2500, action: function() {
-        addCarePoints(20, '政策学习（自动演示）');
-      }},
-      { msg: '💬 模拟AI问答 +30护理值', delay: 2500, action: function() {
-        addCarePoints(30, 'AI问答（自动演示）');
-      }},
-      { msg: '📋 模拟完成保障测评 +100护理值\n当前积分已达兑换门槛！', delay: 3000, action: function() {
-        addCarePoints(100, '保障测评（自动演示）');
-        renderHome();
-      }},
-      { msg: '🔄 切换到家属协助账号…\n家属仅可代办操作，不产生护理值', delay: 3000, action: function() {
-        switchRole('family');
-      }},
-      { msg: '👨‍👩‍👧 模拟打开商业授权页面（演示模式）…\n下一步按钮正常显示，无校验阻塞', delay: 3000, action: function() {
-        setAccountMode('authorized', true);
+        setTimeout(function () {
+          if (token !== state._demoToken) return;
+          navigateTo('education');
+          setDemoBanner('读一篇政策文章，读完能得护理值哦');
+          setTimeout(function () {
+            if (token !== state._demoToken) return;
+            addCarePoints(20, '政策学习《居家护理1850元/月详解》');
+            setDemoBanner('读完啦，护理值 +20！');
+            setTimeout(done, 700);
+          }, 800);
+        }, 700);
+      },
+      // ② AI护阿姨问答，模拟使用 +30
+      function (done) {
+        navigateTo('qa');
+        setDemoBanner('有问题随时问护阿姨，这就替您问一句');
+        setTimeout(function () {
+          if (token !== state._demoToken) return;
+          askQuestion('长护险是什么？');
+          setTimeout(function () {
+            if (token !== state._demoToken) return;
+            addCarePoints(30, 'AI问答互动');
+            setDemoBanner('问答完成，护理值 +30！');
+            setTimeout(done, 800);
+          }, 1100);
+        }, 700);
+      },
+      // ③ 保障测评，演示模式绕过校验，模拟完成 +100（积分到1280）
+      function (done) {
+        setAccountMode('authorized', false);
         openSubPage('gapQuestionnaire');
-      }},
-      { msg: '✅ 全自动演示完成！\n\n您已体验完整业务闭环：\n• 积分赚取与兑换\n• 双账号切换（老人/家属）\n• 商业授权流程\n\n点击任意位置关闭。', delay: 1500, action: function() {} },
+        setDemoBanner('这是保障测评问卷，演示模式自动帮您填好');
+        setTimeout(function () {
+          if (token !== state._demoToken) return;
+          var btn = document.getElementById('gapCalcBtn');
+          if (btn) btn.click(); // 演示模式下校验绕过，真实生成缺口报告
+          addCarePoints(100, '完成保障测评');
+          setDemoBanner('测评完成，护理值 +100，现在一共 1280 分！');
+          setTimeout(done, 1300);
+        }, 1200);
+      },
+      // ④ 数据看板（老人账号）：权限提示 + 个人流水可见 + 运营区置灰
+      function (done) {
+        closeSubPage();
+        navigateTo('dashboard');
+        setDemoBanner('数据看板只对管理人员开放，您只能看个人护理值流水');
+        setTimeout(done, 1500);
+      },
+      // ⑤ 积分商城：展示兑换服务逻辑
+      function (done) {
+        navigateTo('home');
+        openSubPage('points');
+        setDemoBanner('攒够的护理值，可以在积分商城兑换真实服务');
+        setTimeout(done, 1400);
+      },
+      // ⑥ 切换家属协助账号：顶部标签同步更新，再进看板复现权限提示
+      function (done) {
+        closeSubPage();
+        switchRole('family'); // 演示期间 _demoRunning 守卫保证不会弹出新手指引
+        setDemoBanner('已切换为家属协助账号：代办操作不产生护理值');
+        setTimeout(function () {
+          if (token !== state._demoToken) return;
+          navigateTo('dashboard');
+          setDemoBanner('家属账号看数据看板，运营数据同样锁定');
+          setTimeout(done, 1500);
+        }, 900);
+      },
+      // ⑦ 商业授权页面：演示模式绕过校验，下一步按钮正常渲染
+      function (done) {
+        navigateTo('home');
+        setAccountMode('authorized', false);
+        openSubPage('gapQuestionnaire');
+        setDemoBanner('商业授权问卷页：演示模式校验已绕过，下一步按钮正常显示');
+        setTimeout(function () {
+          if (token !== state._demoToken) return;
+          var btn2 = document.getElementById('gapCalcBtn');
+          if (btn2) btn2.click();
+          setDemoBanner('您看，按钮一点就能提交，页面不会卡住');
+          setTimeout(done, 1300);
+        }, 1000);
+      },
+      // ⑧ 结束：回到首页
+      function (done) {
+        closeSubPage();
+        if (state.userRole !== 'elder') switchRole('elder');
+        setAccountMode('inclusive', false);
+        navigateTo('home');
+        setDemoBanner('演示走完啦！护阿姨带您回到首页，欢迎自己点点看');
+        setTimeout(function () {
+          if (token !== state._demoToken) return;
+          setDemoBanner(null);
+          state._demoRunning = false;
+          showDemoFloat();
+          toast('全自动演示结束，回到首页啦');
+          done();
+        }, 1800);
+      },
     ];
-    var idx = 0;
-    function runStep() {
-      if (idx >= steps.length) {
-        hideDemoFloat();
-        showDemoFloat();
-        return;
-      }
-      var s = steps[idx];
-      toast(s.msg, 4000);
-      if (s.action) { try { s.action(); } catch (e) {} }
-      idx++;
-      setTimeout(runStep, s.delay);
+
+    var i = 0;
+    function runNext() {
+      if (token !== state._demoToken) return; // 演示已被终止
+      if (i >= steps.length) return;
+      var fn = steps[i++];
+      try { fn(runNext); } catch (err) { runNext(); }
     }
-    runStep();
+    runNext();
+  }
+  // 对外提供演示终止（预留，当前流程不强制中断）
+  function stopAutoDemo() {
+    state._demoToken = (state._demoToken || 0) + 1;
+    state._demoRunning = false;
+    setDemoBanner(null);
+    showDemoFloat();
   }
 
   // ===== 积分流水弹窗 =====
@@ -5204,6 +5352,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     setFontScale: setFontScale,
     setFontMode: setFontMode,
     dashLogin: dashLogin,
+    showDashAuth: showDashAuth,
     closeDashAuth: closeDashAuth,
     exitDash: exitDash,
     togglePolicy: togglePolicy,
@@ -5641,6 +5790,9 @@ if (typeof module !== 'undefined') module.exports = Charts;
   <div class="demo-float__desc">一键体验完整业务｜双账号・积分闭环</div>
   <div class="demo-float__btn" onclick="app.startAutoDemo(event)">启动全自动演示</div>
 </div>
+
+<!-- ===== 全自动演示顶部提示横幅（非阻塞，护阿姨人设） ===== -->
+<div id="demoBanner" style="display:none;position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:10000;max-width:92%;pointer-events:none;background:linear-gradient(135deg,#065A82,#1C7293);color:#fff;padding:10px 18px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-size:calc(15px*var(--fs,1));font-weight:600;line-height:1.5;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
 
 <!-- ===== 新手帮助悬浮按钮 ===== -->
 <div class="help-fab" id="helpFab" onclick="app.restartGuide()">📖</div>
