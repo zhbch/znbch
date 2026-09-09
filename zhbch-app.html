@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -96,8 +96,8 @@ svg { display: block; }
 }
 .tabbar__item {
   flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px; color: var(--c-text-tertiary); transition: color 0.2s; position: relative;
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  gap: 3px; color: var(--c-text-tertiary); transition: color 0.2s; position: relative;
+  cursor: pointer; -webkit-tap-highlight-color: transparent; padding-top: 4px;
 }
 .tabbar__item--active { color: var(--c-orange); }
 .tabbar__item--center { position: relative; }
@@ -105,14 +105,14 @@ svg { display: block; }
   width: 48px; height: 48px; border-radius: 50%;
   background: linear-gradient(135deg, var(--c-orange) 0%, var(--c-gold) 100%);
   color: #fff; display: flex; align-items: center; justify-content: center;
-  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
   box-shadow: var(--shadow-orange);
 }
 .tabbar__item--center .tabbar__icon { display: none; }
 .tabbar__item--center.tabbar__item--active .tabbar__text { color: var(--c-orange); }
-.tabbar__icon { width: 24px; height: 24px; }
-.tabbar__text { font-size:calc(28px*var(--fs,1)); font-weight: 500; }
-.tabbar__text--center { margin-top: 28px; }
+.tabbar__icon { width: 24px; height: 24px; flex-shrink: 0; }
+.tabbar__text { font-size:calc(28px*var(--fs,1)); font-weight: 500; line-height: 1.2; }
+.tabbar__text--center { margin-top: 30px; }
 
 /* ===== 首页：紧凑问候条（替代原绿色大卡片，不占大片空间） ===== */
 .home-greet-strip {
@@ -129,6 +129,7 @@ svg { display: block; }
 .home-greet-strip__text { flex: 1; min-width: 0; }
 .home-greet-strip__greeting { margin: 0; font-size:calc(14px*var(--fs,1)); font-weight: 600; color: var(--c-ink); line-height: 1.5; }
 .home-greet-strip__sub { margin: 0; font-size:calc(12px*var(--fs,1)); color: var(--c-text-secondary); line-height: 1.5; }
+.home-greet-strip__speak { flex-shrink:0; font-size:20px; cursor:pointer; padding:4px 6px; -webkit-tap-highlight-color:transparent; }
 
 .home-stats {
   display: flex; align-items: center; margin: 8px 12px 0;
@@ -623,6 +624,15 @@ html[data-fs="large"] .section__tag, html[data-fs="large"] .home-news__meta, htm
 .points-modal__item-desc { font-size:calc(19px*var(--fs,1)); color:var(--c-ink); }
 .points-modal__item-date { font-size:calc(13px*var(--fs,1)); color:var(--c-text-tertiary); }
 .points-modal__item-amt { font-size:calc(19px*var(--fs,1)); font-weight:700; }
+/* 积分流水筛选/分页/导出 */
+.points-filter { display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
+.points-filter__select, .points-filter__date { font-size:calc(15px*var(--fs,1)); border:1px solid #D1D5DB; border-radius:8px; padding:6px 8px; min-height:36px; max-width:42%; }
+.points-filter__export { margin-left:auto; padding:6px 12px; border-radius:8px; background:var(--c-deep-blue); color:#fff; font-size:calc(15px*var(--fs,1)); font-weight:600; cursor:pointer; border:none; min-height:36px; white-space:nowrap; }
+.points-filter__export:active { opacity:0.8; }
+.points-empty { text-align:center; padding:30px 0; color:var(--c-text-tertiary); font-size:calc(19px*var(--fs,1)); }
+.points-pagination { display:flex; gap:8px; justify-content:center; align-items:center; margin-top:14px; font-size:calc(15px*var(--fs,1)); color:var(--c-text-secondary); }
+.points-pagination button { padding:6px 14px; border-radius:8px; border:1px solid #D1D5DB; background:#fff; cursor:pointer; font-size:calc(15px*var(--fs,1)); min-height:32px; }
+.points-pagination button:disabled { opacity:0.4; cursor:default; }
 
 /* ===== 回到首页悬浮按钮（子页面内显示） ===== */
 .home-fab { position:fixed; right:12px; bottom:calc(130px + var(--safe-bottom)); z-index:9997; width:44px; height:44px; border-radius:50%; background:var(--c-deep-blue); color:#fff; display:none; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,0.3); cursor:pointer; font-size:20px; }
@@ -630,6 +640,13 @@ html[data-fs="large"] .section__tag, html[data-fs="large"] .home-news__meta, htm
 /* 护理值赠予长辈页 */
 .gift-opt { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: calc(26px*var(--fs,1)); color: var(--c-ink); cursor: pointer; margin: 4px 10px 4px 0; }
 .gift-opt--on { border-color: var(--c-deep-blue); background: var(--c-blue-light); color: var(--c-deep-blue); font-weight: 700; }
+/* 转赠长辈弹窗 */
+.gift-modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(15,35,60,.55); z-index:10003; align-items:center; justify-content:center; padding:16px; }
+.gift-modal__box { position:relative; width:100%; max-width:380px; max-height:80vh; max-height:min(80vh,560px); overflow-y:auto; -webkit-overflow-scrolling:touch; background:#fff; border-radius:16px; padding:20px 16px calc(16px+var(--safe-bottom)); box-sizing:border-box; }
+.gift-modal__close { position:absolute; right:12px; top:10px; font-size:22px; color:var(--c-text-tertiary); cursor:pointer; padding:4px; line-height:1; z-index:2; }
+/* 统一弹窗×关闭按钮（全项目复用） */
+.modal-close-x { position:absolute; right:12px; top:10px; font-size:22px; color:var(--c-text-tertiary); cursor:pointer; padding:4px 8px; line-height:1; z-index:5; -webkit-tap-highlight-color:transparent; }
+.modal-close-x:active { color:var(--c-ink); }
 
 /* ===== 适老化字体与阅读体验优化 ===== */
 /* 字体:优先无衬线(苹方/微软雅黑/思源黑体),避免衬线字体 */
@@ -696,6 +713,7 @@ try{var a=localStorage.getItem('zbchAccount');var am=(a==='authorized')?'authori
             <p class="home-greet-strip__greeting" id="homeGreeting">中午好！吃饱了来看看政策，阿姨陪你</p>
             <p class="home-greet-strip__sub" id="homeSubGreeting">你的护理值又涨了，当前1280分</p>
           </div>
+          <span class="home-greet-strip__speak" id="speakToggle" onclick="app.toggleSpeak()" title="点击朗读当前页面内容｜再次点击静音">🔊</span>
         </div>
 
         <!-- 快捷统计 -->
@@ -3086,9 +3104,9 @@ if (typeof module !== 'undefined') module.exports = Charts;
       }
     }
     state.currentPage = pageId;
-    // 「赚取护理积分」快捷按钮仅首页显示
-    var ef = $('earnFab');
-    if (ef) ef.style.display = pageId === 'home' ? 'flex' : 'none';
+    // 切换页面自动停止语音朗读（朗读状态仅限当前页面）
+    if (typeof stopSpeech === 'function') stopSpeech();
+    // 「赚取护理积分」快捷按钮全局常驻（不再仅首页显示）
     // 滚动到顶部
     var ca = $('contentArea');
     if (ca) ca.scrollTop = 0;
@@ -3299,14 +3317,15 @@ if (typeof module !== 'undefined') module.exports = Charts;
 
   function renderQAMessages() {
     var html = '';
-    state.qaMessages.forEach(function (msg) {
+    state.qaMessages.forEach(function (msg, idx) {
       var avatarHtml = msg.type === 'ai' ?
         '<div class="qa-msg__avatar">' + huapoSVG(36) + '</div>' :
         '<div class="qa-msg__avatar">' + getIcon('user', 20) + '</div>';
       var sourceHtml = msg.source ? '<div class="qa-msg__source">' + getIcon('doc', 12) + ' 来源：' + escapeHtml(msg.source) + '</div>' : '';
+      var speakBtn = msg.type === 'ai' ? '<span class="qa-msg__speak" onclick="app.speakQA(' + idx + ')" title="语音朗读">🔊</span>' : '';
       html += '<div class="qa-msg qa-msg--' + msg.type + '">' +
         avatarHtml +
-        '<div><div class="qa-msg__bubble">' + escapeHtml(msg.text).replace(/\n/g, '<br>') + '</div>' + sourceHtml + '</div>' +
+        '<div><div class="qa-msg__bubble">' + speakBtn + escapeHtml(msg.text).replace(/\n/g, '<br>') + '</div>' + sourceHtml + '</div>' +
         '</div>';
     });
     $('qaMessages').innerHTML = html;
@@ -3633,7 +3652,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     html += '<div class="nav-bar">' +
       '<button class="nav-bar__back" onclick="app.closeSubPage()">' + getIcon('arrow', 24).replace('M9 6l6 6-6 6', 'M15 18l-6-6 6-6') + '</button>' +
       '<span class="nav-bar__title">' + navTitle + '</span>' +
-      '<span class="nav-bar__right"></span>' +
+      '<span class="nav-bar__right" style="font-size:22px;color:var(--c-text-tertiary);cursor:pointer;padding:4px 8px" onclick="app.closeSubPage()">✕</span>' +
       '</div>';
     html += '<div class="subpage__inner">';
 
@@ -3671,8 +3690,6 @@ if (typeof module !== 'undefined') module.exports = Charts;
     inner.scrollTop = 0;
     var hf = $('homeFab');
     if (hf) hf.classList.add('home-fab--show');
-    var ef = $('earnFab');
-    if (ef) ef.style.display = 'none';
   }
 
   function closeSubPage() {
@@ -3682,8 +3699,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
     $('subPageInner').innerHTML = '';
     var hf = $('homeFab');
     if (hf) hf.classList.remove('home-fab--show');
-    var ef = $('earnFab');
-    if (ef) ef.style.display = state.currentPage === 'home' ? 'flex' : 'none';
+    // 关闭子页面时停止朗读
+    if (typeof stopSpeech === 'function') stopSpeech();
   }
 
   // ===== 子页面：护理值中心 =====
@@ -3696,8 +3713,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
       '<div class="sp-points__balance">' + ui.carePoints + '</div>' +
       '<div class="sp-points__label">当前护理值</div>' +
       '<div class="sp-points__actions">' +
-      '<div class="sp-points__action" onclick="app.openSubPage(\'giftPoints\')"><div class="sp-points__action-icon">' + getIcon('transfer', 20) + '</div><span class="sp-points__action-text">转赠长辈</span></div>' +
-      '<div class="sp-points__action" onclick="app.openSubPage(\'records\')"><div class="sp-points__action-icon">' + getIcon('doc', 20) + '</div><span class="sp-points__action-text">积分记录</span></div>' +
+      '<div class="sp-points__action" onclick="app.showGiftModal()"><div class="sp-points__action-icon">' + getIcon('transfer', 20) + '</div><span class="sp-points__action-text">转赠长辈</span></div>' +
       '<div class="sp-points__action" onclick="app.showPointsModal()"><div class="sp-points__action-icon">' + getIcon('doc', 20) + '</div><span class="sp-points__action-text">积分流水</span></div>' +
       '</div></div>';
 
@@ -4462,7 +4478,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
     // 首页渲染
     renderHome();
 
-    // 首页默认激活：「赚取护理积分」快捷按钮初始显示
+    // 首页默认激活：「赚取护理积分」快捷按钮全局常驻
     var ef0 = $('earnFab');
     if (ef0) ef0.style.display = 'flex';
 
@@ -4476,6 +4492,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
     initDemoFloatDrag();
     // 新手指引卡片：手柄拖拽 + 位置记忆
     initGuideDrag();
+    // 赚积分悬浮按钮：拖拽 + 位置记忆
+    initEarnFabDrag();
     // 启动后检查是否需要弹出新手指引
     setTimeout(function () { checkAndShowGuide(); }, 800);
   }
@@ -4501,6 +4519,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
   function closeDashAuth() {
     var m = $('dashAuthModal');
     if (m) m.style.display = 'none';
+    if (typeof stopSpeech === 'function') stopSpeech();
   }
   function dashLogin() {
     var roleEl = document.querySelector('input[name="dashRole"]:checked');
@@ -4792,8 +4811,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
     html += '</div>';
     return html;
   }
-  function pickGiftTo(name) { state._giftTo = name; openSubPage('giftPoints'); }
-  function pickGiftAmt(a) { state._giftAmt = a; openSubPage('giftPoints'); }
+  function pickGiftTo(name) { state._giftTo = name; showGiftModal(); }
+  function pickGiftAmt(a) { state._giftAmt = a; showGiftModal(); }
   function giftPointsConfirm() {
     var ui = MockData.userInfo;
     var amt = state._giftAmt || 100;
@@ -5123,20 +5142,18 @@ if (typeof module !== 'undefined') module.exports = Charts;
     // 弹窗显示后校正拖动位置（防止上次保存的位置在当前屏幕出界）
     if (typeof _guidePosEnsure === 'function') _guidePosEnsure();
   }
-  // 🔊 语音朗读当前指引（适配不识字老年用户）
+  // 🔊 语音朗读当前指引（适配不识字老年用户，不支持时底部小字降级不阻断）
   function speakGuide() {
     var steps = guideSteps[state.userRole] || guideSteps.elder;
     var s = steps[guideStepIdx];
     if (!s) return;
-    if (!('speechSynthesis' in window)) { toast('当前浏览器不支持语音播报'); return; }
-    try {
-      window.speechSynthesis.cancel();
-      var clean = function (t) { return String(t).replace(/[^\u4e00-\u9fa5A-Za-z0-9，。！？、；：]/g, ''); };
-      var u = new SpeechSynthesisUtterance(clean(s.title) + '。' + clean(s.desc));
-      u.lang = 'zh-CN';
-      u.rate = 0.92;
-      window.speechSynthesis.speak(u);
-    } catch (e) { toast('语音播报启动失败'); }
+    speakText(s.title + '。' + s.desc);
+  }
+  // 🔊 朗读问答回复
+  function speakQA(idx) {
+    var msg = state.qaMessages[idx];
+    if (!msg || msg.type !== 'ai') return;
+    speakText(msg.text);
   }
   function nextGuideStep() {
     guideStepIdx++;
@@ -5456,6 +5473,8 @@ if (typeof module !== 'undefined') module.exports = Charts;
           state._demoRunning = false;
           showDemoFloat();
           toast('全自动演示结束，回到首页啦');
+          // 演示结束后自动弹出设备兼容提示弹窗
+          if (typeof showDemoEndModal === 'function') showDemoEndModal();
           done();
         }, 1800);
       },
@@ -5490,13 +5509,197 @@ if (typeof module !== 'undefined') module.exports = Charts;
   // 面板展开/收起对外别名（供「—」收起按钮调用）
   function toggleDemoFloatMini(mini) { setDemoFloatMini(mini); }
 
-  // ===== 积分流水弹窗 =====
+  // ===== 转赠长辈弹窗 =====
+  function showGiftModal() {
+    var body = $('giftModalBody');
+    if (body) body.innerHTML = renderGiftPoints();
+    var m = $('giftModal');
+    if (m) m.style.display = 'flex';
+  }
+  function closeGiftModal() {
+    var m = $('giftModal');
+    if (m) m.style.display = 'none';
+    if (typeof stopSpeech === 'function') stopSpeech();
+  }
+
+  // ===== 演示结束设备兼容提示弹窗 =====
+  function showDemoEndModal() {
+    var m = $('demoEndModal');
+    if (m) m.style.display = 'flex';
+  }
+  function closeDemoEndModal() {
+    var m = $('demoEndModal');
+    if (m) m.style.display = 'none';
+    if (typeof stopSpeech === 'function') stopSpeech();
+  }
+
+  // ===== 赚积分悬浮按钮拖拽（与指引卡片拖拽逻辑一致） =====
+  var _earnFabPos = { x: 0, y: 0 };
+  function _earnFabMove(noTransition) {
+    var el = $('earnFab');
+    if (!el) return;
+    el.style.transition = noTransition ? 'none' : 'transform .18s ease';
+    el.style.transform = 'translate(' + _earnFabPos.x + 'px,' + _earnFabPos.y + 'px)';
+  }
+  function _earnFabClamp() {
+    var el = $('earnFab');
+    if (!el) return;
+    var r = el.getBoundingClientRect();
+    if (r.width === 0) return;
+    var M = 4;
+    if (r.left < M) _earnFabPos.x += (M - r.left);
+    if (r.right > window.innerWidth - M) _earnFabPos.x -= (r.right - (window.innerWidth - M));
+    if (r.top < M) _earnFabPos.y += (M - r.top);
+    if (r.bottom > window.innerHeight - M) _earnFabPos.y -= (r.bottom - (window.innerHeight - M));
+  }
+  function initEarnFabDrag() {
+    var el = $('earnFab');
+    if (!el || el._dragInit) return;
+    el._dragInit = true;
+    try {
+      var p = JSON.parse(localStorage.getItem('zbchEarnFabPos') || 'null');
+      if (p && typeof p.x === 'number' && typeof p.y === 'number') { _earnFabPos = { x: p.x, y: p.y }; _earnFabMove(true); }
+    } catch (e) {}
+    el.addEventListener('pointerdown', function (e) {
+      if (e.button && e.button !== 0) return;
+      e.preventDefault();
+      var sx = e.clientX, sy = e.clientY;
+      var startPos = { x: _earnFabPos.x, y: _earnFabPos.y };
+      var moved = false, pressTimer = null, suppressed = false;
+      function onMove(ev) {
+        var dx = ev.clientX - sx, dy = ev.clientY - sy;
+        if (!moved && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+          moved = true;
+          suppressed = true;
+          try { if (navigator.vibrate) navigator.vibrate(10); } catch (err) {}
+        }
+        if (!moved) return;
+        ev.preventDefault();
+        var r = el.getBoundingClientRect();
+        var minX = 4 - r.left, maxX = window.innerWidth - 4 - r.right;
+        var minY = 4 - r.top, maxY = window.innerHeight - 4 - r.bottom;
+        _earnFabPos.x = startPos.x + Math.max(minX, Math.min(dx, maxX));
+        _earnFabPos.y = startPos.y + Math.max(minY, Math.min(dy, maxY));
+        _earnFabMove(true);
+      }
+      function onUp(ev) {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        document.removeEventListener('pointercancel', onUp);
+        if (moved) {
+          try { localStorage.setItem('zbchEarnFabPos', JSON.stringify(_earnFabPos)); } catch (err) {}
+          // 延迟恢复点击，防止拖完立刻触发onclick
+          setTimeout(function () { suppressed = false; }, 100);
+        } else {
+          // 没有拖动→视为点击，正常触发
+          showEarnTasks();
+        }
+      }
+      document.addEventListener('pointermove', onMove, { passive: false });
+      document.addEventListener('pointerup', onUp);
+      document.addEventListener('pointercancel', onUp);
+    });
+    window.addEventListener('resize', function () { _earnFabClamp(); _earnFabMove(false); });
+  }
+
+  // ===== 全局语音朗读管理（跨页面自动停止） =====
+  var _speechActive = false;
+  function speakText(text, opts) {
+    if (!('speechSynthesis' in window)) {
+      _showSpeechFallback();
+      return;
+    }
+    try {
+      window.speechSynthesis.cancel();
+      var clean = function (t) { return String(t).replace(/[^\u4e00-\u9fa5A-Za-z0-9，。！？、；：））]/g, ''); };
+      var u = new SpeechSynthesisUtterance(clean(text));
+      u.lang = 'zh-CN';
+      u.rate = (opts && opts.rate) || 0.92;
+      u.onend = function () { _speechActive = false; _updateSpeakToggle(); };
+      u.onerror = function () { _speechActive = false; _updateSpeakToggle(); _showSpeechFallback(); };
+      _speechActive = true;
+      _updateSpeakToggle();
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      _speechActive = false;
+      _updateSpeakToggle();
+      _showSpeechFallback();
+    }
+  }
+  function stopSpeech() {
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+    _speechActive = false;
+    _updateSpeakToggle();
+  }
+  function _showSpeechFallback() {
+    var el = $('speechFallback');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'speechFallback';
+      el.style.cssText = 'position:fixed;bottom:calc(80px+var(--safe-bottom));left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:6px 14px;border-radius:8px;font-size:12px;z-index:9998;pointer-events:none;opacity:0;transition:opacity .3s';
+      document.body.appendChild(el);
+    }
+    el.textContent = '当前浏览器不支持语音播报，可正常操作';
+    el.style.opacity = '1';
+    clearTimeout(el._t);
+    el._t = setTimeout(function () { el.style.opacity = '0'; }, 2500);
+  }
+  function _updateSpeakToggle() {
+    var btn = $('speakToggle');
+    if (btn) btn.textContent = _speechActive ? '🔇' : '🔊';
+  }
+  function toggleSpeak() {
+    if (_speechActive) { stopSpeech(); }
+    else {
+      var cur = document.querySelector('.page--active');
+      if (!cur) return;
+      var texts = [];
+      cur.querySelectorAll('h2, h3, p, .edu-content__section, .qa-msg__text, .sp-section, .home-greet-strip__greeting, .home-greet-strip__sub').forEach(function (el) {
+        var t = el.textContent.trim();
+        if (t.length > 2) texts.push(t);
+      });
+      speakText(texts.slice(0, 6).join('。'));
+    }
+  }
+
+  // ===== 积分流水弹窗（增强：筛选+分页+空状态+导出） =====
+  var _pointsPageNo = 1, _pointsPageSize = 8;
   function showPointsModal() {
+    _pointsPageNo = 1;
+    renderPointsList();
+    $('pointsModal').classList.add('points-modal--show');
+  }
+  function closePointsModal() {
+    $('pointsModal').classList.remove('points-modal--show');
+    stopSpeech();
+  }
+  function renderPointsList() {
     var list = $('pointsModalList');
     if (!list) return;
+    var typeF = ($('pointsFilterType') || {}).value || '';
+    var dateF = ($('pointsFilterDate') || {}).value || '';
+    var filtered = (MockData.pointsHistory || []).filter(function (h) {
+      if (typeF && h.type !== typeF) return false;
+      if (dateF && (h.date || '').slice(0, 10) !== dateF) return false;
+      return true;
+    });
+    var empty = $('pointsEmpty');
+    var pagination = $('pointsPagination');
+    if (filtered.length === 0) {
+      list.innerHTML = '';
+      if (empty) empty.style.display = 'block';
+      if (pagination) pagination.innerHTML = '';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+    var totalPages = Math.ceil(filtered.length / _pointsPageSize);
+    if (_pointsPageNo > totalPages) _pointsPageNo = totalPages;
+    if (_pointsPageNo < 1) _pointsPageNo = 1;
+    var slice = filtered.slice((_pointsPageNo - 1) * _pointsPageSize, _pointsPageNo * _pointsPageSize);
     var html = '';
-    var history = MockData.pointsHistory.slice(0, 10);
-    history.forEach(function (h) {
+    slice.forEach(function (h) {
       var isEarn = h.type === 'earn';
       var color = isEarn ? '#16A34A' : (h.type === 'spend' ? '#B91C1C' : '#D97706');
       var sign = h.amount > 0 ? '+' : '';
@@ -5507,10 +5710,44 @@ if (typeof module !== 'undefined') module.exports = Charts;
         '</div>';
     });
     list.innerHTML = html;
-    $('pointsModal').classList.add('points-modal--show');
+    if (pagination) {
+      pagination.innerHTML = '<button onclick="app._pointsPage(-1)"' + (_pointsPageNo <= 1 ? ' disabled' : '') + '>上一页</button>' +
+        '<span>第 ' + _pointsPageNo + ' / ' + totalPages + ' 页（共' + filtered.length + '条）</span>' +
+        '<button onclick="app._pointsPage(1)"' + (_pointsPageNo >= totalPages ? ' disabled' : '') + '>下一页</button>';
+    }
   }
-  function closePointsModal() {
-    $('pointsModal').classList.remove('points-modal--show');
+  function _pointsPage(delta) {
+    _pointsPageNo += delta;
+    renderPointsList();
+  }
+  function exportPointsLog() {
+    var typeF = ($('pointsFilterType') || {}).value || '';
+    var dateF = ($('pointsFilterDate') || {}).value || '';
+    var filtered = (MockData.pointsHistory || []).filter(function (h) {
+      if (typeF && h.type !== typeF) return false;
+      if (dateF && (h.date || '').slice(0, 10) !== dateF) return false;
+      return true;
+    });
+    if (filtered.length === 0) { toast('暂无流水可导出'); return; }
+    var uid = state.currentUserId || 'user';
+    var now = new Date();
+    var ts = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    var csv = '\uFEFF类型,变动原因,变动数量,操作时间\n';
+    filtered.forEach(function (h) {
+      csv += (h.type === 'earn' ? '收入' : (h.type === 'spend' ? '支出' : '调整')) + ',' +
+        (h.desc || '').replace(/,/g, '，') + ',' + (h.amount > 0 ? '+' : '') + h.amount + ',' + (h.date || '') + '\n';
+    });
+    try {
+      var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      var link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = '护理值流水_' + uid + '_' + ts + '.csv';
+      link.click();
+      setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
+      toast('已导出 ' + filtered.length + ' 条流水记录');
+    } catch (e) {
+      toast('导出失败，请稍后重试');
+    }
   }
 
   // ===== 首页「赚取护理积分」快捷任务清单 =====
@@ -5548,6 +5785,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
   function closeEarnTasks() {
     var m = $('earnModal');
     if (m) m.style.display = 'none';
+    if (typeof stopSpeech === 'function') stopSpeech();
   }
   function goEarn(target) {
     closeEarnTasks();
@@ -5586,6 +5824,7 @@ if (typeof module !== 'undefined') module.exports = Charts;
   function closeAcctInfo() {
     var m = $('acctInfoModal');
     if (m) m.style.display = 'none';
+    if (typeof stopSpeech === 'function') stopSpeech();
   }
 
   // ===== 回到首页 =====
@@ -5653,9 +5892,12 @@ if (typeof module !== 'undefined') module.exports = Charts;
     // 全自动演示
     startAutoDemo: startAutoDemo,
     stopAutoDemo: stopAutoDemo,
-    // 积分流水
+    // 积分流水（增强：筛选/分页/导出）
     showPointsModal: showPointsModal,
     closePointsModal: closePointsModal,
+    renderPointsList: renderPointsList,
+    _pointsPage: _pointsPage,
+    exportPointsLog: exportPointsLog,
     // 赚取护理积分任务清单
     showEarnTasks: showEarnTasks,
     closeEarnTasks: closeEarnTasks,
@@ -5665,6 +5907,17 @@ if (typeof module !== 'undefined') module.exports = Charts;
     closeAcctInfo: closeAcctInfo,
     // 演示悬浮控件展开/收起
     toggleDemoFloatMini: toggleDemoFloatMini,
+    // 转赠长辈弹窗
+    showGiftModal: showGiftModal,
+    closeGiftModal: closeGiftModal,
+    // 演示结束设备兼容提示
+    showDemoEndModal: showDemoEndModal,
+    closeDemoEndModal: closeDemoEndModal,
+    // 全局语音朗读
+    speakText: speakText,
+    speakQA: speakQA,
+    stopSpeech: stopSpeech,
+    toggleSpeak: toggleSpeak,
     // 回到首页
     goHome: goHome,
   };
@@ -6070,6 +6323,10 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
   .auth-modal { max-height: 92vh; overflow-y: auto; }
 }
 
+/* QA回复朗读按钮 */
+.qa-msg__speak { display:inline-block; cursor:pointer; font-size:16px; margin-right:6px; vertical-align:middle; -webkit-tap-highlight-color:transparent; opacity:0.7; }
+.qa-msg__speak:active { opacity:1; }
+
 /* ===== 问答页语音按钮：麦克风图标+小字提示 ===== */
 /* 输入栏 flex 防溢出（安卓 WebView 下 input 默认最小宽度会把按钮挤出屏幕） */
 .qa-input-bar { flex-wrap: nowrap; }
@@ -6091,7 +6348,7 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 .demo-float__fold { flex-shrink: 0; min-width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; cursor: pointer; }
 
 /* ===== 首页「赚取护理积分」快捷悬浮按钮 ===== */
-.earn-fab { position: fixed; right: 12px; bottom: calc(186px + var(--safe-bottom)); z-index: 9996; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #F97316); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.3); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.earn-fab { position: fixed; right: 12px; bottom: calc(186px + var(--safe-bottom)); z-index: 9996; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B, #F97316); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.3); cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: none; }
 .earn-fab__ico { font-size: 18px; line-height: 1; }
 .earn-fab__txt { font-size: 10px; font-weight: 800; line-height: 1.2; }
 
@@ -6153,7 +6410,8 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 .guide-overlay { right: 0; bottom: 0; width: auto; height: auto; padding-bottom: var(--safe-bottom); }
 </style>
 <div class="dash-modal-mask" id="dashAuthModal" style="display:none">
-  <div class="dash-modal">
+  <div class="dash-modal" style="position:relative">
+    <span class="modal-close-x" onclick="app.closeDashAuth()">✕</span>
     <h3>数据看板 · 权限验证</h3>
     <p>看板运营数据仅对合作保险公司与政府监管部门开放，个人用户无法查看。请完成机构授权（演示环境）。</p>
     <label class="dash-role"><input type="radio" name="dashRole" value="ins" checked onchange="app.prefillDashAuth()"><span>保险公司工作人员</span></label>
@@ -6213,7 +6471,7 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 </div>
 
 <!-- ===== 首页「赚取护理积分」快捷悬浮按钮（仅首页显示） ===== -->
-<div class="earn-fab" id="earnFab" onclick="app.showEarnTasks()" title="赚取护理积分">
+<div class="earn-fab" id="earnFab" title="赚取护理积分｜按住可拖动移位">
   <span class="earn-fab__ico">💰</span>
   <span class="earn-fab__txt">赚积分</span>
 </div>
@@ -6231,7 +6489,8 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
 
 <!-- ===== 账户身份/权限查看弹窗（问卷页🔍悬浮按钮） ===== -->
 <div class="dash-modal-mask" id="acctInfoModal" style="display:none;z-index:10002">
-  <div class="dash-modal" style="width:320px">
+  <div class="dash-modal" style="width:320px;position:relative">
+    <span class="modal-close-x" onclick="app.closeAcctInfo()">✕</span>
     <h3>🔍 我的账户信息</h3>
     <div id="acctInfoBody"></div>
     <div class="dash-hint">护阿姨说：普惠账户能学政策、攒护理值、换服务；授权账户还能做保障测评、看产品对比。信息仅演示用，不会外传。</div>
@@ -6249,12 +6508,43 @@ body.env-wechat .tabbar { padding-bottom: calc(var(--safe-bottom) + 2px); }
   <div class="points-modal__box" style="position:relative">
     <span class="points-modal__close" onclick="app.closePointsModal()">✕</span>
     <div class="points-modal__title">护理值流水明细</div>
+    <!-- 筛选栏 -->
+    <div class="points-filter" id="pointsFilter">
+      <select id="pointsFilterType" class="points-filter__select" onchange="app.renderPointsList()">
+        <option value="">全部类型</option>
+        <option value="earn">收入</option>
+        <option value="spend">支出</option>
+      </select>
+      <input type="date" id="pointsFilterDate" class="points-filter__date" onchange="app.renderPointsList()">
+      <button class="points-filter__export" onclick="app.exportPointsLog()">导出</button>
+    </div>
     <div id="pointsModalList"></div>
+    <div id="pointsEmpty" class="points-empty" style="display:none">暂无护理值流水记录</div>
+    <div class="points-pagination" id="pointsPagination"></div>
+  </div>
+</div>
+
+<!-- ===== 转赠长辈弹窗 ===== -->
+<div class="gift-modal" id="giftModal">
+  <div class="gift-modal__box">
+    <span class="gift-modal__close" onclick="app.closeGiftModal()">✕</span>
+    <div id="giftModalBody"></div>
+  </div>
+</div>
+
+<!-- ===== 演示结束设备兼容提示弹窗 ===== -->
+<div class="gift-modal" id="demoEndModal" style="z-index:10005">
+  <div class="gift-modal__box" style="text-align:center">
+    <span class="gift-modal__close" onclick="app.closeDemoEndModal()">✕</span>
+    <div style="font-size:calc(28px*var(--fs,1));font-weight:800;color:var(--c-ink);margin-bottom:12px">📱 设备兼容提示</div>
+    <div style="font-size:calc(22px*var(--fs,1));color:var(--c-text-secondary);line-height:1.7;margin-bottom:16px">不同手机访问本页面可能存在页面兼容错乱问题，请留意。</div>
+    <button class="sp-rec__submit" style="width:100%;margin-top:4px" onclick="app.closeDemoEndModal()">我知道了</button>
   </div>
 </div>
 
 <div class="auth-mask" id="authModal">
-  <div class="auth-modal">
+  <div class="auth-modal" style="position:relative">
+    <span class="modal-close-x" onclick="app.refuseAuth()">✕</span>
     <h3>🔐 护阿姨小提示</h3>
     <p>获取您的账户信息，我才能帮您精准测算长护险待遇。授权后可获得：</p>
     <ul class="auth-list">
